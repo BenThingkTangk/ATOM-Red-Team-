@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ATOM — Autonomous Threat Operations Matrix | Nirmata Holdings</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --void: #000005;
+  --deep: #03030a;
+  --panel: #07070f;
+  --card: #0b0b16;
+  --card2: #0e0e1a;
+  --glass: rgba(255,255,255,0.025);
+  --border: rgba(220,30,30,0.15);
+  --border2: rgba(220,30,30,0.35);
+  --border3: rgba(220,30,30,0.6);
+  --red: #ff1a1a;
+  --red2: #cc0000;
+  --red3: #880000;
+  --red-glow: 0 0 20px rgba(255,20,20,0.4);
+  --red-glow2: 0 0 40px rgba(255,20,20,0.25);
+  --amber: #ffaa00;
+  --amber2: #cc8800;
+  --green: #00ff88;
+  --green2: #00cc66;
+  --cyan: #00d4ff;
+  --cyan2: #0099cc;
+  --purple: #8b44ff;
+  --purple2: #6622cc;
+  --blue: #1a44ff;
+  --white: #f0f0ff;
+  --dim: #6a6a8a;
+  --muted: #333345;
+  --font-hud: 'Share Tech Mono', monospace;
+  --font-ui: 'Rajdhani', sans-serif;
+  --font-brand: 'Orbitron', sans-serif;
+  --transition: all 0.22s cubic-bezier(0.4,0,0.2,1);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html, body {
+  width:100vw; height:100vh;
+  overflow:hidden;
+  background:var(--void);
+  color:var(--white);
+  font-family:var(--font-ui);
+  font-size:14px;
+}
+
+/* SCANLINES */
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:9998;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.05) 3px,rgba(0,0,0,0.05) 4px);
+}
+
+/* NOISE OVERLAY */
+body::before {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:9997; opacity:0.018;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ═══ SCROLLBARS ═══ */
+::-webkit-scrollbar { width:3px; height:3px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:rgba(255,20,20,0.25); border-radius:2px; }
+
+/* ═══════════════════════════════════════════
+   LOGIN SCREEN
+═══════════════════════════════════════════ */
+#login {
+  position:fixed; inset:0; z-index:1000;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:radial-gradient(ellipse 80% 60% at 50% 40%, rgba(180,0,0,0.07) 0%, var(--void) 65%);
+  transition:opacity 0.7s ease, transform 0.7s ease;
+}
+#login.out { opacity:0; transform:scale(1.04); pointer-events:none; }
+
+.login-grid-bg {
+  position:absolute; inset:0; overflow:hidden; opacity:0.06;
+  background-image:
+    linear-gradient(rgba(255,20,20,0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,20,20,0.4) 1px, transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+.login-corner {
+  position:absolute;
+  width:40px; height:40px;
+  border-color:rgba(255,20,20,0.4);
+  border-style:solid;
+}
+.login-corner.tl { top:40px; left:40px; border-width:2px 0 0 2px; }
+.login-corner.tr { top:40px; right:40px; border-width:2px 2px 0 0; }
+.login-corner.bl { bottom:40px; left:40px; border-width:0 0 2px 2px; }
+.login-corner.br { bottom:40px; right:40px; border-width:0 2px 2px 0; }
+
+.login-header { text-align:center; margin-bottom:44px; }
+.login-eyebrow {
+  font-family:var(--font-hud);
+  font-size:10px; letter-spacing:5px; color:rgba(255,20,20,0.6);
+  margin-bottom:14px;
+}
+.login-logo-text {
+  font-family:var(--font-brand);
+  font-size:72px; font-weight:900; letter-spacing:14px;
+  background:linear-gradient(135deg, #fff 0%, #ff4444 40%, #cc0000 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+  text-shadow:none;
+  line-height:1;
+  position:relative;
+}
+.login-logo-text::after {
+  content:'ATOM';
+  position:absolute; inset:0;
+  font-family:var(--font-brand);
+  font-size:72px; font-weight:900; letter-spacing:14px;
+  background:none; -webkit-text-fill-color:transparent;
+  filter:blur(18px);
+  background:linear-gradient(135deg,rgba(255,80,80,0.6),rgba(200,0,0,0.4));
+  -webkit-background-clip:text; background-clip:text;
+  z-index:-1;
+}
+.login-tagline {
+  font-family:var(--font-hud);
+  font-size:9px; letter-spacing:4px; color:var(--dim);
+  margin-top:12px;
+}
+
+.login-box {
+  width:420px;
+  background:linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.2) 100%);
+  border:1px solid var(--border2);
+  border-radius:8px;
+  padding:36px 40px;
+  box-shadow:0 0 80px rgba(200,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.04);
+  position:relative;
+}
+.login-box::before {
+  content:''; position:absolute; top:-1px; left:20%; right:20%; height:1px;
+  background:linear-gradient(90deg, transparent, var(--red), transparent);
+}
+
+.lf-label {
+  font-family:var(--font-hud); font-size:9px; letter-spacing:3px;
+  color:var(--dim); margin-bottom:8px; display:block;
+}
+.lf-input {
+  width:100%;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:13px 16px;
+  color:var(--white);
+  font-family:var(--font-hud); font-size:13px;
+  outline:none;
+  transition:var(--transition);
+  margin-bottom:18px;
+}
+.lf-input::placeholder { color:var(--muted); }
+.lf-input:focus {
+  border-color:var(--red);
+  background:rgba(255,20,20,0.04);
+  box-shadow:0 0 0 1px rgba(255,20,20,0.15), inset 0 0 20px rgba(255,20,20,0.03);
+}
+
+.btn-auth {
+  width:100%; padding:14px;
+  background:linear-gradient(135deg, rgba(200,0,0,0.9) 0%, rgba(120,0,0,0.9) 100%);
+  border:1px solid var(--red);
+  border-radius:4px;
+  color:#fff;
+  font-family:var(--font-brand); font-size:12px; font-weight:600; letter-spacing:4px;
+  cursor:pointer; transition:var(--transition);
+  box-shadow:0 0 20px rgba(255,20,20,0.2);
+  position:relative; overflow:hidden;
+}
+.btn-auth::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
+}
+.btn-auth:hover {
+  background:linear-gradient(135deg, rgba(255,20,20,0.95) 0%, rgba(180,0,0,0.9) 100%);
+  box-shadow:0 0 35px rgba(255,20,20,0.4), 0 0 60px rgba(255,20,20,0.15);
+  transform:translateY(-1px);
+}
+.btn-auth:active { transform:translateY(0); }
+
+.login-err {
+  font-family:var(--font-hud); font-size:10px; color:var(--red);
+  text-align:center; margin-top:14px; min-height:14px; letter-spacing:1px;
+}
+.login-footer-txt {
+  font-family:var(--font-hud); font-size:8px; color:var(--muted);
+  text-align:center; margin-top:18px; letter-spacing:2px; line-height:1.8;
+}
+
+/* ═══════════════════════════════════════════
+   PLATFORM SHELL
+═══════════════════════════════════════════ */
+#platform { display:none; flex-direction:column; height:100vh; width:100vw; }
+#platform.on { display:flex; }
+
+/* ─── TOPBAR ─── */
+.topbar {
+  height:54px; flex-shrink:0;
+  background:rgba(0,0,3,0.97);
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center;
+  padding:0 18px; gap:0;
+  position:relative; z-index:200;
+}
+.topbar::after {
+  content:''; position:absolute; bottom:-1px; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent 0%, rgba(255,20,20,0.5) 30%, rgba(255,20,20,0.5) 70%, transparent 100%);
+}
+
+.tb-brand {
+  display:flex; align-items:center; gap:12px;
+  padding-right:20px;
+  border-right:1px solid var(--border);
+  margin-right:18px;
+  flex-shrink:0;
+}
+.tb-logo {
+  font-family:var(--font-brand);
+  font-size:16px; font-weight:800; letter-spacing:4px;
+  color:var(--red);
+  text-shadow:var(--red-glow);
+}
+.tb-subtitle {
+  font-family:var(--font-hud); font-size:8px; letter-spacing:2px; color:var(--dim);
+  line-height:1.4;
+}
+
+.tb-nav { display:flex; gap:2px; flex:1; align-items:center; }
+.tb-tab {
+  padding:7px 14px;
+  font-family:var(--font-ui); font-weight:600; font-size:11px; letter-spacing:1.5px;
+  color:var(--dim); cursor:pointer; border-radius:3px;
+  transition:var(--transition); white-space:nowrap; border:1px solid transparent;
+  text-transform:uppercase;
+  display:flex; align-items:center; gap:6px;
+}
+.tb-tab:hover { color:var(--white); background:rgba(255,20,20,0.06); }
+.tb-tab.on { color:var(--red); border-color:rgba(255,20,20,0.3); background:rgba(255,20,20,0.08); }
+.tb-tab .t-ico { font-size:13px; }
+
+.tb-right { display:flex; align-items:center; gap:14px; margin-left:auto; }
+
+.tb-status-group { display:flex; align-items:center; gap:8px; }
+.tb-pulse { position:relative; width:8px; height:8px; }
+.tb-pulse-core { width:8px; height:8px; border-radius:50%; background:var(--green); display:block; position:relative; z-index:1; box-shadow:0 0 8px var(--green); }
+.tb-pulse-ring {
+  position:absolute; inset:-4px; border-radius:50%;
+  border:1px solid var(--green); opacity:0.5;
+  animation:ring 2s infinite ease-out;
+}
+@keyframes ring { 0%{transform:scale(0.6);opacity:0.8} 100%{transform:scale(2);opacity:0} }
+
+.tb-status-label { font-family:var(--font-hud); font-size:9px; letter-spacing:2px; color:var(--dim); }
+.tb-status-label span { color:var(--green); }
+
+.tb-user-chip {
+  display:flex; align-items:center; gap:8px;
+  background:rgba(255,255,255,0.04); border:1px solid var(--border);
+  border-radius:20px; padding:5px 14px 5px 8px;
+}
+.tb-avatar {
+  width:24px; height:24px; border-radius:50%;
+  background:linear-gradient(135deg, var(--red2), var(--red3));
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-brand); font-size:9px; font-weight:700; color:#fff;
+}
+.tb-uname { font-family:var(--font-hud); font-size:10px; color:var(--dim); letter-spacing:1px; }
+.tb-uname span { color:var(--white); }
+
+.btn-exit {
+  padding:6px 14px;
+  background:transparent; border:1px solid var(--border);
+  border-radius:3px; color:var(--dim);
+  font-family:var(--font-hud); font-size:9px; letter-spacing:2px;
+  cursor:pointer; transition:var(--transition);
+}
+.btn-exit:hover { border-color:var(--red); color:var(--red); box-shadow:0 0 12px rgba(255,20,20,0.15); }
+
+/* ─── BODY LAYOUT ─── */
+.shell-body { display:flex; flex:1; overflow:hidden; }
+
+/* ─── SIDEBAR ─── */
+.sidebar {
+  width:200px; flex-shrink:0;
+  background:rgba(0,0,5,0.98);
+  border-right:1px solid var(--border);
+  display:flex; flex-direction:column;
+  overflow-y:auto; padding:16px 0 24px;
+}
+
+.sb-section { margin-bottom:6px; }
+.sb-section-label {
+  font-family:var(--font-hud); font-size:8px; letter-spacing:4px;
+  color:var(--muted); padding:10px 16px 6px;
+  text-transform:uppercase;
+  border-top:1px solid rgba(255,255,255,0.03);
+  margin-top:4px;
+}
+.sb-section:first-child .sb-section-label { border-top:none; margin-top:0; }
+
+.sb-item {
+  display:flex; align-items:center; gap:10px;
+  padding:8px 16px;
+  font-family:var(--font-ui); font-weight:500; font-size:12px; letter-spacing:0.5px;
+  color:var(--dim); cursor:pointer;
+  transition:var(--transition);
+  border-left:2px solid transparent;
+  position:relative;
+}
+.sb-item:hover { color:var(--white); background:rgba(255,20,20,0.04); border-left-color:rgba(255,20,20,0.2); }
+.sb-item.on { color:var(--red); background:rgba(255,20,20,0.07); border-left-color:var(--red); }
+.sb-item.on::before {
+  content:''; position:absolute; right:0; top:20%; bottom:20%; width:1px;
+  background:var(--red); box-shadow:0 0 6px var(--red);
+}
+.sb-ico { font-size:14px; width:18px; text-align:center; flex-shrink:0; }
+.sb-badge {
+  margin-left:auto; padding:1px 7px; border-radius:10px;
+  font-family:var(--font-hud); font-size:8px; letter-spacing:1px;
+  background:rgba(255,20,20,0.2); color:var(--red); border:1px solid rgba(255,20,20,0.3);
+}
+.sb-badge.g { background:rgba(0,255,136,0.12); color:var(--green); border-color:rgba(0,255,136,0.25); }
+.sb-badge.a { background:rgba(255,170,0,0.12); color:var(--amber); border-color:rgba(255,170,0,0.25); }
+.sb-badge.c { background:rgba(0,212,255,0.1); color:var(--cyan); border-color:rgba(0,212,255,0.25); }
+
+/* ─── CONTENT ─── */
+.content { flex:1; overflow-y:auto; overflow-x:hidden; background:var(--void); padding:20px; }
+
+/* ─── VIEWS ─── */
+.view { display:none; animation:fadeIn 0.3s ease; }
+.view.on { display:block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+/* ─── PAGE HEADER ─── */
+.ph {
+  display:flex; align-items:flex-start; justify-content:space-between;
+  margin-bottom:20px; padding-bottom:16px;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.ph-left {}
+.ph-title {
+  font-family:var(--font-brand); font-size:18px; font-weight:700; letter-spacing:2px;
+  color:var(--white);
+}
+.ph-sub {
+  font-family:var(--font-hud); font-size:9px; letter-spacing:3px; color:var(--dim);
+  margin-top:5px;
+}
+.ph-right { display:flex; align-items:center; gap:10px; }
+.ph-clock { font-family:var(--font-hud); font-size:10px; color:var(--dim); letter-spacing:1px; }
+
+/* ─── GRID ─── */
+.g1 { display:grid; grid-template-columns:1fr; gap:14px; margin-bottom:14px; }
+.g2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+.g3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-bottom:14px; }
+.g4 { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:14px; }
+.g5 { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:14px; }
+.g7 { display:grid; grid-template-columns:2fr 1fr; gap:14px; margin-bottom:14px; }
+.g8 { display:grid; grid-template-columns:1fr 2fr; gap:14px; margin-bottom:14px; }
+.span2 { grid-column:span 2; }
+.span3 { grid-column:span 3; }
+
+/* ─── CARD ─── */
+.c {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  position:relative; overflow:hidden;
+}
+.c::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent 0%, rgba(255,20,20,0.25) 50%, transparent 100%);
+}
+.c.hi-red { border-color:rgba(255,20,20,0.35); }
+.c.hi-green { border-color:rgba(0,255,136,0.2); }
+.c.hi-cyan { border-color:rgba(0,212,255,0.2); }
+.c.hi-amber { border-color:rgba(255,170,0,0.2); }
+.c.hi-purple { border-color:rgba(139,68,255,0.25); }
+
+/* CARD INNER GLOW VARIANTS */
+.c.glow-red::after { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse at top, rgba(255,20,20,0.04) 0%, transparent 65%); }
+.c.glow-green::after { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse at top, rgba(0,255,136,0.03) 0%, transparent 65%); }
+.c.glow-cyan::after { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse at top, rgba(0,212,255,0.03) 0%, transparent 65%); }
+.c.glow-purple::after { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse at top, rgba(139,68,255,0.04) 0%, transparent 65%); }
+
+/* ─── CARD HEADER ─── */
+.ch {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 16px; border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.ch-left { display:flex; align-items:center; gap:8px; }
+.ch-title { font-family:var(--font-ui); font-weight:700; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--white); }
+.ch-ico { font-size:13px; }
+
+/* ─── BADGES ─── */
+.badge {
+  font-family:var(--font-hud); font-size:8px; letter-spacing:1.5px;
+  padding:2px 9px; border-radius:3px;
+}
+.bd-live { background:rgba(255,20,20,0.15); color:var(--red); border:1px solid rgba(255,20,20,0.3); }
+.bd-ok { background:rgba(0,255,136,0.1); color:var(--green); border:1px solid rgba(0,255,136,0.25); }
+.bd-warn { background:rgba(255,170,0,0.1); color:var(--amber); border:1px solid rgba(255,170,0,0.25); }
+.bd-info { background:rgba(0,212,255,0.08); color:var(--cyan); border:1px solid rgba(0,212,255,0.2); }
+.bd-purple { background:rgba(139,68,255,0.1); color:var(--purple); border:1px solid rgba(139,68,255,0.25); }
+.bd-sim { background:rgba(255,255,255,0.05); color:var(--dim); border:1px solid rgba(255,255,255,0.08); }
+
+/* ─── KPI TILES ─── */
+.kpi { padding:18px 20px; }
+.kpi-val {
+  font-family:var(--font-brand); font-size:32px; font-weight:700;
+  line-height:1; margin:4px 0 6px;
+}
+.kpi-label { font-family:var(--font-hud); font-size:8px; letter-spacing:3px; color:var(--dim); text-transform:uppercase; }
+.kpi-delta { font-family:var(--font-hud); font-size:10px; margin-top:4px; }
+.kpi .ch-title { font-size:8px; letter-spacing:3px; }
+
+.kv-red .kpi-val { color:var(--red); text-shadow:0 0 25px rgba(255,20,20,0.5); }
+.kv-green .kpi-val { color:var(--green); text-shadow:0 0 25px rgba(0,255,136,0.4); }
+.kv-cyan .kpi-val { color:var(--cyan); text-shadow:0 0 25px rgba(0,212,255,0.4); }
+.kv-amber .kpi-val { color:var(--amber); text-shadow:0 0 25px rgba(255,170,0,0.4); }
+.kv-purple .kpi-val { color:var(--purple); text-shadow:0 0 25px rgba(139,68,255,0.4); }
+.kv-white .kpi-val { color:var(--white); }
+.du { color:var(--red); }
+.dd { color:var(--green); }
+.da { color:var(--amber); }
+.dc { color:var(--cyan); }
+
+/* ─── TERMINAL ─── */
+.term {
+  background:#000;
+  border:1px solid rgba(255,20,20,0.12);
+  border-radius:4px;
+  padding:12px 14px;
+  font-family:var(--font-hud); font-size:11px; line-height:1.9;
+  overflow-y:auto;
+}
+.term::-webkit-scrollbar { width:2px; }
+.term::-webkit-scrollbar-thumb { background:rgba(255,20,20,0.2); }
+.tl { margin:0; }
+.ts { color:var(--muted); }
+.t-ok { color:var(--green); }
+.t-warn { color:var(--amber); }
+.t-crit { color:var(--red); }
+.t-info { color:var(--cyan); }
+.t-sys { color:var(--purple); }
+.t-dim { color:var(--dim); }
+.t-white { color:var(--white); }
+
+/* ─── PROGRESS ─── */
+.prog-row { margin-bottom:11px; }
+.prog-meta { display:flex; justify-content:space-between; margin-bottom:5px; font-family:var(--font-hud); font-size:10px; }
+.prog-lbl { color:var(--dim); }
+.prog-v { color:var(--white); }
+.prog-track { height:4px; background:rgba(255,255,255,0.05); border-radius:2px; overflow:hidden; position:relative; }
+.prog-fill { height:100%; border-radius:2px; transition:width 1.2s cubic-bezier(0.4,0,0.2,1); position:relative; }
+.prog-fill::after { content:''; position:absolute; right:0; top:0; bottom:0; width:4px; background:rgba(255,255,255,0.6); border-radius:2px; box-shadow:0 0 6px rgba(255,255,255,0.4); }
+.pf-red { background:linear-gradient(90deg,#660000,#ff2222); }
+.pf-green { background:linear-gradient(90deg,#004422,#00ff88); }
+.pf-cyan { background:linear-gradient(90deg,#003344,#00d4ff); }
+.pf-amber { background:linear-gradient(90deg,#442200,#ffaa00); }
+.pf-purple { background:linear-gradient(90deg,#2a0066,#8b44ff); }
+.pf-blue { background:linear-gradient(90deg,#000044,#1a44ff); }
+
+/* ─── DATA TABLE ─── */
+.dt { width:100%; border-collapse:collapse; font-size:12px; }
+.dt th {
+  font-family:var(--font-hud); font-size:8px; letter-spacing:2.5px; text-transform:uppercase;
+  color:var(--muted); text-align:left; padding:8px 14px;
+  border-bottom:1px solid var(--border);
+}
+.dt td { padding:9px 14px; border-bottom:1px solid rgba(255,255,255,0.025); color:var(--white); }
+.dt tr:last-child td { border-bottom:none; }
+.dt tr:hover td { background:rgba(255,20,20,0.03); }
+.dm { font-family:var(--font-hud); font-size:11px; }
+.dr { color:var(--red); }
+.dg { color:var(--green); }
+.da { color:var(--amber); }
+.dc { color:var(--cyan); }
+.dp { color:var(--purple); }
+.dw { color:var(--white); }
+
+/* ─── PILLS ─── */
+.pill { display:inline-block; padding:2px 9px; border-radius:10px; font-family:var(--font-hud); font-size:8px; letter-spacing:1px; font-weight:700; }
+.p-crit { background:rgba(255,20,20,0.2); color:var(--red); border:1px solid rgba(255,20,20,0.4); }
+.p-high { background:rgba(255,100,0,0.15); color:#ff6600; border:1px solid rgba(255,100,0,0.3); }
+.p-med { background:rgba(255,170,0,0.12); color:var(--amber); border:1px solid rgba(255,170,0,0.3); }
+.p-low { background:rgba(0,255,136,0.08); color:var(--green); border:1px solid rgba(0,255,136,0.2); }
+.p-info { background:rgba(0,212,255,0.08); color:var(--cyan); border:1px solid rgba(0,212,255,0.2); }
+.p-purple { background:rgba(139,68,255,0.12); color:var(--purple); border:1px solid rgba(139,68,255,0.3); }
+.p-ok { background:rgba(0,255,136,0.08); color:var(--green); border:1px solid rgba(0,255,136,0.2); }
+
+/* ─── HEATMAP ─── */
+.hmap { display:grid; grid-template-columns:repeat(5,1fr); gap:5px; }
+.hm-cell {
+  padding:8px 4px; border-radius:3px; font-family:var(--font-hud); font-size:8px;
+  text-align:center; cursor:pointer; transition:var(--transition);
+  border:1px solid transparent; line-height:1.4;
+}
+.hm-cell:hover { transform:scale(1.08); z-index:10; position:relative; }
+.h0 { background:rgba(255,20,20,0.04); color:#2a2a3a; }
+.h1 { background:rgba(255,20,20,0.1); color:#884444; }
+.h2 { background:rgba(255,20,20,0.2); color:#cc6666; }
+.h3 { background:rgba(255,20,20,0.35); color:#ee9999; }
+.h4 { background:rgba(255,20,20,0.52); color:#ffbbbb; }
+.h5 { background:rgba(255,20,20,0.72); color:#fff; border-color:rgba(255,80,80,0.5); }
+
+/* ─── NODE GRAPH (architecture) ─── */
+.arch-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  padding:16px;
+}
+.arch-node {
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:14px;
+  text-align:center;
+  cursor:pointer;
+  transition:var(--transition);
+  position:relative;
+}
+.arch-node:hover { border-color:var(--border3); background:rgba(255,20,20,0.06); transform:translateY(-2px); }
+.arch-node.active-node { border-color:var(--red); background:rgba(255,20,20,0.08); box-shadow:0 0 20px rgba(255,20,20,0.15); }
+.an-ico { font-size:24px; margin-bottom:8px; }
+.an-name { font-family:var(--font-ui); font-weight:700; font-size:12px; margin-bottom:4px; }
+.an-desc { font-family:var(--font-hud); font-size:9px; color:var(--dim); line-height:1.5; }
+.an-status { margin-top:8px; font-family:var(--font-hud); font-size:8px; letter-spacing:1px; }
+.an-conn {
+  position:absolute; top:-1px; left:50%; transform:translateX(-50%);
+  width:2px; height:12px; background:linear-gradient(180deg, transparent, var(--red));
+}
+
+/* ─── GAUGE RING ─── */
+.gauge-wrap { display:flex; flex-direction:column; align-items:center; padding:10px; }
+.gauge-svg { width:100px; height:100px; }
+.gauge-label { font-family:var(--font-hud); font-size:9px; letter-spacing:2px; color:var(--dim); margin-top:6px; text-align:center; }
+.gauge-val { font-family:var(--font-brand); font-size:18px; font-weight:700; }
+
+/* ─── MAP WRAPPER ─── */
+.map-wrap {
+  position:relative; width:100%;
+  border-radius:6px; overflow:hidden;
+  border:1px solid var(--border);
+}
+.map-frame { width:100%; height:520px; border:none; display:block; background:#000; }
+.map-hud {
+  position:absolute; top:0; left:0; right:0; padding:10px 16px;
+  background:linear-gradient(180deg, rgba(0,0,5,0.95) 0%, transparent 100%);
+  display:flex; align-items:center; gap:14px; pointer-events:none;
+}
+.map-live { display:flex; align-items:center; gap:7px; font-family:var(--font-hud); font-size:9px; color:var(--red); letter-spacing:2px; }
+.map-live-dot { width:7px; height:7px; border-radius:50%; background:var(--red); box-shadow:0 0 8px var(--red); animation:blink 1.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+/* ─── MODULE CARDS ─── */
+.mod-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.mod-card {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:6px; padding:20px;
+  cursor:pointer; transition:var(--transition);
+  position:relative; overflow:hidden;
+}
+.mod-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:var(--mc-color, var(--red));
+  transform:scaleX(0); transition:transform 0.25s ease; transform-origin:left;
+}
+.mod-card:hover { border-color:rgba(255,30,30,0.4); transform:translateY(-3px); box-shadow:0 12px 40px rgba(0,0,0,0.5); }
+.mod-card:hover::before { transform:scaleX(1); }
+.mod-ico { font-size:26px; margin-bottom:12px; }
+.mod-name { font-family:var(--font-ui); font-weight:700; font-size:14px; letter-spacing:0.5px; margin-bottom:6px; }
+.mod-desc { font-size:11px; color:var(--dim); line-height:1.7; }
+.mod-footer { margin-top:14px; display:flex; align-items:center; gap:8px; }
+
+/* ─── INVEST METRIC ─── */
+.im { display:flex; align-items:center; gap:14px; padding:12px 16px; border-bottom:1px solid rgba(255,255,255,0.03); }
+.im:last-child { border-bottom:none; }
+.im-ico { font-size:18px; width:28px; text-align:center; flex-shrink:0; }
+.im-label { flex:1; font-size:12px; color:var(--dim); }
+.im-val { font-family:var(--font-hud); font-size:13px; font-weight:700; }
+
+/* ─── QUANTUM VIZ ─── */
+.q-matrix {
+  display:grid; grid-template-columns:repeat(8,1fr); gap:3px; padding:16px;
+}
+.q-cell {
+  aspect-ratio:1;
+  border-radius:2px;
+  transition:var(--transition);
+  cursor:pointer;
+}
+.q-cell:hover { transform:scale(1.3); }
+
+/* ─── FOOTER ─── */
+.footer-bar {
+  height:26px; flex-shrink:0;
+  background:rgba(0,0,3,0.98);
+  border-top:1px solid var(--border);
+  display:flex; align-items:center;
+  padding:0 18px; gap:0;
+}
+.fb-items { display:flex; align-items:center; gap:20px; width:100%; }
+.fb-item { font-family:var(--font-hud); font-size:8px; letter-spacing:2px; color:var(--muted); display:flex; align-items:center; gap:6px; }
+.fb-sep { color:rgba(255,20,20,0.2); }
+.fb-dot { width:5px; height:5px; border-radius:50%; }
+.fb-dot-g { background:var(--green); box-shadow:0 0 5px var(--green); }
+.fb-dot-r { background:var(--red); box-shadow:0 0 5px var(--red); }
+.fb-dot-a { background:var(--amber); box-shadow:0 0 5px var(--amber); }
+.fb-link { color:rgba(255,80,80,0.5); text-decoration:none; }
+.fb-link:hover { color:var(--red); }
+.fb-clock-r { margin-left:auto; font-family:var(--font-hud); font-size:8px; letter-spacing:2px; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ LOGIN ═══════════════════ -->
+<div id="login">
+  <div class="login-grid-bg"></div>
+  <div class="login-corner tl"></div>
+  <div class="login-corner tr"></div>
+  <div class="login-corner bl"></div>
+  <div class="login-corner br"></div>
+
+  <div class="login-header">
+    <div class="login-eyebrow">SECURE PLATFORM ACCESS</div>
+    <div class="login-logo-text">ATOM</div>
+    <div class="login-tagline">AUTONOMOUS THREAT OPERATIONS MATRIX · POST-QUANTUM CYBERSECURITY ENGINE</div>
+  </div>
+
+  <div class="login-box">
+    <label class="lf-label">ACCESS IDENTIFIER</label>
+    <input class="lf-input" id="inp-u" type="text" placeholder="user@nirmata.io" autocomplete="off"/>
+    <label class="lf-label">SECURITY PASSPHRASE</label>
+    <input class="lf-input" id="inp-p" type="password" placeholder="••••••••••••••••"/>
+    <button class="btn-auth" onclick="doLogin()">▶ &nbsp; INITIALIZE SECURE SESSION</button>
+    <div class="login-err" id="lerr"></div>
+    <div class="login-footer-txt">
+      PROTECTED BY ANTIMATTER AI · CRYSTALS-KYBER PQC ENCRYPTION<br/>
+      ALL ACCESS LOGGED · 18 U.S.C. § 1030 ENFORCED
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ PLATFORM ═══════════════════ -->
+<div id="platform">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="tb-brand">
+      <div>
+        <div class="tb-logo">⚛ ATOM</div>
+        <div class="tb-subtitle">NIRMATA HOLDINGS<br/>RED TEAM ENGINE</div>
+      </div>
+    </div>
+    <nav class="tb-nav">
+      <div class="tb-tab on" data-v="command" onclick="nav(this)"><span class="t-ico">🏠</span>Command</div>
+      <div class="tb-tab" data-v="threatmap" onclick="nav(this)"><span class="t-ico">🗺️</span>Threat Map</div>
+      <div class="tb-tab" data-v="architecture" onclick="nav(this)"><span class="t-ico">🏗️</span>Architecture</div>
+      <div class="tb-tab" data-v="quantum" onclick="nav(this)"><span class="t-ico">⚛️</span>Quantum PQC</div>
+      <div class="tb-tab" data-v="redteam" onclick="nav(this)"><span class="t-ico">🎯</span>Red Team</div>
+      <div class="tb-tab" data-v="intelligence" onclick="nav(this)"><span class="t-ico">🧠</span>Intelligence</div>
+      <div class="tb-tab" data-v="investor" onclick="nav(this)"><span class="t-ico">📈</span>Investor</div>
+      <div class="tb-tab" data-v="devhub" onclick="nav(this)"><span class="t-ico">⚙️</span>Dev Hub</div>
+    </nav>
+    <div class="tb-right">
+      <div class="tb-status-group">
+        <div class="tb-pulse"><span class="tb-pulse-core"></span><span class="tb-pulse-ring"></span></div>
+        <div class="tb-status-label">THREAT ENGINE <span>LIVE</span></div>
+      </div>
+      <div class="tb-user-chip">
+        <div class="tb-avatar" id="tb-av">—</div>
+        <div class="tb-uname">SESSION: <span id="tb-un">—</span></div>
+      </div>
+      <button class="btn-exit" onclick="doLogout()">⏻ EXIT</button>
+    </div>
+  </header>
+
+  <div class="shell-body">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sb-section">
+        <div class="sb-section-label">Command</div>
+        <div class="sb-item on" data-v="command" onclick="snav(this)"><span class="sb-ico">🏠</span>Command Center</div>
+        <div class="sb-item" data-v="threatmap" onclick="snav(this)"><span class="sb-ico">🗺️</span>Live Threat Map <span class="sb-badge">LIVE</span></div>
+      </div>
+      <div class="sb-section">
+        <div class="sb-section-label">Security Engine</div>
+        <div class="sb-item" data-v="architecture" onclick="snav(this)"><span class="sb-ico">🏗️</span>Architecture</div>
+        <div class="sb-item" data-v="quantum" onclick="snav(this)"><span class="sb-ico">⚛️</span>Quantum PQC</div>
+        <div class="sb-item" data-v="redteam" onclick="snav(this)"><span class="sb-ico">🎯</span>Red Team Sim</div>
+        <div class="sb-item" data-v="intelligence" onclick="snav(this)"><span class="sb-ico">🧠</span>AI Intelligence <span class="sb-badge a">3</span></div>
+      </div>
+      <div class="sb-section">
+        <div class="sb-section-label">Platform</div>
+        <div class="sb-item" data-v="investor" onclick="snav(this)"><span class="sb-ico">📈</span>Investor Hub</div>
+        <div class="sb-item" data-v="devhub" onclick="snav(this)"><span class="sb-ico">⚙️</span>Dev Hub</div>
+        <div class="sb-item" data-v="devhub" onclick="snav(this)"><span class="sb-ico">🔌</span>API Gateway <span class="sb-badge c">48</span></div>
+      </div>
+      <div class="sb-section">
+        <div class="sb-section-label">Portfolio</div>
+        <div class="sb-item"><span class="sb-ico">🧬</span>AntimatterAI</div>
+        <div class="sb-item"><span class="sb-ico">🧠</span>ThingkTangk</div>
+        <div class="sb-item"><span class="sb-ico">🔬</span>RRG.bio</div>
+        <div class="sb-item"><span class="sb-ico">🏥</span>ClinixAI</div>
+      </div>
+      <div class="sb-section">
+        <div class="sb-section-label">System</div>
+        <div class="sb-item"><span class="sb-ico">🔑</span>Access Control</div>
+        <div class="sb-item"><span class="sb-ico">📋</span>Audit Log</div>
+        <div class="sb-item"><span class="sb-ico">⚙️</span>Settings</div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+
+      <!-- ▓▓▓ COMMAND CENTER ▓▓▓ -->
+      <div class="view on" id="v-command">
+        <div class="ph">
+          <div class="ph-left">
+            <div class="ph-title">COMMAND CENTER</div>
+            <div class="ph-sub">AUTONOMOUS THREAT OPERATIONS MATRIX · REAL-TIME TELEMETRY</div>
+          </div>
+          <div class="ph-right">
+            <span class="badge bd-live">● SYSTEM LIVE</span>
+            <div class="ph-clock" id="clk1">—</div>
+          </div>
+        </div>
+
+        <!-- KPI Row -->
+        <div class="g5">
+          <div class="c hi-red glow-red kpi kv-red">
+            <div class="ch-title">THREATS BLOCKED</div>
+            <div class="kpi-val" id="kp1">0</div>
+            <div class="kpi-delta du" id="kp1d">↑ Loading...</div>
+          </div>
+          <div class="c hi-amber kpi kv-amber">
+            <div class="ch-title">ACTIVE INCIDENTS</div>
+            <div class="kpi-val" id="kp2">0</div>
+            <div class="kpi-delta du">↑ +2 escalated</div>
+          </div>
+          <div class="c hi-green glow-green kpi kv-green">
+            <div class="ch-title">SYSTEMS ONLINE</div>
+            <div class="kpi-val" id="kp3">0</div>
+            <div class="kpi-delta dd">↓ 0 degraded</div>
+          </div>
+          <div class="c hi-cyan glow-cyan kpi kv-cyan">
+            <div class="ch-title">AVG MTTR</div>
+            <div class="kpi-val" id="kp4">—</div>
+            <div class="kpi-delta dd">↓ −34ms vs yesterday</div>
+          </div>
+          <div class="c hi-purple glow-purple kpi kv-purple">
+            <div class="ch-title">PQC KEY ROTATIONS</div>
+            <div class="kpi-val" id="kp5">0</div>
+            <div class="kpi-delta dc">↑ KYBER-1024</div>
+          </div>
+        </div>
+
+        <div class="g2">
+          <!-- Defense Log -->
+          <div class="c hi-red">
+            <div class="ch">
+              <div class="ch-left"><span class="ch-ico">⚡</span><span class="ch-title">Live Defense Log</span></div>
+              <div class="badge bd-live">● LIVE</div>
+            </div>
+            <div class="term" id="def-log" style="height:220px;margin:12px;"></div>
+          </div>
+          <!-- MITRE Heatmap -->
+          <div class="c">
+            <div class="ch">
+              <div class="ch-left"><span class="ch-ico">🎯</span><span class="ch-title">MITRE ATLAS Heatmap</span></div>
+              <div class="badge bd-warn">LAST 60 MIN</div>
+            </div>
+            <div style="padding:12px;">
+              <div class="hmap" id="hmap1"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="g2">
+          <!-- Top Targeted APIs -->
+          <div class="c">
+            <div class="ch">
+              <div class="ch-left"><span class="ch-ico">🤖</span><span class="ch-title">Top Targeted AI APIs</span></div>
+              <div class="badge bd-live">LIVE</div>
+            </div>
+            <div style="padding:12px;" id="api-tgt"></div>
+          </div>
+          <!-- System Health -->
+          <div class="c hi-green glow-green">
+            <div class="ch">
+              <div class="ch-left"><span class="ch-ico">💊</span><span class="ch-title">System Health</span></div>
+              <div class="badge bd-ok">ALL NOMINAL</div>
+            </div>
+            <div style="padding:12px;" id="health-bars"></div>
+          </div>
+        </div>
+
+        <!-- Active Incidents -->
+        <div class="c" style="margin-bottom:14px;">
+          <div class="ch">
+            <div class="ch-left"><span class="ch-ico">📋</span><span class="ch-title">Active Incident Queue</span></div>
+            <div class="badge bd-live">LIVE FEED</div>
+          </div>
+          <table class="dt">
+            <thead><tr><th>ID</th><th>Time</th><th>Vector</th><th>Target</th><th>Severity</th><th>Status</th><th>MTTR</th></tr></thead>
+            <tbody id="inc-tb"></tbody>
+          </table>
+        </div>
+
+        <div class="g2">
+          <!-- Attack vectors -->
+          <div class="c">
+            <div class="ch">
+              <div class="ch-left"><span class="ch-ico">🔥</span><span class="ch-title">Attack Vector Breakdown</span></div>
+            </div>
+            <div style="padding:12px;" id="vec-bars"></div>
+          </div>
+          <!-- Ops Log -->
+          <div class="c">
+            <div class="ch">
+              <div class="ch-left"><span class="ch-ico">📡</span><span class="ch-title">Response Actions</span></div>
+              <div class="badge bd-live">LIVE</div>
+            </div>
+            <div class="term" id="ops-log" style="height:180px;margin:12px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ▓▓▓ THREAT MAP ▓▓▓ -->
+      <div class="view" id="v-threatmap">
+        <div class="ph">
+          <div class="ph-left">
+            <div class="ph-title">LIVE THREAT MAP</div>
+            <div class="ph-sub">ATOM RED TEAM · GLOBAL ATTACK TELEMETRY</div>
+          </div>
+          <div class="ph-right">
+            <span class="badge bd-live">● ATOM LIVE</span>
+            <div class="ph-clock" id="clk2">—</div>
+          </div>
+        </div>
+
+        <div class="map-wrap" style="margin-bottom:14px;">
+          <iframe class="map-frame" src="https://www.antimatterai.com/demos/atom-red-team"
+            sandbox="allow-scripts allow-same-origin allow-forms" loading="lazy"></iframe>
+          <div class="map-hud">
+            <div class="map-live"><div class="map-live-dot"></div>ATOM RED TEAM · LIVE DETECTION</div>
+          </div>
+        </div>
+
+        <div class="g4">
+          <div class="c hi-red kpi kv-red"><div class="ch-title">CRITICAL</div><div class="kpi-val" id="mc1">0</div><div class="kpi-delta du">P0 threats</div></div>
+          <div class="c hi-amber kpi kv-amber"><div class="ch-title">HIGH SEV</div><div class="kpi-val" id="mc2">0</div><div class="kpi-delta da">P1 threats</div></div>
+          <div class="c hi-cyan kpi kv-cyan"><div class="ch-title">TOTAL ATTACKS</div><div class="kpi-val" id="mc3">0</div><div class="kpi-delta dc">cumulative</div></div>
+          <div class="c hi-green kpi kv-green"><div class="ch-title">BLOCKED RATE</div><div class="kpi-val">99.8%</div><div class="kpi-delta dd">ATOM engine</div></div>
+        </div>
+
+        <div class="g2">
+          <div class="c hi-purple glow-purple">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">⚛️</span><span class="ch-title">PQC Engine Status</span></div><div class="badge bd-purple">LATTICE-BASED</div></div>
+            <div style="padding:12px;" id="pqc-bars"></div>
+          </div>
+          <div class="c">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">🎯</span><span class="ch-title">MITRE ATLAS</span></div><div class="badge bd-warn">ATLAS + QUANTUM</div></div>
+            <div style="padding:12px;"><div class="hmap" id="hmap2"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ▓▓▓ ARCHITECTURE ▓▓▓ -->
+      <div class="view" id="v-architecture">
+        <div class="ph">
+          <div class="ph-left">
+            <div class="ph-title">PLATFORM ARCHITECTURE</div>
+            <div class="ph-sub">ATOM ENGINE · SYSTEM TOPOLOGY · NIRMATA HOLDINGS</div>
+          </div>
+          <div class="ph-right"><span class="badge bd-info">v3.2.1 STABLE</span></div>
+        </div>
+
+        <div class="g2" style="margin-bottom:14px;">
+          <div class="c hi-cyan glow-cyan">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">🏗️</span><span class="ch-title">Core Engine Topology</span></div><div class="badge bd-info">LIVE</div></div>
+            <div class="arch-grid">
+              <div class="arch-node active-node"><div class="an-ico">⚛️</div><div class="an-name">ATOM Core</div><div class="an-desc">Autonomous threat detection kernel</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
+              <div class="arch-node"><div class="an-ico">🛡️</div><div class="an-name">Red Team Sim</div><div class="an-desc">Adversarial attack orchestration</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
+              <div class="arch-node"><div class="an-ico">🔑</div><div class="an-name">PQC Auth Layer</div><div class="an-desc">Kyber-1024 key exchange</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
+              <div class="arch-node"><div class="an-ico">🧠</div><div class="an-name">AI Decision Engine</div><div class="an-desc">LLM-native defense scoring</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
+              <div class="arch-node"><div class="an-ico">📡</div><div class="an-name">Telemetry Bus</div><div class="an-desc">WebSocket + gRPC streams</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
+              <div class="arch-node"><div class="an-ico">☁️</div><div class="an-name">Linode GPU Cluster</div><div class="an-desc">Akamai edge inference nodes</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
+              <div class="arch-node"><div class="an-ico">🔌</div><div class="an-name">API Gateway</div><div class="an-desc">48 endpoints / rate limiting</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
+              <div class="arch-node"><div class="an-ico">🗄️</div><div class="an-name">Vector DB</div><div class="an-desc">Threat embedding store (Pinecone)</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
+              <div class="arch-node"><div class="an-ico">📊</div><div class="an-name">Analytics Engine</div><div class="an-desc">Real-time MITRE mapping + scoring</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
+            </div>
+          </div>
+
+          <div class="c" style="display:flex;flex-direction:column;gap:14px;">
+            <div class="c hi-red glow-red" style="box-shadow:none;">
+              <div class="ch"><div class="ch-left"><span class="ch-ico">📶</span><span class="ch-title">Service Health</span></div><div class="badge bd-ok">ALL NOMINAL</div></div>
+              <div style="padding:12px;" id="arch-health"></div>
+            </div>
+            <div class="c hi-green">
+              <div class="ch"><div class="ch-left"><span class="ch-ico">⚡</span><span class="ch-title">API Throughput</span></div></div>
+              <div style="padding:12px;" id="arch-api"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="g3">
+          <div class="c hi-purple">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">🔄</span><span class="ch-title">Data Flow</span></div></div>
+            <div class="term" id="arch-log" style="height:160px;margin:12px;"></div>
+          </div>
+          <div class="c hi-cyan">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">🖥️</span><span class="ch-title">Infrastructure</span></div></div>
+            <div style="padding:12px;">
+              <div id="infra-bars"></div>
+            </div>
+          </div>
+          <div class="c hi-amber">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">📦</span><span class="ch-title">SDK Packages</span></div></div>
+            <div class="term" style="height:160px;margin:12px;">
+              <p class="tl"><span class="t-info"># TypeScript</span></p>
+              <p class="tl"><span class="t-ok">npm</span> <span class="t-dim">i @nirmata/dtom-sdk</span></p>
+              <p class="tl"><span class="t-ok">npm</span> <span class="t-dim">i @antimatterai/atom</span></p>
+              <p class="tl">&nbsp;</p>
+              <p class="tl"><span class="t-info"># Python</span></p>
+              <p class="tl"><span class="t-ok">pip</span> <span class="t-dim">install nirmata-dtom</span></p>
+              <p class="tl"><span class="t-ok">pip</span> <span class="t-dim">install antimatterai-atom</span></p>
+              <p class="tl">&nbsp;</p>
+              <p class="tl"><span class="t-info"># Docker</span></p>
+              <p class="tl"><span class="t-ok">docker</span> <span class="t-dim">pull nirmata/atom:3.2.1</span></p>
+              <p class="tl">&nbsp;</p>
+              <p class="tl"><span class="t-sys">docs.nirmata.io/atom</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ▓▓▓ QUANTUM PQC ▓▓▓ -->
+      <div class="view" id="v-quantum">
+        <div class="ph">
+          <div class="ph-left">
+            <div class="ph-title">QUANTUM PQC ENGINE</div>
+            <div class="ph-sub">POST-QUANTUM CRYPTOGRAPHY · NIST PQC STANDARDS · LATTICE DEFENSE</div>
+          </div>
+          <div class="ph-right"><span class="badge bd-purple">CRYSTALS-KYBER ACTIVE</span></div>
+        </div>
+
+        <div class="g4">
+          <div class="c hi-purple glow-purple kpi kv-purple"><div class="ch-title">KEY ROTATIONS / HR</div><div class="kpi-val">22K</div><div class="kpi-delta dc">↑ Kyber-1024</div></div>
+          <div class="c hi-cyan glow-cyan kpi kv-cyan"><div class="ch-title">QUANTUM THREAT SCORE</div><div class="kpi-val" id="qts">0</div><div class="kpi-delta">/ 100</div></div>
+          <div class="c hi-green glow-green kpi kv-green"><div class="ch-title">LATTICE INTEGRITY</div><div class="kpi-val">100%</div><div class="kpi-delta dd">NTRU + Dilithium</div></div>
+          <div class="c hi-red kpi kv-red"><div class="ch-title">HARVEST ATTACKS</div><div class="kpi-val" id="harv">0</div><div class="kpi-delta du">↑ Blocked</div></div>
+        </div>
+
+        <div class="g2">
+          <div class="c hi-purple glow-purple">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">🔐</span><span class="ch-title">PQC Algorithm Suite</span></div><div class="badge bd-purple">NIST APPROVED</div></div>
+            <div style="padding:12px;">
+              <div id="pqc-algo-bars"></div>
+            </div>
+          </div>
+          <div class="c hi-cyan">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">⚛️</span><span class="ch-title">Quantum Threat Matrix</span></div><div class="badge bd-warn">LIVE</div></div>
+            <div style="padding:12px;">
+              <div class="q-matrix" id="q-matrix"></div>
+              <div style="margin-top:10px;font-family:var(--font-hud);font-size:9px;color:var(--dim);letter-spacing:2px;">ENTANGLEMENT DISRUPTION PATTERN · 64-NODE LATTICE</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="g3">
+          <div class="c hi-purple">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">🗝️</span><span class="ch-title">Key Exchange Log</span></div><div class="badge bd-live">LIVE</div></div>
+            <div class="term" id="pqc-log" style="height:180px;margin:12px;"></div>
+          </div>
+          <div class="c">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">📊</span><span class="ch-title">Cipher Performance</span></div></div>
+            <div style="padding:12px;" id="cipher-bars"></div>
+          </div>
+          <div class="c hi-red">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">🚨</span><span class="ch-title">Harvest-Now-Decrypt-Later</span></div><div class="badge bd-live">MONITOR</div></div>
+            <table class="dt" style="font-size:11px;">
+              <thead><tr><th>Vector</th><th>Risk</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>RSA-2048 Legacy</td><td><span class="pill p-crit">CRITICAL</span></td><td class="dg dm">MIGRATING</td></tr>
+                <tr><td>ECDH P-256</td><td><span class="pill p-high">HIGH</span></td><td class="da dm">HYBRID</td></tr>
+                <tr><td>TLS 1.3 Hybrid</td><td><span class="pill p-med">MED</span></td><td class="dg dm">PATCHED</td></tr>
+                <tr><td>Kyber-1024 PQC</td><td><span class="pill p-low">SAFE</span></td><td class="dg dm">ACTIVE</td></tr>
+                <tr><td>Dilithium Sig</td><td><span class="pill p-low">SAFE</span></td><td class="dg dm">ACTIVE</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ▓▓▓ RED TEAM ▓▓▓ -->
+      <div class="view" id="v-redteam">
+        <div class="ph">
+          <div class="ph-left">
+            <div class="ph-title">RED TEAM SIMULATOR</div>
+            <div class="ph-sub">ADVERSARIAL AI TESTING · MITRE ATLAS FRAMEWORK · AUTONOMOUS ATTACK CHAINS</div>
+          </div>
+          <div class="ph-right"><span class="badge bd-live">● SIM ACTIVE</span></div>
+        </div>
+
+        <div class="g4">
+          <div class="c hi-red kpi kv-red"><div class="ch-title">OPEN P0</div><div class="kpi-val" id="r-p0">2</div><div class="kpi-delta du">critical incidents</div></div>
+          <div class="c hi-amber kpi kv-amber"><div class="ch-title">OPEN P1</div><div class="kpi-val" id="r-p1">7</div><div class="kpi-delta da">high incidents</div></div>
+          <div class="c hi-green kpi kv-green"><div class="ch-title">RESOLVED TODAY</div><div class="kpi-val" id="r-res">0</div><div class="kpi-delta dd">auto-contained</div></div>
+          <div class="c hi-cyan kpi kv-cyan"><div class="ch-title">MEAN RESPONSE</div><div class="kpi-val">92ms</div><div class="kpi-delta dc">ATOM engine</div></div>
+        </div>
+
+        <div class="c" style="margin-bottom:14px;">
+          <div class="ch"><div class="ch-left"><span class="ch-ico">📋</span><span class="ch-title">Active Incident Queue</span></div><div class="badge bd-live">LIVE</div></div>
+          <table class="dt">
+            <thead><tr><th>ID</th><th>Time</th><th>Attack Vector</th><th>Target</th><th>Severity</th><th>Status</th><th>MTTR</th></tr></thead>
+            <tbody id="rt-inc"></tbody>
+          </table>
+        </div>
+
+        <div class="g2">
+          <div class="c">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">🎯</span><span class="ch-title">MITRE ATLAS Full Map</span></div><div class="badge bd-warn">LIVE</div></div>
+            <div style="padding:12px;"><div class="hmap" id="hmap3"></div></div>
+          </div>
+          <div class="c hi-red">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">🤖</span><span class="ch-title">Attack Chain Simulator</span></div><div class="badge bd-live">LIVE</div></div>
+            <div class="term" id="rt-log" style="height:200px;margin:12px;"></div>
+          </div>
+        </div>
+
+        <div class="g3">
+          <div class="c hi-amber">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">🔥</span><span class="ch-title">Vector Breakdown</span></div></div>
+            <div style="padding:12px;" id="rt-vec"></div>
+          </div>
+          <div class="c hi-cyan">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">📊</span><span class="ch-title">Attack Origins</span></div></div>
+            <div style="padding:12px;" id="rt-orig"></div>
+          </div>
+          <div class="c">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">📡</span><span class="ch-title">Response Actions</span></div><div class="badge bd-live">LIVE</div></div>
+            <div class="term" id="rt-resp" style="height:160px;margin:12px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ▓▓▓ INTELLIGENCE ▓▓▓ -->
+      <div class="view" id="v-intelligence">
+        <div class="ph">
+          <div class="ph-left">
+            <div class="ph-title">AI INTELLIGENCE HUB</div>
+            <div class="ph-sub">THREAT INTELLIGENCE · IOC FEEDS · AUTONOMOUS REASONING ENGINE</div>
+          </div>
+          <div class="ph-right"><span class="badge bd-info">3,841 NEW IOCs</span></div>
+        </div>
+
+        <div class="g4">
+          <div class="c hi-cyan kpi kv-cyan"><div class="ch-title">IOC DATABASE</div><div class="kpi-val">842K</div><div class="kpi-delta dc">↑ +3,841 today</div></div>
+          <div class="c hi-red kpi kv-red"><div class="ch-title">ACTIVE THREAT ACTORS</div><div class="kpi-val">14</div><div class="kpi-delta du">↑ tracked</div></div>
+          <div class="c hi-amber kpi kv-amber"><div class="ch-title">AI CONFIDENCE</div><div class="kpi-val">97.4%</div><div class="kpi-delta da">avg detection</div></div>
+          <div class="c hi-green kpi kv-green"><div class="ch-title">FEED SOURCES</div><div class="kpi-val">38</div><div class="kpi-delta dd">live intel feeds</div></div>
+        </div>
+
+        <div class="g2">
+          <div class="c hi-cyan glow-cyan">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">🧠</span><span class="ch-title">Threat Actor Profiles</span></div><div class="badge bd-live">LIVE</div></div>
+            <table class="dt">
+              <thead><tr><th>Actor</th><th>Category</th><th>Last Seen</th><th>Targets</th><th>Confidence</th></tr></thead>
+              <tbody>
+                <tr><td class="dc dm">APT-SHADOW-42</td><td>LLM Adversary</td><td class="dm t-warn">4 min ago</td><td>GPT APIs</td><td><span class="pill p-crit">99.1%</span></td></tr>
+                <tr><td class="dc dm">RED-QUBIT-9</td><td>PQC Harvester</td><td class="dm t-warn">12 min ago</td><td>RSA Legacy</td><td><span class="pill p-high">96.8%</span></td></tr>
+                <tr><td class="dc dm">NEURALRIFT-X</td><td>RAG Poisoner</td><td class="dm">1 hr ago</td><td>Azure OpenAI</td><td><span class="pill p-med">91.2%</span></td></tr>
+                <tr><td class="dc dm">AGENTFORK-3</td><td>Agent Hijacker</td><td class="dm">2 hr ago</td><td>Claude APIs</td><td><span class="pill p-med">88.5%</span></td></tr>
+                <tr><td class="dc dm">PHANTOMLLM</td><td>Jailbreak Bot</td><td class="dm">6 hr ago</td><td>OSS Models</td><td><span class="pill p-low">82.0%</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="c hi-red">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">⚡</span><span class="ch-title">Live Intel Stream</span></div><div class="badge bd-live">LIVE</div></div>
+            <div class="term" id="intel-log" style="height:220px;margin:12px;"></div>
+          </div>
+        </div>
+
+        <div class="g3">
+          <div class="c hi-amber">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">📊</span><span class="ch-title">IOC Category Distribution</span></div></div>
+            <div style="padding:12px;" id="ioc-bars"></div>
+          </div>
+          <div class="c">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">🌐</span><span class="ch-title">Top Attack Geographies</span></div></div>
+            <table class="dt" style="font-size:11px;">
+              <thead><tr><th>Origin</th><th>Attacks</th><th>Type</th></tr></thead>
+              <tbody>
+                <tr><td>🇷🇺 Eastern EU</td><td class="dm dr">28%</td><td>LLM injection</td></tr>
+                <tr><td>🌐 TOR/Anonymous</td><td class="dm da">22%</td><td>Multi-vector</td></tr>
+                <tr><td>🇨🇳 East Asia</td><td class="dm da">18%</td><td>PQC harvest</td></tr>
+                <tr><td>🇺🇸 US (rogue)</td><td class="dm dc">14%</td><td>Agent hijack</td></tr>
+                <tr><td>🌍 Rest of World</td><td class="dm dg">18%</td><td>Mixed</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="c hi-purple">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">🔮</span><span class="ch-title">Predictive Threat Score</span></div></div>
+            <div style="padding:12px;" id="pred-bars"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ▓▓▓ INVESTOR HUB ▓▓▓ -->
+      <div class="view" id="v-investor">
+        <div class="ph">
+          <div class="ph-left">
+            <div class="ph-title">INVESTOR HUB</div>
+            <div class="ph-sub">NIRMATA HOLDINGS · PORTFOLIO INTELLIGENCE · SERIES A</div>
+          </div>
+          <div class="ph-right"><span class="badge bd-ok">SERIES A ROUND OPEN</span></div>
+        </div>
+
+        <div class="g4">
+          <div class="c hi-green glow-green kpi kv-green"><div class="ch-title">PORTFOLIO VALUATION</div><div class="kpi-val">$47M</div><div class="kpi-delta dd">↑ +18% QoQ</div></div>
+          <div class="c hi-cyan glow-cyan kpi kv-cyan"><div class="ch-title">RAISE TARGET</div><div class="kpi-val">$12M</div><div class="kpi-delta dc">$4.2M committed</div></div>
+          <div class="c hi-amber kpi kv-amber"><div class="ch-title">TOTAL ARR</div><div class="kpi-val">$1.53M</div><div class="kpi-delta da">↑ across portfolio</div></div>
+          <div class="c hi-purple glow-purple kpi kv-purple"><div class="ch-title">PORTFOLIO COS.</div><div class="kpi-val">4</div><div class="kpi-delta dc">active companies</div></div>
+        </div>
+
+        <div class="g2">
+          <div class="c">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">📊</span><span class="ch-title">Portfolio Companies</span></div><div class="badge bd-ok">4 ACTIVE</div></div>
+            <table class="dt">
+              <thead><tr><th>Company</th><th>Vertical</th><th>Stage</th><th>ARR</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>⚛️ AntimatterAI</td><td class="dc">AI Security</td><td><span class="pill p-high">SEED+</span></td><td class="dg dm">$840K</td><td><span class="pill p-ok">GROWING</span></td></tr>
+                <tr><td>🧠 ThingkTangk</td><td class="dc">HumanOS/AI</td><td><span class="pill p-high">SEED</span></td><td class="dg dm">$220K</td><td><span class="pill p-ok">ACTIVE</span></td></tr>
+                <tr><td>🔬 RRG.bio</td><td class="dc">BioTech</td><td><span class="pill p-med">PRE-SEED</span></td><td class="da dm">$80K</td><td><span class="pill p-med">R&D</span></td></tr>
+                <tr><td>🏥 ClinixAI</td><td class="dc">HealthTech</td><td><span class="pill p-high">SEED</span></td><td class="dg dm">$390K</td><td><span class="pill p-ok">SCALING</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="c hi-green">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">📈</span><span class="ch-title">Growth Metrics</span></div><div class="badge bd-sim">SIMULATED</div></div>
+            <div style="padding:12px;" id="inv-bars"></div>
+          </div>
+        </div>
+
+        <div class="g2">
+          <div class="c hi-cyan">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">🏆</span><span class="ch-title">Investment Highlights</span></div></div>
+            <div class="im"><div class="im-ico">🌐</div><div class="im-label">AI Security TAM by 2027</div><div class="im-val dc">$46.3B</div></div>
+            <div class="im"><div class="im-ico">⚡</div><div class="im-label">Daily API Calls</div><div class="im-val dg">2.4M / day</div></div>
+            <div class="im"><div class="im-ico">🛡️</div><div class="im-label">Threats Blocked YTD</div><div class="im-val dr">1.2M+</div></div>
+            <div class="im"><div class="im-ico">👥</div><div class="im-label">Enterprise Pilot Clients</div><div class="im-val da">14 active</div></div>
+            <div class="im"><div class="im-ico">📜</div><div class="im-label">Patents Pending (PQC + AI)</div><div class="im-val">3</div></div>
+            <div class="im"><div class="im-ico">🏅</div><div class="im-label">NIST PQC Compliant</div><div class="im-val dg">✓ CERTIFIED</div></div>
+          </div>
+          <div class="c">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">📅</span><span class="ch-title">Milestones</span></div></div>
+            <table class="dt">
+              <thead><tr><th>Date</th><th>Milestone</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td class="dm">Q3 2026</td><td>ATOM v4.0 Launch</td><td><span class="pill p-info">IN DEV</span></td></tr>
+                <tr><td class="dm">Q3 2026</td><td>Series A Close</td><td><span class="pill p-high">OPEN</span></td></tr>
+                <tr><td class="dm">Q4 2026</td><td>RRG.bio FDA Pre-IND</td><td><span class="pill p-med">PLANNED</span></td></tr>
+                <tr><td class="dm">Q4 2026</td><td>ClinixAI HIPAA Cert</td><td><span class="pill p-ok">ON TRACK</span></td></tr>
+                <tr><td class="dm">Q1 2027</td><td>AntimatterAI Series B</td><td><span class="pill p-low">PIPELINE</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ▓▓▓ DEV HUB ▓▓▓ -->
+      <div class="view" id="v-devhub">
+        <div class="ph">
+          <div class="ph-left">
+            <div class="ph-title">DEVELOPER HUB</div>
+            <div class="ph-sub">ATOM SDK · API GATEWAY · BUILD ENVIRONMENT</div>
+          </div>
+          <div class="ph-right"><span class="badge bd-ok">SDK v3.2.1 STABLE</span></div>
+        </div>
+
+        <div class="g4">
+          <div class="c hi-green kpi kv-green"><div class="ch-title">API UPTIME</div><div class="kpi-val">99.97%</div></div>
+          <div class="c hi-cyan kpi kv-cyan"><div class="ch-title">ENDPOINTS</div><div class="kpi-val">48</div></div>
+          <div class="c hi-amber kpi kv-amber"><div class="ch-title">AVG LATENCY</div><div class="kpi-val">38ms</div></div>
+          <div class="c hi-red kpi kv-red"><div class="ch-title">ACTIVE KEYS</div><div class="kpi-val">127</div></div>
+        </div>
+
+        <div class="mod-grid" style="margin-bottom:14px;">
+          <div class="mod-card" style="--mc-color:var(--red)"><div class="mod-ico">⚛️</div><div class="mod-name">ATOM Threat Engine</div><div class="mod-desc">Real-time AI attack detection, MITRE ATLAS mapping, PQC key rotation & live telemetry streams.</div><div class="mod-footer"><span class="pill p-ok">● STABLE</span><span class="badge bd-info">REST · WebSocket</span></div></div>
+          <div class="mod-card" style="--mc-color:var(--cyan)"><div class="mod-ico">🛡️</div><div class="mod-name">Red Team Simulator</div><div class="mod-desc">Automated adversarial testing, prompt injection, jailbreak fuzzing, and agent hijack scenarios.</div><div class="mod-footer"><span class="pill p-ok">● STABLE</span><span class="badge bd-info">REST · gRPC</span></div></div>
+          <div class="mod-card" style="--mc-color:var(--purple)"><div class="mod-ico">🧬</div><div class="mod-name">PQC Crypto Suite</div><div class="mod-desc">Lattice-based post-quantum key exchange, CRYSTALS-Kyber/Dilithium integration for API auth.</div><div class="mod-footer"><span class="pill p-ok">● STABLE</span><span class="badge bd-purple">SDK · NPM</span></div></div>
+          <div class="mod-card" style="--mc-color:var(--amber)"><div class="mod-ico">🧠</div><div class="mod-name">HumanOS Bridge</div><div class="mod-desc">ThingkTangk HumanOS cognitive interface API for intelligent agent orchestration and memory.</div><div class="mod-footer"><span class="pill p-med">● BETA</span><span class="badge bd-warn">GraphQL · REST</span></div></div>
+          <div class="mod-card" style="--mc-color:var(--green)"><div class="mod-ico">🏥</div><div class="mod-name">ClinixAI SDK</div><div class="mod-desc">HIPAA-compliant AI clinical decision support, TCPA outbound compliance, patient data APIs.</div><div class="mod-footer"><span class="pill p-med">● BETA</span><span class="badge bd-warn">REST · FHIR</span></div></div>
+          <div class="mod-card" style="--mc-color:var(--purple)"><div class="mod-ico">🔬</div><div class="mod-name">RRG.bio Data Layer</div><div class="mod-desc">Stem cell research telemetry, genomic sequence ingestion, lab data pipelines & trial registries.</div><div class="mod-footer"><span class="pill p-high">● ALPHA</span><span class="badge bd-sim">REST · HL7</span></div></div>
+        </div>
+
+        <div class="g2">
+          <div class="c hi-red">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">🔌</span><span class="ch-title">API Services</span></div><div class="badge bd-ok">ALL LIVE</div></div>
+            <table class="dt" style="font-size:11px;">
+              <thead><tr><th>Service</th><th>Endpoint</th><th>Calls/hr</th><th>Latency</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>⚛️ ATOM Stream</td><td class="dm dc">/v3/atom/stream</td><td class="dm dg">128K</td><td class="dm">18ms</td><td><span class="pill p-ok">LIVE</span></td></tr>
+                <tr><td>🛡️ Red Team</td><td class="dm dc">/v3/redteam/run</td><td class="dm dg">4.2K</td><td class="dm">142ms</td><td><span class="pill p-ok">LIVE</span></td></tr>
+                <tr><td>🧬 PQC Rotate</td><td class="dm dc">/v3/pqc/rotate</td><td class="dm dg">22K</td><td class="dm">9ms</td><td><span class="pill p-ok">LIVE</span></td></tr>
+                <tr><td>🧠 HumanOS</td><td class="dm dc">/v3/humanos/query</td><td class="dm da">1.8K</td><td class="dm">88ms</td><td><span class="pill p-med">BETA</span></td></tr>
+                <tr><td>🏥 ClinixAI</td><td class="dm dc">/v3/clinix/decision</td><td class="dm da">980</td><td class="dm">62ms</td><td><span class="pill p-med">BETA</span></td></tr>
+                <tr><td>🔬 RRG Genomics</td><td class="dm dc">/v3/rrg/sequence</td><td class="dm">240</td><td class="dm">210ms</td><td><span class="pill p-high">ALPHA</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="c">
+            <div class="ch"><div class="ch-left"><span class="ch-ico">💻</span><span class="ch-title">Quickstart</span></div></div>
+            <div class="term" style="height:260px;margin:12px;">
+              <p class="tl"><span class="t-info"># 1. Authenticate (PQC)</span></p>
+              <p class="tl"><span class="t-ok">POST</span> <span class="t-sys">https://api.atom.nirmata.io/v3/auth</span></p>
+              <p class="tl"><span class="t-dim">Authorization: Bearer &lt;PQC_KYBER_KEY&gt;</span></p>
+              <p class="tl">&nbsp;</p>
+              <p class="tl"><span class="t-info"># 2. Stream live threats</span></p>
+              <p class="tl"><span class="t-ok">WS </span> <span class="t-sys">wss://api.atom.nirmata.io/v3/atom/stream</span></p>
+              <p class="tl">&nbsp;</p>
+              <p class="tl"><span class="t-info"># 3. Run red team simulation</span></p>
+              <p class="tl"><span class="t-ok">POST</span> <span class="t-sys">https://api.atom.nirmata.io/v3/redteam/run</span></p>
+              <p class="tl"><span class="t-dim">{"target":"gpt4o","mode":"full","pqc":true}</span></p>
+              <p class="tl">&nbsp;</p>
+              <p class="tl"><span class="t-ok">[200]</span> <span class="t-info">{"session":"rtx-8824","status":"running"}</span></p>
+              <p class="tl">&nbsp;</p>
+              <p class="tl"><span class="t-info"># 4. Query PQC key rotation</span></p>
+              <p class="tl"><span class="t-ok">GET </span> <span class="t-sys">https://api.atom.nirmata.io/v3/pqc/status</span></p>
+              <p class="tl"><span class="t-ok">[200]</span> <span class="t-info">{"kyber":"1024","rotations":22184}</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer-bar">
+    <div class="fb-items">
+      <div class="fb-item"><div class="fb-dot fb-dot-g"></div>ATOM ENGINE LIVE</div>
+      <div class="fb-item fb-sep">·</div>
+      <div class="fb-item">⚛ NIRMATA HOLDINGS</div>
+      <div class="fb-item fb-sep">·</div>
+      <div class="fb-item">DTOM RED TEAM COMMAND PLATFORM v3.2.1</div>
+      <div class="fb-item fb-sep">·</div>
+      <div class="fb-item">ORLANDO, FL</div>
+      <div class="fb-item fb-sep">·</div>
+      <div class="fb-item"><div class="fb-dot fb-dot-g"></div>PROTECTED BY CRYSTALS-KYBER PQC ENCRYPTION</div>
+      <div class="fb-clock-r" id="footer-clk">—</div>
+    </div>
+  </footer>
+</div>
+
+<script>
+/* ══════════ AUTH ══════════ */
+const USERS = [
+  {user:'Ben.oleary@nirmata.io', pass:'Lambo2391!', name:'BEN', init:'BO'},
+  {user:'Chris.riley@nirmata.io', pass:'Kq7&$82KYBE$8!', name:'CHRIS', init:'CR'},
+];
+
+document.getElementById('inp-p').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+document.getElementById('inp-u').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+function doLogin() {
+  const u = document.getElementById('inp-u').value.trim();
+  const p = document.getElementById('inp-p').value;
+  const m = USERS.find(x => x.user.toLowerCase()===u.toLowerCase() && x.pass===p);
+  if (m) {
+    document.getElementById('login').classList.add('out');
+    setTimeout(() => {
+      document.getElementById('login').style.display='none';
+      document.getElementById('platform').classList.add('on');
+      document.getElementById('tb-un').textContent = m.name;
+      document.getElementById('tb-av').textContent = m.init;
+      boot();
+    }, 700);
+  } else {
+    const e = document.getElementById('lerr');
+    e.textContent = '⚠  AUTHENTICATION FAILED — INVALID CREDENTIALS';
+    document.getElementById('inp-p').value = '';
+    setTimeout(()=>e.textContent='', 3500);
+  }
+}
+
+function doLogout() {
+  stop();
+  document.getElementById('platform').classList.remove('on');
+  const l = document.getElementById('login');
+  l.style.display='flex'; l.classList.remove('out');
+  document.getElementById('inp-u').value='';
+  document.getElementById('inp-p').value='';
+}
+
+/* ══════════ NAV ══════════ */
+function nav(el) {
+  document.querySelectorAll('.tb-tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  showV(el.dataset.v);
+  document.querySelectorAll('.sb-item').forEach(s=>{
+    s.classList.toggle('on', s.dataset.v===el.dataset.v);
+  });
+}
+function snav(el) {
+  document.querySelectorAll('.sb-item').forEach(s=>s.classList.remove('on'));
+  el.classList.add('on');
+  showV(el.dataset.v);
+  document.querySelectorAll('.tb-tab').forEach(t=>{
+    t.classList.toggle('on', t.dataset.v===el.dataset.v);
+  });
+}
+function showV(v) {
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));
+  const el = document.getElementById('v-'+v);
+  if(el) el.classList.add('on');
+}
+
+/* ══════════ CLOCK ══════════ */
+function updateClocks() {
+  const s = new Date().toUTCString().replace('GMT','UTC');
+  ['clk1','clk2','footer-clk'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=s; });
+}
+
+/* ══════════ DATA ══════════ */
+const MITRE = ['Prompt Inject','Data Poison','Model Evasion','Model Theft','Backdoor ML','Supply Chain','Membership Inf.','Model Inversion','Agent Hijack','RAG Poison','Sponge Attack','Gradient Leak','Context Poison','Tool Exploit','LLM Jailbreak'];
+const LOG_POOL = [
+  ['t-ok','DEF','BLOCKED: Prompt injection from 45.33.32.156'],
+  ['t-crit','ATM','CRITICAL: Agent hijack attempt on Claude API'],
+  ['t-ok','PQC','Key rotation completed — Kyber-1024 (session #8842)'],
+  ['t-warn','INC','HIGH: Model evasion attempt on GPT-4o'],
+  ['t-ok','DEF','CONTAINED: RAG poisoning vector neutralized'],
+  ['t-sys','SYS','ATOM IOC database updated — 3,841 new entries'],
+  ['t-ok','DEF','BLOCKED: LLM jailbreak pattern #JB-4492'],
+  ['t-warn','ATM','WARN: Sponge attack signature detected'],
+  ['t-ok','DEF','BLOCKED: Gradient leakage on inference endpoint'],
+  ['t-info','SYS','GPU cluster health: 94.2% — Linode edge nodes'],
+  ['t-crit','INC','ESCALATED: Supply chain anomaly in ML pipeline'],
+  ['t-ok','PQC','Dilithium signature verified — round-trip 6ms'],
+  ['t-info','SYS','MTTR updated: 92ms avg over last 100 incidents'],
+  ['t-ok','DEF','BLOCKED: Adversarial suffix injection #AS-0991'],
+];
+const PQC_LOGS = [
+  'Kyber-1024 encapsulation — 0.42ms',
+  'Dilithium-3 sign+verify — 1.1ms',
+  'SPHINCS+ hash chain validated',
+  'NTRU lattice layer — entropy 512-bit',
+  'Key rotation #8845 complete — forward secrecy',
+  'New session bootstrapped — client: edge-node-07',
+  'CRYSTALS handshake latency: 9ms',
+];
+const RT_LOGS = [
+  '→ Injecting adversarial suffix on GPT-4o endpoint',
+  '→ Testing prompt boundary: system prompt exfil',
+  '✓ BLOCKED by ATOM detection layer (T-0.8s)',
+  '→ Initiating RAG corpus poisoning scenario',
+  '→ Embedding malicious document into vector DB',
+  '✗ CONTAINED — vector similarity threshold breach detected',
+  '→ Launching agent hijack chain on Claude-3.5',
+  '→ Tool call injection: calendar read + exfil',
+  '✓ BLOCKED — anomalous tool call sequence flagged',
+  '→ Sponge attack: flooding inference with expensive tokens',
+  '✓ Rate-limit triggered — request throttled at 847 req/s',
+];
+const INTEL_LOGS = [
+  'New IOC ingested: malicious_embedding_hash_82f1a9',
+  'Threat actor APT-SHADOW-42 activity spike detected',
+  'YARA rule updated: LLM_INJECT_v4 → 3 new variants',
+  'Feed: MISP cluster synced — 142 new indicators',
+  'TTP mapped: T1059.007 (JavaScript in LLM context)',
+  'Confidence score elevated: NEURALRIFT-X → 91.2%',
+  'New harvest-now-decrypt-later signal: 3 endpoints',
+];
+
+let logIdx=0, pqcIdx=0, rtIdx=0, intIdx=0;
+let blocked=2847, incidents=3, pqcRot=22184, harv=34;
+let timers=[];
+
+function pad(n){return String(n).padStart(2,'0');}
+function ts(){const d=new Date();return`[${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}]`;}
+
+function addLog(id, cls, msg) {
+  const c=document.getElementById(id); if(!c) return;
+  const p=document.createElement('p'); p.className='tl';
+  p.innerHTML=`<span class="ts">${ts()}</span> <span class="${cls}">${msg}</span>`;
+  c.appendChild(p);
+  if(c.children.length>100) c.removeChild(c.firstChild);
+  c.scrollTop=c.scrollHeight;
+}
+
+function buildHmap(id) {
+  const c=document.getElementById(id); if(!c) return;
+  c.innerHTML=MITRE.map(t=>{
+    const h=Math.floor(Math.random()*6);
+    return`<div class="hm-cell h${h}" title="${t}">${t}</div>`;
+  }).join('');
+}
+
+function buildBars(id, items) {
+  const c=document.getElementById(id); if(!c) return;
+  c.innerHTML=items.map(i=>`
+    <div class="prog-row">
+      <div class="prog-meta"><span class="prog-lbl">${i.l}</span><span class="prog-v">${i.v||i.p+'%'}</span></div>
+      <div class="prog-track"><div class="prog-fill ${i.c}" style="width:${i.p}%"></div></div>
+    </div>`).join('');
+}
+
+function buildQMatrix() {
+  const c=document.getElementById('q-matrix'); if(!c) return;
+  const cols=['#ff1a1a','#cc0000','#880000','#440000','#001a44','#003388','#0055cc','#1a44ff'];
+  c.innerHTML=Array.from({length:64},(_,i)=>{
+    const h=Math.floor(Math.random()*cols.length);
+    const op=(0.1+Math.random()*0.9).toFixed(2);
+    return`<div class="q-cell" style="background:${cols[h]};opacity:${op};" title="Node ${i}"></div>`;
+  }).join('');
+}
+
+function animCounter(id, target, ms) {
+  const el=document.getElementById(id); if(!el) return;
+  let v=0; const step=target/(ms/50);
+  const t=setInterval(()=>{ v=Math.min(v+step,target); el.textContent=Math.round(v).toLocaleString(); if(v>=target)clearInterval(t); },50);
+}
+
+function buildIncidents(id) {
+  const tb=document.getElementById(id); if(!tb) return;
+  const rows=[
+    {id:'INC-0081',ts:'03:14:22',vec:'Prompt Injection',tgt:'OpenAI GPT-4o',sev:'p-crit',ss:'CRITICAL',stat:'CONTAINED',m:'44ms'},
+    {id:'INC-0080',ts:'03:11:09',vec:'Agent Hijack',tgt:'Anthropic Claude',sev:'p-high',ss:'HIGH',stat:'BLOCKED',m:'88ms'},
+    {id:'INC-0079',ts:'03:08:44',vec:'RAG Poisoning',tgt:'Azure OpenAI',sev:'p-high',ss:'HIGH',stat:'ESCALATED',m:'—'},
+    {id:'INC-0078',ts:'03:01:17',vec:'LLM Jailbreak',tgt:'Meta LLaMA',sev:'p-med',ss:'MEDIUM',stat:'BLOCKED',m:'112ms'},
+    {id:'INC-0077',ts:'02:55:33',vec:'Model Evasion',tgt:'Google Gemini',sev:'p-med',ss:'MEDIUM',stat:'RESOLVED',m:'190ms'},
+  ];
+  tb.innerHTML=rows.map(r=>`<tr>
+    <td class="dm dc">${r.id}</td><td class="dm">${r.ts}</td><td>${r.vec}</td><td>${r.tgt}</td>
+    <td><span class="pill ${r.sev}">${r.ss}</span></td>
+    <td class="dm ${r.stat==='ESCALATED'?'dr':r.stat==='BLOCKED'?'dg':'da'}">${r.stat}</td>
+    <td class="dm">${r.m}</td>
+  </tr>`).join('');
+}
+
+function tickLogs() {
+  const m=LOG_POOL[logIdx++%LOG_POOL.length];
+  addLog('def-log',m[0],m[1]+' '+m[2]);
+  addLog('ops-log',m[0],m[1]+' '+m[2]);
+}
+function tickPQC() {
+  addLog('pqc-log','t-sys','PQC '+PQC_LOGS[pqcIdx++%PQC_LOGS.length]);
+}
+function tickRT() {
+  addLog('rt-log','t-warn',RT_LOGS[rtIdx++%RT_LOGS.length]);
+  addLog('rt-resp','t-ok','RESP '+RT_LOGS[rtIdx%RT_LOGS.length].replace('→','→ ACK').replace('✓','✓ LOG').replace('✗','✗ TRIAGE'));
+}
+function tickIntel() {
+  addLog('intel-log','t-info','INTEL '+INTEL_LOGS[intIdx++%INTEL_LOGS.length]);
+}
+function tickKPIs() {
+  blocked+=Math.floor(Math.random()*4)+1;
+  pqcRot+=Math.floor(Math.random()*3)+1;
+  harv+=Math.random()<0.15?1:0;
+  if(Math.random()<0.12) incidents=Math.max(0,incidents+(Math.random()<0.5?1:-1));
+  const mttr=88+Math.floor(Math.random()*20);
+  const el=(id,v)=>{ const e=document.getElementById(id); if(e) e.textContent=v; };
+  el('kp1',blocked.toLocaleString()); el('kp2',incidents); el('kp4',mttr+'ms'); el('kp5',pqcRot.toLocaleString());
+  el('mc1',Math.floor(Math.random()*4)); el('mc2',Math.floor(Math.random()*12)+4); el('mc3',blocked.toLocaleString());
+  el('qts',Math.floor(Math.random()*15)+82); el('harv',harv);
+  el('r-res',Math.floor(blocked/8));
+}
+
+function stop() { timers.forEach(clearInterval); timers=[]; }
+
+/* ══════════ BOOT ══════════ */
+function boot() {
+  updateClocks();
+  timers.push(setInterval(updateClocks,1000));
+
+  // Build all static content
+  ['hmap1','hmap2','hmap3'].forEach(buildHmap);
+  buildQMatrix();
+  buildIncidents('inc-tb');
+  buildIncidents('rt-inc');
+
+  buildBars('health-bars',[
+    {l:'ATOM Threat Engine',p:99,c:'pf-green',v:'99%'},
+    {l:'PQC Key Rotation',p:100,c:'pf-purple',v:'100%'},
+    {l:'Redis Cache',p:97,c:'pf-green',v:'97%'},
+    {l:'Linode GPU Cluster',p:94,c:'pf-amber',v:'94%'},
+    {l:'API Gateway',p:99,c:'pf-green',v:'99%'},
+    {l:'Auth Service',p:100,c:'pf-green',v:'100%'},
+  ]);
+  buildBars('pqc-bars',[
+    {l:'Kyber-1024 Key Gen',p:100,c:'pf-purple',v:'100%'},
+    {l:'Dilithium Signing',p:100,c:'pf-purple',v:'100%'},
+    {l:'SPHINCS+ Hash Auth',p:98,c:'pf-cyan',v:'98%'},
+    {l:'NTRU Lattice Layer',p:95,c:'pf-blue',v:'95%'},
+  ]);
+  buildBars('pqc-algo-bars',[
+    {l:'CRYSTALS-Kyber (KEM)',p:100,c:'pf-purple',v:'NIST L5'},
+    {l:'CRYSTALS-Dilithium (Sig)',p:100,c:'pf-purple',v:'NIST L3'},
+    {l:'SPHINCS+ (Hash-based)',p:98,c:'pf-cyan',v:'NIST L3'},
+    {l:'NTRU-HPS (Hybrid)',p:95,c:'pf-blue',v:'HYBRID'},
+    {l:'FrodoKEM (Lattice)',p:88,c:'pf-blue',v:'TESTING'},
+  ]);
+  buildBars('cipher-bars',[
+    {l:'Kyber-1024 Encap',p:99,c:'pf-purple',v:'0.42ms'},
+    {l:'Dilithium Sign',p:95,c:'pf-cyan',v:'1.10ms'},
+    {l:'Dilithium Verify',p:97,c:'pf-cyan',v:'0.88ms'},
+    {l:'SPHINCS+ Sign',p:72,c:'pf-blue',v:'4.20ms'},
+  ]);
+  buildBars('vec-bars',[
+    {l:'Prompt Injection',p:72,c:'pf-red',v:'72%'},
+    {l:'LLM Jailbreak',p:56,c:'pf-red',v:'56%'},
+    {l:'Model Evasion',p:48,c:'pf-amber',v:'48%'},
+    {l:'RAG Poisoning',p:38,c:'pf-cyan',v:'38%'},
+    {l:'Agent Hijack',p:31,c:'pf-purple',v:'31%'},
+  ]);
+  buildBars('rt-vec',[
+    {l:'Prompt Injection',p:72,c:'pf-red',v:'72%'},
+    {l:'Agent Hijack',p:48,c:'pf-purple',v:'48%'},
+    {l:'RAG Poisoning',p:38,c:'pf-cyan',v:'38%'},
+    {l:'Model Evasion',p:31,c:'pf-amber',v:'31%'},
+  ]);
+  buildBars('rt-orig',[
+    {l:'Eastern Europe',p:28,c:'pf-red',v:'28%'},
+    {l:'TOR / Anonymous',p:22,c:'pf-amber',v:'22%'},
+    {l:'East Asia',p:18,c:'pf-cyan',v:'18%'},
+    {l:'US (Rogue)',p:14,c:'pf-blue',v:'14%'},
+    {l:'Rest of World',p:18,c:'pf-green',v:'18%'},
+  ]);
+  buildBars('arch-health',[
+    {l:'ATOM Core',p:100,c:'pf-green',v:'100%'},
+    {l:'Telemetry Bus',p:99,c:'pf-green',v:'99%'},
+    {l:'Vector DB',p:97,c:'pf-cyan',v:'97%'},
+    {l:'Analytics Engine',p:98,c:'pf-green',v:'98%'},
+  ]);
+  buildBars('arch-api',[
+    {l:'ATOM Stream',p:88,c:'pf-red',v:'128K/hr'},
+    {l:'PQC Rotation',p:52,c:'pf-purple',v:'22K/hr'},
+    {l:'Red Team Sim',p:28,c:'pf-amber',v:'4.2K/hr'},
+  ]);
+  buildBars('infra-bars',[
+    {l:'Linode GPU (Akamai)',p:94,c:'pf-amber',v:'94%'},
+    {l:'Vercel Edge',p:99,c:'pf-green',v:'99%'},
+    {l:'Redis Cache',p:97,c:'pf-cyan',v:'97%'},
+    {l:'Pinecone Vector DB',p:100,c:'pf-purple',v:'100%'},
+  ]);
+  buildBars('inv-bars',[
+    {l:'AntimatterAI ARR',p:84,c:'pf-red',v:'$840K'},
+    {l:'ClinixAI ARR',p:39,c:'pf-cyan',v:'$390K'},
+    {l:'ThingkTangk ARR',p:22,c:'pf-purple',v:'$220K'},
+    {l:'RRG.bio ARR',p:8,c:'pf-amber',v:'$80K'},
+    {l:'Series A Committed',p:35,c:'pf-green',v:'$4.2M / $12M'},
+  ]);
+  buildBars('ioc-bars',[
+    {l:'LLM Prompt Vectors',p:38,c:'pf-red',v:'38%'},
+    {l:'PQC Harvest Sigs',p:24,c:'pf-purple',v:'24%'},
+    {l:'Malicious Embeddings',p:18,c:'pf-cyan',v:'18%'},
+    {l:'Agent Tool Exploits',p:12,c:'pf-amber',v:'12%'},
+    {l:'Network IOCs',p:8,c:'pf-green',v:'8%'},
+  ]);
+  buildBars('pred-bars',[
+    {l:'Next 1hr Attack Prob',p:68,c:'pf-amber',v:'68%'},
+    {l:'PQC Harvest Risk',p:42,c:'pf-purple',v:'42%'},
+    {l:'LLM Supply Chain',p:35,c:'pf-red',v:'35%'},
+    {l:'Agent Hijack Vector',p:55,c:'pf-cyan',v:'55%'},
+  ]);
+
+  // API targets
+  const apis=[
+    {ico:'🤖',n:'OpenAI GPT-4o',h:0,max:480},
+    {ico:'🧠',n:'Anthropic Claude',h:0,max:380},
+    {ico:'💎',n:'Google Gemini',h:0,max:310},
+    {ico:'🦙',n:'Meta LLaMA',h:0,max:240},
+    {ico:'☁️',n:'Azure OpenAI',h:0,max:200},
+  ];
+  const atgt=document.getElementById('api-tgt');
+  if(atgt) atgt.innerHTML=apis.map((a,i)=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03);">
+      <span style="font-size:16px;">${a.ico}</span>
+      <span style="flex:1;font-size:12px;">${a.n}</span>
+      <span style="font-family:var(--font-hud);font-size:10px;color:var(--dim);width:80px;text-align:right;" id="ah${i}">0 hits</span>
+      <div style="width:80px;height:3px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;">
+        <div style="height:100%;background:linear-gradient(90deg,#880000,#ff2222);border-radius:2px;transition:width 0.5s;" id="ab${i}"></div>
+      </div>
+    </div>`).join('');
+
+  // Animated counters
+  animCounter('kp1',blocked,1500);
+  animCounter('kp2',incidents,800);
+  animCounter('kp3',12,1000);
+  animCounter('kp5',pqcRot,1200);
+  setTimeout(()=>{ const e=document.getElementById('kp4'); if(e) e.textContent='92ms'; },200);
+  setTimeout(()=>{ const e=document.getElementById('qts'); if(e) e.textContent='87'; },300);
+  setTimeout(()=>{ const e=document.getElementById('harv'); if(e) e.textContent=harv; },400);
+
+  // Boot terminal messages
+  const bootMsgs=[
+    ['t-sys','INIT','ATOM Platform v3.2.1 kernel boot...'],
+    ['t-ok','SYS','Post-quantum crypto layer initialized'],
+    ['t-ok','SYS','ATOM threat engine connected'],
+    ['t-ok','PQC','Kyber-1024 key exchange complete'],
+    ['t-ok','SYS','All 48 API endpoints healthy'],
+    ['t-info','SYS','IOC database: 842,441 entries loaded'],
+    ['t-warn','ATM','Scanning live telemetry streams...'],
+  ];
+  bootMsgs.forEach((m,i)=>{ setTimeout(()=>{ ['def-log','ops-log','arch-log','pqc-log','rt-log','intel-log','rt-resp'].forEach(id=>addLog(id,m[0],m[1]+' '+m[2])); },i*250); });
+
+  // Start live tickers
+  timers.push(setInterval(tickLogs, 1800));
+  timers.push(setInterval(tickKPIs, 2400));
+  timers.push(setInterval(tickPQC, 2200));
+  timers.push(setInterval(tickRT, 2600));
+  timers.push(setInterval(tickIntel, 3000));
+
+  // API hit counters
+  timers.push(setInterval(()=>{
+    apis.forEach((a,i)=>{
+      a.h+=Math.floor(Math.random()*8);
+      const e=document.getElementById('ah'+i); if(e) e.textContent=a.h.toLocaleString()+' hits';
+      const b=document.getElementById('ab'+i); if(b) b.style.width=Math.min(100,(a.h/a.max)*100)+'%';
+    });
+  }, 2000));
+
+  // Quantum matrix pulse
+  timers.push(setInterval(()=>{
+    const cells=document.querySelectorAll('.q-cell');
+    cells.forEach(c=>{ if(Math.random()<0.3) c.style.opacity=(0.1+Math.random()*0.9).toFixed(2); });
+  }, 800));
+}
+</script>
+</body>
+</html>
