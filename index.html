@@ -398,6 +398,72 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
 .fd-r{background:var(--r);box-shadow:0 0 4px var(--r);}
 .sep{color:rgba(255,255,255,.08);}
 .f-clk{margin-left:auto;font-family:var(--f-mono);font-size:7.5px;letter-spacing:1.5px;color:var(--d2);}
+
+.user-menu{position:absolute;top:46px;right:96px;width:200px;background:rgba(8,9,15,.98);border:1px solid rgba(255,255,255,.08);border-radius:8px;box-shadow:0 12px 30px rgba(0,0,0,.8);display:none;flex-direction:column;z-index:400;}
+.um-item{padding:8px 12px;font-family:var(--f-mono);font-size:10px;color:var(--w);cursor:pointer;border-bottom:1px solid rgba(255,255,255,.05);}
+.um-item:last-child{border-bottom:none;}
+.um-item:hover{background:rgba(255,0,51,.18);}
+
+.mini-dock{position:fixed;bottom:28px;right:22px;width:360px;max-height:260px;background:rgba(8,9,15,.98);border-radius:10px;border:1px solid rgba(255,255,255,.1);box-shadow:0 18px 40px rgba(0,0,0,.85);display:none;flex-direction:column;z-index:350;}
+.mini-h{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;}
+.mini-t{font-family:var(--f-mono);font-size:9px;letter-spacing:2px;color:var(--d);}
+.mini-close{cursor:pointer;font-size:14px;color:var(--d);}
+.mini-b{padding:10px 12px;overflow-y:auto;font-family:var(--f-mono);font-size:10px;line-height:1.6;}
+.mini-pill{display:inline-block;padding:1px 6px;border-radius:999px;border:1px solid rgba(0,245,255,.35);color:var(--c);font-size:8px;margin-left:6px;}
+
+
+/* ── CINEMATIC OVERLAYS & MICROINTERACTIONS ── */
+.boot-overlay{position:fixed;inset:0;z-index:1200;display:none;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 20% 0%,rgba(255,0,51,.35),transparent 60%),radial-gradient(circle at 80% 100%,rgba(0,245,255,.25),transparent 65%),#020308;
+  pointer-events:none;}
+.boot-inner{text-align:center;max-width:420px;}
+.boot-atom{width:120px;height:120px;margin:0 auto 18px;border-radius:50%;
+  box-shadow:0 0 40px rgba(255,0,51,.7),0 0 1px rgba(255,255,255,.2);
+  background:radial-gradient(circle,rgba(255,0,51,.6) 0%,rgba(255,0,51,.15) 40%,transparent 65%);
+  position:relative;overflow:hidden;}
+.boot-atom::before,.boot-atom::after{content:'';position:absolute;inset:18px;border-radius:50%;border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 0 20px rgba(255,0,51,.5);}
+.boot-atom::after{inset:30px;border-color:rgba(255,0,51,.7);}
+.boot-part{position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.95);
+  box-shadow:0 0 10px rgba(255,255,255,.9);opacity:0;}
+.boot-globe{width:150px;height:150px;border-radius:50%;margin:0 auto 10px;position:relative;overflow:hidden;
+  background:radial-gradient(circle at 30% 30%,#00F5FF 0%,#00111F 55%,#000308 100%);opacity:0;}
+.boot-globe::before{content:'';position:absolute;left:-40%;right:-40%;top:45%;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.8),transparent);opacity:.25;}
+.boot-scan{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,255,255,.15);
+  box-shadow:0 0 35px rgba(0,245,255,.5);opacity:0;}
+.boot-text{font-family:var(--f-mono);font-size:9px;letter-spacing:3px;color:var(--d);}
+.boot-text span{color:var(--c);}
+
+.map-arc{position:absolute;inset:auto 10% 35% 10%;height:80px;border-radius:999px;border:1px solid rgba(255,0,51,.0);
+  box-shadow:0 0 0 rgba(255,0,51,0);pointer-events:none;}
+
+.lattice-shock{animation:latticeShock .4s ease-out forwards;}
+@keyframes latticeShock{0%{transform:scale(1);filter:brightness(1);}40%{transform:scale(1.08);filter:brightness(2.2);}100%{transform:scale(1);filter:brightness(1.1);} }
+
+.comp-overlay{position:fixed;inset:0;z-index:1100;background:radial-gradient(circle at 50% 0%,rgba(0,245,255,.2),transparent 60%),rgba(0,0,0,.96);
+  display:none;align-items:center;justify-content:center;}
+.comp-box{width:340px;border-radius:12px;position:relative;padding:18px 20px;display:flex;flex-direction:column;gap:10px;
+  background:linear-gradient(145deg,rgba(255,255,255,.05),rgba(0,0,0,.9));border:1px solid rgba(0,245,255,.35);
+  box-shadow:0 0 40px rgba(0,245,255,.6);font-family:var(--f-mono);font-size:10px;}
+.comp-row{height:6px;border-radius:999px;background:rgba(255,255,255,.06);overflow:hidden;}
+.comp-row span{display:block;height:100%;background:linear-gradient(90deg,#00F5FF,#FFB300);width:0%;}
+.comp-stamp{margin-top:4px;font-size:11px;letter-spacing:2px;color:var(--a);border-radius:999px;border:1px solid rgba(255,179,0,.6);
+  padding:4px 10px;align-self:flex-end;text-shadow:0 0 8px rgba(255,179,0,.9);opacity:0;}
+
+.kc-ripple{position:absolute;left:-22px;top:10px;width:10px;height:10px;border-radius:50%;
+  box-shadow:0 0 0 0 rgba(255,0,51,.9);animation:kcRipple 0.8s ease-out forwards;}
+@keyframes kcRipple{0%{box-shadow:0 0 0 0 rgba(255,0,51,.9);}100%{box-shadow:0 0 0 18px rgba(255,0,51,0);} }
+
+.volt-flag{position:absolute;bottom:18px;left:18px;padding:4px 10px;border-radius:999px;border:1px solid rgba(255,0,51,.7);
+  background:rgba(0,0,0,.85);color:var(--r);font-family:var(--f-mono);font-size:8px;letter-spacing:2px;
+  box-shadow:0 0 20px rgba(255,0,51,.7);opacity:0;pointer-events:none;}
+
+#qr-overlay{position:fixed;inset:0;z-index:1150;background:radial-gradient(circle at 50% 0%,rgba(0,245,255,.35),transparent 60%),rgba(0,0,0,.96);
+  display:none;align-items:center;justify-content:center;}
+.qr-text{font-family:var(--f-brand);font-size:28px;letter-spacing:4px;color:var(--c);text-shadow:0 0 30px rgba(0,245,255,1);}
+.qr-sub{font-family:var(--f-mono);font-size:10px;letter-spacing:3px;color:var(--d);margin-top:10px;text-align:center;}
+
 </style>
 </head>
 <body>
@@ -408,7 +474,6 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
   <div class="l-corner tl"></div><div class="l-corner tr"></div>
   <div class="l-corner bl"></div><div class="l-corner br"></div>
   <div class="l-hdr">
-    <img class="l-emblem" src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/37a51c06-8586-4bdd-a320-d32cef0b7d73" alt="ATOM Emblem" id="l-emblem-img"/>
     <div class="l-eye">SECURE PLATFORM ACCESS</div>
     <div class="l-logo">ATOM</div>
     <div class="l-tag">AUTONOMOUS THREAT OPERATIONS MATRIX · POST-QUANTUM CYBERSECURITY ENGINE</div>
@@ -430,8 +495,7 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
   <!-- TOPBAR -->
   <header class="topbar">
     <div class="tb-brand">
-      <img class="tb-emblem" src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/37a51c06-8586-4bdd-a320-d32cef0b7d73" alt="ATOM"/>
-      <div>
+<div>
         <div class="tb-logo-txt">ATOM</div>
         <div class="tb-sub">AUTONOMOUS DEFENSE COMMAND PLATFORM</div>
       </div>
@@ -469,9 +533,14 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
       <!-- settings -->
       <div class="tb-icon-btn">🛠️</div>
       <!-- user -->
-      <div class="tb-user">
+      <div class="tb-user" onclick="toggleUserMenu(event)">
         <div class="tb-avatar" id="tb-av">—</div>
         <div class="tb-uname"><b id="tb-un">—</b></div>
+      </div>
+      <div class="user-menu" id="user-menu">
+        <div class="um-item" onclick="openMini('access');event.stopPropagation();">Access Control</div>
+        <div class="um-item" onclick="openMini('audit');event.stopPropagation();">Audit Log</div>
+        <div class="um-item" onclick="openMini('settings');event.stopPropagation();">Settings</div>
       </div>
       <button class="btn-auth" style="width:auto;padding:7px 16px;font-size:9px;letter-spacing:2px;" onclick="doLogout()">⏻ EXIT</button>
     </div>
@@ -555,6 +624,8 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
           <div class="ph-r"><span class="bd bd-live">● ATOM LIVE</span><span class="bd bd-info" id="clk2">—</span></div>
         </div>
         <div class="map-outer" style="margin-bottom:14px;">
+          <div class="map-arc" id="map-arc"></div>
+          <div class="volt-flag" id="volt-flag">VOLT TYPHOON DETECTED</div>
           <iframe class="map-frame" src="https://www.antimatterai.com/demos/atom-red-team"
             sandbox="allow-scripts allow-same-origin allow-forms" loading="lazy"></iframe>
           <div class="map-hud">
@@ -831,6 +902,31 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
     </div>
   </footer>
 
+  <div class="boot-overlay" id="boot-overlay">
+    <div class="boot-inner">
+      <div class="boot-atom" id="boot-atom"></div>
+      <div class="boot-globe" id="boot-globe">
+        <div class="boot-scan" id="boot-scan"></div>
+      </div>
+      <div class="boot-text">SATELLITE ACQUISITION <span>ΔTOM LINK</span> ESTABLISHED</div>
+    </div>
+  </div>
+  <div class="comp-overlay" id="comp-overlay">
+    <div class="comp-box">
+      <div>GENERATING EVIDENCE BUNDLE...</div>
+      <div class="comp-row"><span id="comp-r1"></span></div>
+      <div class="comp-row"><span id="comp-r2"></span></div>
+      <div class="comp-row"><span id="comp-r3"></span></div>
+      <div class="comp-stamp" id="comp-stamp">CRYPTOGRAPHICALLY SEALED</div>
+    </div>
+  </div>
+  <div id="qr-overlay">
+    <div>
+      <div class="qr-text">POST-QUANTUM CERTIFIED</div>
+      <div class="qr-sub">QUANTUM READINESS SCORE 100 · CNSA 2.0 COMPLETE</div>
+    </div>
+  </div>
+
 </div><!-- /platform -->
 
 <script>
@@ -850,10 +946,7 @@ function doLogin(){
     document.getElementById('login').classList.add('out');
     setTimeout(()=>{
       document.getElementById('login').style.display='none';
-      document.getElementById('platform').classList.add('on');
-      document.getElementById('tb-un').textContent=m.name;
-      document.getElementById('tb-av').textContent=m.init;
-      boot(); animEntrance();
+      startBootSequence(m);
     },700);
   } else {
     const e=document.getElementById('lerr');
@@ -998,7 +1091,7 @@ function addLog(id,cls,msg){
 
 function anim(id,val,suf){
   const el=document.getElementById(id);if(!el)return;
-  if(!window.gsap){el.textContent=(typeof val==='number'?Math.round(val).toLocaleString():val)+(suf||'');return;}
+  if(!window.gsap){el.textContent=(typeof val==='number'?Math.round(val).toLocaleString():val)+(suf||'');if(id==='qts' && val>=100)triggerQuantumOverlay();return;}
   const cur=parseFloat(el.getAttribute('data-v')||'0')||0;
   const obj={v:cur};
   gsap.to(obj,{v:val,duration:.6,ease:'power2.out',onUpdate:()=>{el.textContent=Math.round(obj.v).toLocaleString()+(suf||'');},
@@ -1167,7 +1260,10 @@ function tickAPIs(apis){
     if(eB)eB.style.width=Math.min(100,(a.h/a.max)*100)+'%';
   });
 }
+let latticeCount=0;
 function tickLattice(){
+  latticeCount++;
+  if(latticeCount%10===0){const g=document.getElementById('lattice-grid');if(g){g.classList.add('lattice-shock');setTimeout(()=>g.classList.remove('lattice-shock'),420);}}
   document.querySelectorAll('#lattice-grid > div').forEach(c=>{if(Math.random()<.3)c.style.opacity=(0.1+Math.random()*.9).toFixed(2);});
 }
 
@@ -1217,7 +1313,7 @@ function boot(){
   updateClocks(); timers.push(setInterval(updateClocks,1000));
 
   ['hmap1','hmap2','hmap3'].forEach(buildHmap);
-  buildIncidents('inc-tb'); buildIncidents('rt-inc');
+  renderIncidents(); buildIncidents('rt-inc');
   buildLattice(); buildHNDL();
   initCharts(); initArch();
 
@@ -1301,6 +1397,168 @@ function boot(){
   timers.push(setInterval(tickIntel,2000));
   timers.push(setInterval(()=>tickAPIs(apis),2000));
   timers.push(setInterval(tickLattice,700));
+  timers.push(setInterval(rotateIncidents,5000));
+}
+
+// User menu and mini-views
+
+function startBootSequence(user){
+  const overlay=document.getElementById('boot-overlay');
+  if(overlay){overlay.style.display='flex';}
+  if(window.gsap){
+    const parts=[];
+    const atom=document.getElementById('boot-atom');
+    if(atom){
+      for(let i=0;i<26;i++){
+        const s=document.createElement('div');
+        s.className='boot-part';
+        atom.appendChild(s);parts.push(s);
+      }
+      parts.forEach((p,i)=>{
+        const a=Math.random()*Math.PI*2;const r=40+Math.random()*18;
+        p.style.left=60+Math.cos(a)*r+'px';
+        p.style.top=60+Math.sin(a)*r+'px';
+        gsap.fromTo(p,{scale:0,opacity:0},{scale:1,opacity:1,duration:.35,delay:.05*i,ease:'back.out(2)'});
+      });
+    }
+    gsap.to('#boot-globe',{opacity:1,duration:.5,delay:.5});
+    gsap.fromTo('#boot-scan',{opacity:0,scale:.6},{opacity:1,scale:1.1,repeat:3,yoyo:true,duration:.5,delay:.7});
+    gsap.to('#boot-overlay',{opacity:0,duration:.7,delay:2.2,ease:'power2.inOut',onComplete:()=>{
+      overlay.style.display='none';
+      document.getElementById('platform').classList.add('on');
+      document.getElementById('tb-un').textContent=user.name;
+      document.getElementById('tb-av').textContent=user.init;
+      boot(); animEntrance();
+      triggerFirstThreat();
+    }});
+  } else {
+    if(overlay)overlay.style.display='none';
+    document.getElementById('platform').classList.add('on');
+    document.getElementById('tb-un').textContent=user.name;
+    document.getElementById('tb-av').textContent=user.init;
+    boot(); animEntrance();
+  }
+}
+
+function triggerFirstThreat(){
+  const arc=document.getElementById('map-arc');
+  if(!arc||!window.gsap)return;
+  gsap.fromTo(arc,{opacity:.9,boxShadow:'0 0 0 0 rgba(255,0,51,.9)'},{
+    duration:1.2,opacity:0,boxShadow:'0 0 45px 18px rgba(255,0,51,0)',ease:'power3.out'
+  });
+  const flag=document.getElementById('volt-flag');
+  if(flag){
+    gsap.to(flag,{opacity:1,y:-8,duration:.7,delay:.6,ease:'power2.out'});
+  }
+}
+
+function generateCompliance(){
+  const o=document.getElementById('comp-overlay');
+  if(!o)return; o.style.display='flex';
+  const r1=document.getElementById('comp-r1');
+  const r2=document.getElementById('comp-r2');
+  const r3=document.getElementById('comp-r3');
+  const st=document.getElementById('comp-stamp');
+  if(window.gsap){
+    [r1,r2,r3].forEach((r,i)=>{if(r)gsap.fromTo(r,{width:'0%'},{width:'100%',duration:.5,delay:.2*i,ease:'power2.out'});});
+    gsap.to(st,{opacity:1,scale:1.05,duration:.4,delay:1.6,ease:'back.out(2)'});
+    gsap.to(o,{opacity:0,duration:.7,delay:2.4,onComplete:()=>{o.style.display='none';o.style.opacity=1;}});
+  } else {
+    o.style.display='none';
+  }
+}
+
+function neutralizeKillChain(){
+  const nodes=document.querySelectorAll('#kc-chain-inner .kc-node');
+  if(!nodes.length)return;
+  const last=nodes[nodes.length-1];
+  const ripple=document.createElement('div');
+  ripple.className='kc-ripple';
+  last.appendChild(ripple);
+  setTimeout(()=>{if(ripple&&ripple.parentNode)ripple.parentNode.removeChild(ripple);},800);
+}
+
+function triggerQuantumOverlay(){
+  const o=document.getElementById('qr-overlay');
+  if(!o)return; if(o.style.display==='flex')return;
+  o.style.display='flex';
+  if(window.gsap){
+    gsap.fromTo(o,{opacity:0},{opacity:1,duration:.4});
+    gsap.fromTo('.qr-text',{scale:.8},{scale:1.05,duration:.6,ease:'back.out(2)'});
+    gsap.to(o,{opacity:0,duration:.7,delay:2.3,onComplete:()=>{o.style.display='none';o.style.opacity=1;}});
+  } else {
+    setTimeout(()=>{o.style.display='none';},2000);
+  }
+}
+
+let umOpen=false;
+function toggleUserMenu(ev){
+  ev.stopPropagation();
+  umOpen=!umOpen;
+  const m=document.getElementById('user-menu');
+  if(m)m.style.display=umOpen?'flex':'none';
+}
+window.addEventListener('click',()=>{const m=document.getElementById('user-menu');if(m){m.style.display='none';umOpen=false;}});
+
+function openMini(kind){
+  const dock=document.getElementById('mini-dock');
+  const title=document.getElementById('mini-title');
+  const body=document.getElementById('mini-body');
+  if(!dock||!title||!body)return;
+  if(kind==='access'){
+    title.textContent='ACCESS CONTROL';
+    body.innerHTML='<p>Session:</p><p class="td">Ben O'Leary <span class="mini-pill">L3 RED TEAM</span></p><p>Last login: UTC '+new Date().toISOString().replace('T',' ').slice(0,19)+'</p><p>Roles: OWNER · RED TEAM OPERATOR · PQC ADMIN</p><p>Current scope: ALL TENANTS</p>';
+  } else if(kind==='audit'){
+    title.textContent='AUDIT LOG';
+    body.innerHTML='<p>03:11:22 — POLICY UPDATED · PQC rotation interval set to 4h.</p><p>03:08:09 — ROLE CHANGE · Chris Riley granted DEVOPS.</p><p>02:55:44 — SESSION ESTABLISHED · rt-sim-8824 (Ben).</p><p>02:41:02 — EXPORT · MITRE Navigator bundle generated for board.</p>';
+  } else {
+    title.textContent='SETTINGS';
+    body.innerHTML='<p>Theme: <span class="mini-pill">ATOM DARK</span></p><p>Animation: ENABLED (GSAP)</p><p>Live Data: SIMULATED STREAM</p><p>Compliance Mode: BOARD DEMO</p>';
+  }
+  dock.style.display='flex';
+}
+function closeMini(){const dock=document.getElementById('mini-dock');if(dock)dock.style.display='none';}
+
+// Incident queue rotation
+let INC_ROWS_BASE=[
+  {id:'INC-0081',ts:'03:14',vec:'Prompt Injection',tgt:'GPT-4o',sev:'p-crit',ss:'CRITICAL',stat:'CONTAINED',m:'T1190',mttr:'44ms'},
+  {id:'INC-0080',ts:'03:11',vec:'Agent Hijack',tgt:'Claude',sev:'p-high',ss:'HIGH',stat:'BLOCKED',m:'T1059',mttr:'88ms'},
+  {id:'INC-0079',ts:'03:08',vec:'RAG Poisoning',tgt:'Azure OAI',sev:'p-high',ss:'HIGH',stat:'ESCALATED',m:'T1657',mttr:'—'},
+  {id:'INC-0078',ts:'03:01',vec:'LLM Jailbreak',tgt:'LLaMA',sev:'p-med',ss:'MEDIUM',stat:'BLOCKED',m:'T1190',mttr:'112ms'},
+  {id:'INC-0077',ts:'02:55',vec:'Model Evasion',tgt:'Gemini',sev:'p-med',ss:'MEDIUM',stat:'RESOLVED',m:'T1055',mttr:'190ms'},
+];
+let incCursor=82;
+function renderIncidents(){
+  const tb=document.getElementById('inc-tb');
+  if(!tb)return;
+  tb.innerHTML=INC_ROWS_BASE.map(r=>`<tr>
+    <td class="dm dc2">${r.id}</td><td class="dm">${r.ts}</td><td>${r.vec}</td><td>${r.tgt}</td>
+    <td><span class="pill ${r.sev}">${r.ss}</span></td>
+    <td class="dm ${r.stat==='ESCALATED'?'dr':r.stat==='BLOCKED'?'dg':'da'}">${r.stat}</td>
+    <td class="dm">${r.mttr}</td>
+  </tr>`).join('');
+}
+function rotateIncidents(){
+  const now=new Date();
+  INC_ROWS_BASE.pop();
+  incCursor++;
+  const hh=String(now.getHours()).padStart(2,'0');
+  const mm=String(now.getMinutes()).padStart(2,'0');
+  const sevOptions=[['p-crit','CRITICAL'],['p-high','HIGH'],['p-med','MEDIUM']];
+  const pick=sevOptions[Math.floor(Math.random()*sevOptions.length)];
+  const newRow={
+    id:`INC-${String(incCursor).padStart(4,'0')}`,
+    ts:`${hh}:${mm}`,
+    vec:['Prompt Injection','Agent Hijack','RAG Poisoning','LLM Jailbreak','Model Evasion'][Math.floor(Math.random()*5)],
+    tgt:['GPT-4o','Claude','Gemini','LLaMA','Azure OAI'][Math.floor(Math.random()*5)],
+    sev:pick[0],ss:pick[1],
+    stat:['BLOCKED','CONTAINED','ESCALATED','RESOLVED'][Math.floor(Math.random()*4)],
+    m:['T1190','T1059','T1657','T1055'][Math.floor(Math.random()*4)],
+    mttr:Math.random()<.2?'—':`${Math.floor(40+Math.random()*200)}ms`,
+  };
+  INC_ROWS_BASE.unshift(newRow);
+  renderIncidents();
+  neutralizeKillChain();
 }
 
 // Run login animations on load
