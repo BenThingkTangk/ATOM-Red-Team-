@@ -463,6 +463,10 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
   display:none;align-items:center;justify-content:center;}
 .qr-text{font-family:var(--f-brand);font-size:28px;letter-spacing:4px;color:var(--c);text-shadow:0 0 30px rgba(0,245,255,1);}
 .qr-sub{font-family:var(--f-mono);font-size:10px;letter-spacing:3px;color:var(--d);margin-top:10px;text-align:center;}
+.boot-console{margin-top:18px;background:rgba(0,0,0,.6);border-radius:8px;padding:10px 14px;font-family:var(--f-mono);font-size:9px;color:var(--c);text-align:left;box-shadow:0 0 24px rgba(0,0,0,.9);max-height:120px;overflow:hidden;}
+.boot-row{opacity:0.82;margin-bottom:2px;color:var(--d);white-space:nowrap;}
+.boot-row::before{content:'› ';color:var(--r);}
+
 
 </style>
 </head>
@@ -474,6 +478,17 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
   <div class="l-corner tl"></div><div class="l-corner tr"></div>
   <div class="l-corner bl"></div><div class="l-corner br"></div>
   <div class="l-hdr">
+    <img
+  src="https://user-gen-media-assets.s3.amazonaws.com/gemini_images/dbabf27a-c6cf-4c28-8f9e-08e2f8b55cb1.png"
+  alt="Red Team Atom Logo"
+  style="
+    height: 64px;
+    width: auto;
+    display: block;
+    margin: 0 auto 18px auto;
+    filter: drop-shadow(0 0 12px rgba(255,0,0,0.6));
+  "
+>
     <div class="l-eye">SECURE PLATFORM ACCESS</div>
     <div class="l-logo">ATOM</div>
     <div class="l-tag">AUTONOMOUS THREAT OPERATIONS MATRIX · POST-QUANTUM CYBERSECURITY ENGINE</div>
@@ -495,7 +510,18 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
   <!-- TOPBAR -->
   <header class="topbar">
     <div class="tb-brand">
-<div>
+  <img
+  src="https://user-gen-media-assets.s3.amazonaws.com/gemini_images/dbabf27a-c6cf-4c28-8f9e-08e2f8b55cb1.png"
+  alt="Red Team Atom Logo"
+  style="
+    height: 64px;
+    width: auto;
+    display: block;
+    margin: 0 auto 18px auto;
+    filter: drop-shadow(0 0 12px rgba(255,0,0,0.6));
+  "
+>
+  <div>
         <div class="tb-logo-txt">ATOM</div>
         <div class="tb-sub">AUTONOMOUS DEFENSE COMMAND PLATFORM</div>
       </div>
@@ -503,13 +529,13 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
 
     <!-- TABS -->
     <nav class="tb-tabs" id="tb-tabs">
-      <div class="tb-tab on" data-v="command" onclick="nav(this)"><span class="t-ico">🏠</span>Command</div>
-      <div class="tb-tab" data-v="threatmap" onclick="nav(this)"><span class="t-ico">🛰️</span>Threat Map</div>
-      <div class="tb-tab" data-v="intelligence" onclick="nav(this)"><span class="t-ico">🎖️</span>AI Intelligence</div>
-      <div class="tb-tab" data-v="quantum" onclick="nav(this)"><span class="t-ico">⚛️</span>Quantum PQC</div>
-      <div class="tb-tab" data-v="redteam" onclick="nav(this)"><span class="t-ico">🎯</span>Red Team</div>
-      <div class="tb-tab" data-v="architecture" onclick="nav(this)"><span class="t-ico">🏗️</span>Architecture</div>
-      <div class="tb-tab" data-v="devhub" onclick="nav(this)"><span class="t-ico">🛠️</span>Dev Hub</div>
+      <div class="tb-tab on" data-v="command" onclick="nav(this)"><img src="/assets/icons/icon-terminal.png" alt="Command" class="nav-icon"/>Command</div>
+      <div class="tb-tab" data-v="threatmap" onclick="nav(this)"><img src="/assets/icons/icon-network.png" alt="Threat Map" class="nav-icon"/>Threat Map</div>
+      <div class="tb-tab" data-v="intelligence" onclick="nav(this)"><img src="/assets/icons/icon-drone-eye.png" alt="AI Intelligence" class="nav-icon"/>AI Intelligence</div>
+      <div class="tb-tab" data-v="quantum" onclick="nav(this)"><img src="/assets/icons/icon-target.png" alt="Quantum PQC" class="nav-icon"/>Quantum PQC</div>
+      <div class="tb-tab" data-v="redteam" onclick="nav(this)"><img src="/assets/icons/icon-skull.png" alt="Red Team" class="nav-icon"/>Red Team</div>
+      <div class="tb-tab" data-v="architecture" onclick="nav(this)"><img src="/assets/icons/icon-shield.png" alt="Architecture" class="nav-icon"/>Architecture</div>
+      <div class="tb-tab" data-v="devhub" onclick="nav(this)"><img src="/assets/icons/icon-checklist.png" alt="Dev Hub" class="nav-icon"/>Dev Hub</div>
     </nav>
 
     <div class="tb-r">
@@ -1404,39 +1430,79 @@ function boot(){
 
 function startBootSequence(user){
   const overlay=document.getElementById('boot-overlay');
-  if(overlay){overlay.style.display='flex';}
-  if(window.gsap){
-    const parts=[];
-    const atom=document.getElementById('boot-atom');
-    if(atom){
-      for(let i=0;i<26;i++){
-        const s=document.createElement('div');
-        s.className='boot-part';
-        atom.appendChild(s);parts.push(s);
-      }
-      parts.forEach((p,i)=>{
-        const a=Math.random()*Math.PI*2;const r=40+Math.random()*18;
-        p.style.left=60+Math.cos(a)*r+'px';
-        p.style.top=60+Math.sin(a)*r+'px';
-        gsap.fromTo(p,{scale:0,opacity:0},{scale:1,opacity:1,duration:.35,delay:.05*i,ease:'back.out(2)'});
-      });
-    }
-    gsap.to('#boot-globe',{opacity:1,duration:.5,delay:.5});
-    gsap.fromTo('#boot-scan',{opacity:0,scale:.6},{opacity:1,scale:1.1,repeat:3,yoyo:true,duration:.5,delay:.7});
-    gsap.to('#boot-overlay',{opacity:0,duration:.7,delay:2.2,ease:'power2.inOut',onComplete:()=>{
-      overlay.style.display='none';
-      document.getElementById('platform').classList.add('on');
-      document.getElementById('tb-un').textContent=user.name;
-      document.getElementById('tb-av').textContent=user.init;
-      boot(); animEntrance();
-      triggerFirstThreat();
-    }});
-  } else {
-    if(overlay)overlay.style.display='none';
-    document.getElementById('platform').classList.add('on');
+  const platform=document.getElementById('platform');
+  if(!overlay){
+    if(platform)platform.classList.add('on');
     document.getElementById('tb-un').textContent=user.name;
     document.getElementById('tb-av').textContent=user.init;
     boot(); animEntrance();
+    return;
+  }
+  overlay.style.display='flex';
+  const atom=document.getElementById('boot-atom');
+  const globe=document.getElementById('boot-globe');
+  const scan=document.getElementById('boot-scan');
+  const consoleEl=document.getElementById('boot-console');
+
+  if(atom) atom.innerHTML='';
+  if(consoleEl) consoleEl.innerHTML='';
+
+  const statusLines=[
+    'AUTH VECTOR: PQC / KYBER-1024',
+    'ROUTE: SIX4 EDGE FABRIC / LINODE GPU',
+    'CLASSIFICATION: TOP SECRET // RED TEAM',
+    'INITIATING ΔTOM AUTONOMOUS DEFENSE KERNEL',
+    'LOCKING ATOM ORBITAL TELEMETRY FEED...'
+  ];
+  if(consoleEl){
+    statusLines.forEach((txt,i)=>{
+      setTimeout(()=>{
+        const row=document.createElement('div');
+        row.className='boot-row';
+        row.textContent=txt;
+        consoleEl.appendChild(row);
+      },220*i+260);
+    });
+  }
+
+  if(!window.gsap){
+    overlay.style.display='none';
+    if(platform)platform.classList.add('on');
+    document.getElementById('tb-un').textContent=user.name;
+    document.getElementById('tb-av').textContent=user.init;
+    boot(); animEntrance();
+    return;
+  }
+
+  const tl=gsap.timeline({defaults:{ease:'power2.out'},onComplete:()=>{
+    overlay.style.display='none';
+    if(platform)platform.classList.add('on');
+    document.getElementById('tb-un').textContent=user.name;
+    document.getElementById('tb-av').textContent=user.init;
+    boot(); animEntrance();
+    triggerFirstThreat();
+  }});
+
+  if(atom){
+    const parts=[];
+    for(let i=0;i<28;i++){
+      const s=document.createElement('div');
+      s.className='boot-part';
+      atom.appendChild(s);parts.push(s);
+    }
+    tl.fromTo(atom,{scale:0.6,opacity:0},{scale:1,opacity:1,duration:0.5});
+    parts.forEach((p,i)=>{
+      const a=Math.random()*Math.PI*2;const r=40+Math.random()*18;
+      p.style.left=60+Math.cos(a)*r+'px';
+      p.style.top=60+Math.sin(a)*r+'px';
+      tl.fromTo(p,{scale:0,opacity:0},{scale:1,opacity:1,duration:0.35},0.18+0.03*i);
+    });
+  }
+  if(globe){
+    tl.fromTo(globe,{opacity:0,scale:0.8},{opacity:1,scale:1,duration:0.6},'-=0.1');
+  }
+  if(scan){
+    tl.fromTo(scan,{opacity:0,scale:0.7},{opacity:1,scale:1.05,repeat:2,yoyo:true,duration:0.45},'-=0.25');
   }
 }
 
