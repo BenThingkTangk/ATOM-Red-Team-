@@ -440,19 +440,19 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
     <!-- TABS -->
     <nav class="tb-tabs" id="tb-tabs">
       <div class="tb-tab on" data-v="command" onclick="nav(this)"><span class="t-ico">🏠</span>Command</div>
-      <div class="tb-tab" data-v="threatmap" onclick="nav(this)"><span class="t-ico">🌐</span>Threat Map</div>
-      <div class="tb-tab" data-v="intelligence" onclick="nav(this)"><span class="t-ico">🧠</span>AI Intelligence</div>
+      <div class="tb-tab" data-v="threatmap" onclick="nav(this)"><span class="t-ico">🛰️</span>Threat Map</div>
+      <div class="tb-tab" data-v="intelligence" onclick="nav(this)"><span class="t-ico">🎖️</span>AI Intelligence</div>
       <div class="tb-tab" data-v="quantum" onclick="nav(this)"><span class="t-ico">⚛️</span>Quantum PQC</div>
       <div class="tb-tab" data-v="redteam" onclick="nav(this)"><span class="t-ico">🎯</span>Red Team</div>
       <div class="tb-tab" data-v="architecture" onclick="nav(this)"><span class="t-ico">🏗️</span>Architecture</div>
-      <div class="tb-tab" data-v="devhub" onclick="nav(this)"><span class="t-ico">⚙️</span>Dev Hub</div>
+      <div class="tb-tab" data-v="devhub" onclick="nav(this)"><span class="t-ico">🛠️</span>Dev Hub</div>
     </nav>
 
     <div class="tb-r">
       <!-- GTI -->
       <div class="tb-gti-wrap">
         <div>
-          <div class="tb-gti-label">GTI SCORE</div>
+          <div class="tb-gti-label">GTI INDEX</div>
           <div class="tb-gti-num" id="tb-gti-n">72</div>
         </div>
         <svg class="tb-gti-svg" viewBox="0 0 28 28">
@@ -467,7 +467,7 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
       <!-- notif -->
       <div class="tb-icon-btn tb-notif">🔔<div class="tb-notif-dot"></div></div>
       <!-- settings -->
-      <div class="tb-icon-btn">⚙️</div>
+      <div class="tb-icon-btn">🛠️</div>
       <!-- user -->
       <div class="tb-user">
         <div class="tb-avatar" id="tb-av">—</div>
@@ -480,20 +480,20 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
   <div class="shell">
 
     <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
+    <aside class="sidebar" id="sidebar" style="display:none;">
       <div class="sb-i on" data-v="command" onclick="snav(this)"><span class="sb-ico">🏠</span><span class="sb-lbl">Command Center</span></div>
-      <div class="sb-i" data-v="threatmap" onclick="snav(this)"><span class="sb-ico">🌐</span><span class="sb-lbl">Threat Map</span><span class="sb-badge">LIVE</span></div>
-      <div class="sb-i" data-v="intelligence" onclick="snav(this)"><span class="sb-ico">🧠</span><span class="sb-lbl">AI Intelligence</span><span class="sb-badge" style="display:none;">3</span></div>
+      <div class="sb-i" data-v="threatmap" onclick="snav(this)"><span class="sb-ico">🛰️</span><span class="sb-lbl">Threat Map</span><span class="sb-badge">LIVE</span></div>
+      <div class="sb-i" data-v="intelligence" onclick="snav(this)"><span class="sb-ico">🎖️</span><span class="sb-lbl">AI Intelligence</span><span class="sb-badge" style="display:none;">3</span></div>
       <div class="sb-sep"></div>
       <div class="sb-i" data-v="quantum" onclick="snav(this)"><span class="sb-ico">⚛️</span><span class="sb-lbl">Quantum PQC</span></div>
       <div class="sb-i" data-v="redteam" onclick="snav(this)"><span class="sb-ico">🎯</span><span class="sb-lbl">Red Team</span></div>
-      <div class="sb-i" data-v="architecture" onclick="snav(this)"><span class="sb-ico">🏗️</span><span class="sb-lbl">Architecture</span></div>
+      
       <div class="sb-sep"></div>
-      <div class="sb-i" data-v="devhub" onclick="snav(this)"><span class="sb-ico">⚙️</span><span class="sb-lbl">Dev Hub</span></div>
-      <div class="sb-i" onclick="toggleKC()"><span class="sb-ico">⛓️</span><span class="sb-lbl">Kill Chain Theater</span></div>
+      <div class="sb-i" data-v="devhub" onclick="snav(this)"><span class="sb-ico">🛠️</span><span class="sb-lbl">Dev Hub</span></div>
+      
       <div class="sb-sep"></div>
-      <div class="sb-i"><span class="sb-ico">📋</span><span class="sb-lbl">Audit Log</span></div>
-      <div class="sb-i"><span class="sb-ico">🔑</span><span class="sb-lbl">Access Control</span></div>
+      
+      
     </aside>
 
     <!-- CONTENT -->
@@ -558,7 +558,7 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
           <iframe class="map-frame" src="https://www.antimatterai.com/demos/atom-red-team"
             sandbox="allow-scripts allow-same-origin allow-forms" loading="lazy"></iframe>
           <div class="map-hud">
-            <div class="map-live"><div class="map-live-d"></div>ATOM RED TEAM · LIVE DETECTION ACTIVE</div>
+            <div class="map-live"><div class="map-live-d"></div>ATOM RED TEAM GLOBAL ATTACK TELEMETRY · LIVE DETECTION ACTIVE</div>
           </div>
           <div class="map-stats">
             <div class="map-stat">CRITICAL: <span id="mc1" class="dr">0</span></div>
@@ -607,7 +607,7 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
           <!-- LEFT: Threat Actor + charts -->
           <div style="display:flex;flex-direction:column;gap:14px;">
             <div class="c">
-              <div class="ch"><div class="ch-l"><span class="ch-ico">🧠</span><span class="ch-t">Threat Actor Profiles</span></div><div class="bd bd-live">LIVE</div></div>
+              <div class="ch"><div class="ch-l"><span class="ch-ico">🎖️</span><span class="ch-t">Threat Actor Profiles</span></div><div class="bd bd-live">LIVE</div></div>
               <table class="dt">
                 <thead><tr><th>Actor</th><th>Type</th><th>Last Seen</th><th>Confidence</th></tr></thead>
                 <tbody>
@@ -642,7 +642,7 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
                 <thead><tr><th>Origin</th><th>Attacks</th><th>Vector</th></tr></thead>
                 <tbody>
                   <tr><td>🇷🇺 Eastern EU</td><td class="dm dr">28%</td><td>LLM injection</td></tr>
-                  <tr><td>🌐 TOR/Anon</td><td class="dm da">22%</td><td>Multi-vector</td></tr>
+                  <tr><td>🛰️ TOR/Anon</td><td class="dm da">22%</td><td>Multi-vector</td></tr>
                   <tr><td>🇨🇳 East Asia</td><td class="dm da">18%</td><td>PQC harvest</td></tr>
                   <tr><td>🇺🇸 US (Rogue)</td><td class="dm dc2">14%</td><td>Agent hijack</td></tr>
                   <tr><td>🌍 Rest</td><td class="dm dg">18%</td><td>Mixed</td></tr>
@@ -747,57 +747,11 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
         </div>
         <div class="g2">
           <div class="c a-card"><div class="ch"><div class="ch-l"><span class="ch-ico">🔥</span><span class="ch-t">Vector Breakdown</span></div></div><div style="padding:12px;" id="rt-vec"></div></div>
-          <div class="c c-card"><div class="ch"><div class="ch-l"><span class="ch-ico">📡</span><span class="ch-t">Response Actions</span></div><div class="bd bd-live">LIVE</div></div><div class="term" id="rt-resp" style="height:160px;margin:12px;"></div></div>
+          <div class="c c-card"><div class="ch"><div class="ch-l"><span class="ch-ico">📡</span><span class="ch-t">Response Actions</span></div><div class="bd bd-live">LIVE</div></div><div class="term" id="rt-resp" style="height:200px;margin:12px;overflow-y:auto;"></div></div>
         </div>
       </div>
 
-      <!-- ▌ARCHITECTURE ▐ -->
-      <div class="view" id="v-architecture">
-        <div class="ph">
-          <div><div class="ph-t">Platform Architecture</div><div class="ph-s">ATOM ENGINE · SYSTEM TOPOLOGY · COMMAND FABRIC</div></div>
-          <div class="ph-r"><span class="bd bd-info">v3.2.1 STABLE</span></div>
-        </div>
-        <div class="g2">
-          <div class="c c-card">
-            <div class="ch"><div class="ch-l"><span class="ch-ico">🏗️</span><span class="ch-t">Core Engine Topology</span></div><div class="bd bd-info">CLICK NODE FOR ANALYTICS</div></div>
-            <div class="arch-grid" id="arch-grid">
-              <div class="an on" data-key="atom-core"><div class="an-ico">⚛️</div><div class="an-name">ATOM Core</div><div class="an-desc">Autonomous threat detection kernel</div><div class="an-st"><span class="pill p-ok">● LIVE</span></div></div>
-              <div class="an" data-key="redteam"><div class="an-ico">🛡️</div><div class="an-name">Red Team Sim</div><div class="an-desc">Adversarial attack orchestration</div><div class="an-st"><span class="pill p-ok">● LIVE</span></div></div>
-              <div class="an" data-key="pqc-auth"><div class="an-ico">🔑</div><div class="an-name">PQC Auth Layer</div><div class="an-desc">Kyber-1024 key exchange</div><div class="an-st"><span class="pill p-ok">● LIVE</span></div></div>
-              <div class="an" data-key="ai-engine"><div class="an-ico">🧠</div><div class="an-name">AI Decision Engine</div><div class="an-desc">LLM-native defense scoring</div><div class="an-st"><span class="pill p-ok">● LIVE</span></div></div>
-              <div class="an" data-key="telemetry"><div class="an-ico">📡</div><div class="an-name">Telemetry Bus</div><div class="an-desc">WebSocket + gRPC streams</div><div class="an-st"><span class="pill p-ok">● LIVE</span></div></div>
-              <div class="an" data-key="gpu-cluster"><div class="an-ico">☁️</div><div class="an-name">Linode GPU Cluster</div><div class="an-desc">Akamai edge inference nodes</div><div class="an-st"><span class="pill p-ok">● LIVE</span></div></div>
-              <div class="an" data-key="api-gateway"><div class="an-ico">🔌</div><div class="an-name">API Gateway</div><div class="an-desc">48 endpoints / rate limiting</div><div class="an-st"><span class="pill p-ok">● LIVE</span></div></div>
-              <div class="an" data-key="vector-db"><div class="an-ico">🗄️</div><div class="an-name">Vector DB</div><div class="an-desc">Threat embedding store (Pinecone)</div><div class="an-st"><span class="pill p-ok">● LIVE</span></div></div>
-              <div class="an" data-key="analytics"><div class="an-ico">📊</div><div class="an-name">Analytics Engine</div><div class="an-desc">Real-time MITRE mapping</div><div class="an-st"><span class="pill p-ok">● LIVE</span></div></div>
-            </div>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:14px;">
-            <div class="c r" style="flex:1;">
-              <div class="ch"><div class="ch-l"><span class="ch-ico">📈</span><span class="ch-t">Node Analytics Stream</span></div><div class="bd bd-live">LIVE</div></div>
-              <div class="term" id="arch-log" style="height:220px;margin:12px;"></div>
-            </div>
-            <div class="c g-card">
-              <div class="ch"><div class="ch-l"><span class="ch-ico">📶</span><span class="ch-t">Service Health</span></div><div class="bd bd-ok">ALL NOMINAL</div></div>
-              <div style="padding:12px;" id="arch-health"></div>
-            </div>
-          </div>
-        </div>
-        <div class="g3">
-          <div class="c c-card"><div class="ch"><div class="ch-l"><span class="ch-ico">⚡</span><span class="ch-t">API Throughput</span></div></div><div style="padding:12px;" id="arch-api"></div></div>
-          <div class="c a-card"><div class="ch"><div class="ch-l"><span class="ch-ico">🖥️</span><span class="ch-t">Infrastructure</span></div></div><div style="padding:12px;" id="infra-bars"></div></div>
-          <div class="c p-card"><div class="ch"><div class="ch-l"><span class="ch-ico">📦</span><span class="ch-t">SDK Packages</span></div></div>
-            <div class="term" style="height:140px;margin:12px;">
-              <p class="tl"><span class="ti"># TypeScript / JS</span></p>
-              <p class="tl"><span class="to">npm</span> <span class="td">i @atom/dtom-sdk @atom/pqc</span></p>
-              <p class="tl"><span class="ti"># Python</span></p>
-              <p class="tl"><span class="to">pip</span> <span class="td">install atom-dtom atom-pqc</span></p>
-              <p class="tl"><span class="ti"># Docker</span></p>
-              <p class="tl"><span class="to">docker</span> <span class="td">pull atom/platform:3.2.1</span></p>
-              <p class="tl"><span class="tp">docs.atom.io/quickstart</span></p>
-            </div>
-          </div>
-        </div>
+      <!-- ARCHITECTURE VIEW REDUCED -->
       </div>
 
       <!-- ▌DEV HUB ▐ -->
@@ -820,7 +774,7 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
               <tr><td>⚛️ ATOM Stream</td><td class="dm dc2">/v3/atom/stream</td><td class="dm dg">128K</td><td class="dm">18ms</td><td><span class="pill p-ok">LIVE</span></td></tr>
               <tr><td>🛡️ Red Team</td><td class="dm dc2">/v3/redteam/run</td><td class="dm dg">4.2K</td><td class="dm">142ms</td><td><span class="pill p-ok">LIVE</span></td></tr>
               <tr><td>🧬 PQC Rotate</td><td class="dm dc2">/v3/pqc/rotate</td><td class="dm dg">22K</td><td class="dm">9ms</td><td><span class="pill p-ok">LIVE</span></td></tr>
-              <tr><td>🧠 HumanOS</td><td class="dm dc2">/v3/humanos/query</td><td class="dm da">1.8K</td><td class="dm">88ms</td><td><span class="pill p-med">BETA</span></td></tr>
+              <tr><td>🎖️ HumanOS</td><td class="dm dc2">/v3/humanos/query</td><td class="dm da">1.8K</td><td class="dm">88ms</td><td><span class="pill p-med">BETA</span></td></tr>
               <tr><td>🏥 PhysioPS</td><td class="dm dc2">/v3/physio/decision</td><td class="dm da">980</td><td class="dm">62ms</td><td><span class="pill p-med">BETA</span></td></tr>
               <tr><td>🔬 Solara</td><td class="dm dc2">/v3/solara/sequence</td><td class="dm">240</td><td class="dm">210ms</td><td><span class="pill p-high">ALPHA</span></td></tr>
             </tbody>
@@ -868,7 +822,7 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
     <div class="fb">
       <div class="fi"><div class="fd fd-g"></div>ATOM ENGINE LIVE</div>
       <div class="fi sep">·</div>
-      <div class="fi">DTOM RED TEAM COMMAND PLATFORM v3.2.1</div>
+      <div class="fi">ATOM RED TEAM COMMAND PLATFORM v3.2.1</div>
       <div class="fi sep">·</div>
       <div class="fi"><div class="fd fd-g"></div>PROTECTED BY CRYSTALS-KYBER PQC ENCRYPTION</div>
       <div class="fi sep">·</div>
@@ -1268,7 +1222,7 @@ function boot(){
   initCharts(); initArch();
 
   const apis=[
-    {ico:'🤖',n:'OpenAI GPT-4o',h:0,max:480},{ico:'🧠',n:'Anthropic Claude',h:0,max:380},
+    {ico:'🤖',n:'OpenAI GPT-4o',h:0,max:480},{ico:'🎖️',n:'Anthropic Claude',h:0,max:380},
     {ico:'💎',n:'Google Gemini',h:0,max:310},{ico:'🦙',n:'Meta LLaMA',h:0,max:240},{ico:'☁️',n:'Azure OpenAI',h:0,max:200},
   ];
   const atgt=document.getElementById('api-tgt');
@@ -1284,7 +1238,7 @@ function boot(){
 
   buildBars('health-bars',[
     {l:'ATOM Threat Engine',p:99,c:'pf-g',v:'99%'},{l:'PQC Key Rotation',p:100,c:'pf-p',v:'100%'},
-    {l:'Redis Cache',p:97,c:'pf-g',v:'97%'},{l:'Linode GPU Cluster',p:94,c:'pf-a',v:'94%'},
+    {l:'Semantic Cache',p:97,c:'pf-g',v:'97%'},{l:'Linode GPU Cluster',p:94,c:'pf-a',v:'94%'},
     {l:'API Gateway',p:99,c:'pf-g',v:'99%'},{l:'Auth Service',p:100,c:'pf-g',v:'100%'},
   ]);
   buildBars('pqc-bars-map',[
@@ -1309,8 +1263,8 @@ function boot(){
     {l:'Red Team Sim',p:28,c:'pf-a',v:'4.2K/hr'},
   ]);
   buildBars('infra-bars',[
-    {l:'Linode GPU (Akamai)',p:94,c:'pf-a',v:'94%'},{l:'Vercel Edge',p:99,c:'pf-g',v:'99%'},
-    {l:'Redis Cache',p:97,c:'pf-c',v:'97%'},{l:'Pinecone Vector DB',p:100,c:'pf-p',v:'100%'},
+    {l:'Linode GPU (Akamai)',p:94,c:'pf-a',v:'94%'},{l:'SIx4',p:99,c:'pf-g',v:'99%'},
+    {l:'Semantic Cache',p:97,c:'pf-c',v:'97%'},{l:'Pi3',p:100,c:'pf-p',v:'100%'},
   ]);
   buildBars('cipher-bars',[
     {l:'Kyber-1024 Encap',p:99,c:'pf-p',v:'0.42ms'},{l:'Dilithium Sign',p:95,c:'pf-c',v:'1.10ms'},
@@ -1340,11 +1294,11 @@ function boot(){
   }
 
   // Start tickers
-  timers.push(setInterval(tickLogs,1800));
+  timers.push(setInterval(tickLogs,1300));
   timers.push(setInterval(tickKPIs,2400));
-  timers.push(setInterval(tickPQC,2200));
-  timers.push(setInterval(tickRT,2600));
-  timers.push(setInterval(tickIntel,3000));
+  timers.push(setInterval(tickPQC,1700));
+  timers.push(setInterval(tickRT,1900));
+  timers.push(setInterval(tickIntel,2000));
   timers.push(setInterval(()=>tickAPIs(apis),2000));
   timers.push(setInterval(tickLattice,700));
 }
