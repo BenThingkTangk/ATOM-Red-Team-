@@ -1,3 +1,11 @@
+
+dtom_platform
+
+View
+
+Code
+
+Edit
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -398,6 +406,19 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
 .fd-r{background:var(--r);box-shadow:0 0 4px var(--r);}
 .sep{color:rgba(255,255,255,.08);}
 .f-clk{margin-left:auto;font-family:var(--f-mono);font-size:7.5px;letter-spacing:1.5px;color:var(--d2);}
+
+.user-menu{position:absolute;top:46px;right:96px;width:200px;background:rgba(8,9,15,.98);border:1px solid rgba(255,255,255,.08);border-radius:8px;box-shadow:0 12px 30px rgba(0,0,0,.8);display:none;flex-direction:column;z-index:400;}
+.um-item{padding:8px 12px;font-family:var(--f-mono);font-size:10px;color:var(--w);cursor:pointer;border-bottom:1px solid rgba(255,255,255,.05);}
+.um-item:last-child{border-bottom:none;}
+.um-item:hover{background:rgba(255,0,51,.18);}
+
+.mini-dock{position:fixed;bottom:28px;right:22px;width:360px;max-height:260px;background:rgba(8,9,15,.98);border-radius:10px;border:1px solid rgba(255,255,255,.1);box-shadow:0 18px 40px rgba(0,0,0,.85);display:none;flex-direction:column;z-index:350;}
+.mini-h{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;}
+.mini-t{font-family:var(--f-mono);font-size:9px;letter-spacing:2px;color:var(--d);}
+.mini-close{cursor:pointer;font-size:14px;color:var(--d);}
+.mini-b{padding:10px 12px;overflow-y:auto;font-family:var(--f-mono);font-size:10px;line-height:1.6;}
+.mini-pill{display:inline-block;padding:1px 6px;border-radius:999px;border:1px solid rgba(0,245,255,.35);color:var(--c);font-size:8px;margin-left:6px;}
+
 </style>
 </head>
 <body>
@@ -408,7 +429,7 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
   <div class="l-corner tl"></div><div class="l-corner tr"></div>
   <div class="l-corner bl"></div><div class="l-corner br"></div>
   <div class="l-hdr">
-    <img class="l-emblem" src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/37a51c06-8586-4bdd-a320-d32cef0b7d73" alt="ATOM Emblem" id="l-emblem-img"/>
+    <img class="l-emblem" src="/atom-emblem.png" alt="ATOM Emblem" id="l-emblem-img"/>
     <div class="l-eye">SECURE PLATFORM ACCESS</div>
     <div class="l-logo">ATOM</div>
     <div class="l-tag">AUTONOMOUS THREAT OPERATIONS MATRIX · POST-QUANTUM CYBERSECURITY ENGINE</div>
@@ -430,7 +451,7 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
   <!-- TOPBAR -->
   <header class="topbar">
     <div class="tb-brand">
-      <img class="tb-emblem" src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/37a51c06-8586-4bdd-a320-d32cef0b7d73" alt="ATOM"/>
+      <img class="tb-emblem" src="/atom-emblem.png" alt="ATOM"/>
       <div>
         <div class="tb-logo-txt">ATOM</div>
         <div class="tb-sub">AUTONOMOUS DEFENSE COMMAND PLATFORM</div>
@@ -469,9 +490,14 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
       <!-- settings -->
       <div class="tb-icon-btn">🛠️</div>
       <!-- user -->
-      <div class="tb-user">
+      <div class="tb-user" onclick="toggleUserMenu(event)">
         <div class="tb-avatar" id="tb-av">—</div>
         <div class="tb-uname"><b id="tb-un">—</b></div>
+      </div>
+      <div class="user-menu" id="user-menu">
+        <div class="um-item" onclick="openMini('access');event.stopPropagation();">Access Control</div>
+        <div class="um-item" onclick="openMini('audit');event.stopPropagation();">Audit Log</div>
+        <div class="um-item" onclick="openMini('settings');event.stopPropagation();">Settings</div>
       </div>
       <button class="btn-auth" style="width:auto;padding:7px 16px;font-size:9px;letter-spacing:2px;" onclick="doLogout()">⏻ EXIT</button>
     </div>
@@ -1217,7 +1243,7 @@ function boot(){
   updateClocks(); timers.push(setInterval(updateClocks,1000));
 
   ['hmap1','hmap2','hmap3'].forEach(buildHmap);
-  buildIncidents('inc-tb'); buildIncidents('rt-inc');
+  renderIncidents(); buildIncidents('rt-inc');
   buildLattice(); buildHNDL();
   initCharts(); initArch();
 
@@ -1301,6 +1327,77 @@ function boot(){
   timers.push(setInterval(tickIntel,2000));
   timers.push(setInterval(()=>tickAPIs(apis),2000));
   timers.push(setInterval(tickLattice,700));
+  timers.push(setInterval(rotateIncidents,5000));
+}
+
+// User menu and mini-views
+let umOpen=false;
+function toggleUserMenu(ev){
+  ev.stopPropagation();
+  umOpen=!umOpen;
+  const m=document.getElementById('user-menu');
+  if(m)m.style.display=umOpen?'flex':'none';
+}
+window.addEventListener('click',()=>{const m=document.getElementById('user-menu');if(m){m.style.display='none';umOpen=false;}});
+
+function openMini(kind){
+  const dock=document.getElementById('mini-dock');
+  const title=document.getElementById('mini-title');
+  const body=document.getElementById('mini-body');
+  if(!dock||!title||!body)return;
+  if(kind==='access'){
+    title.textContent='ACCESS CONTROL';
+    body.innerHTML='<p>Session:</p><p class="td">Ben O'Leary <span class="mini-pill">L3 RED TEAM</span></p><p>Last login: UTC '+new Date().toISOString().replace('T',' ').slice(0,19)+'</p><p>Roles: OWNER · RED TEAM OPERATOR · PQC ADMIN</p><p>Current scope: ALL TENANTS</p>';
+  } else if(kind==='audit'){
+    title.textContent='AUDIT LOG';
+    body.innerHTML='<p>03:11:22 — POLICY UPDATED · PQC rotation interval set to 4h.</p><p>03:08:09 — ROLE CHANGE · Chris Riley granted DEVOPS.</p><p>02:55:44 — SESSION ESTABLISHED · rt-sim-8824 (Ben).</p><p>02:41:02 — EXPORT · MITRE Navigator bundle generated for board.</p>';
+  } else {
+    title.textContent='SETTINGS';
+    body.innerHTML='<p>Theme: <span class="mini-pill">ATOM DARK</span></p><p>Animation: ENABLED (GSAP)</p><p>Live Data: SIMULATED STREAM</p><p>Compliance Mode: BOARD DEMO</p>';
+  }
+  dock.style.display='flex';
+}
+function closeMini(){const dock=document.getElementById('mini-dock');if(dock)dock.style.display='none';}
+
+// Incident queue rotation
+let INC_ROWS_BASE=[
+  {id:'INC-0081',ts:'03:14',vec:'Prompt Injection',tgt:'GPT-4o',sev:'p-crit',ss:'CRITICAL',stat:'CONTAINED',m:'T1190',mttr:'44ms'},
+  {id:'INC-0080',ts:'03:11',vec:'Agent Hijack',tgt:'Claude',sev:'p-high',ss:'HIGH',stat:'BLOCKED',m:'T1059',mttr:'88ms'},
+  {id:'INC-0079',ts:'03:08',vec:'RAG Poisoning',tgt:'Azure OAI',sev:'p-high',ss:'HIGH',stat:'ESCALATED',m:'T1657',mttr:'—'},
+  {id:'INC-0078',ts:'03:01',vec:'LLM Jailbreak',tgt:'LLaMA',sev:'p-med',ss:'MEDIUM',stat:'BLOCKED',m:'T1190',mttr:'112ms'},
+  {id:'INC-0077',ts:'02:55',vec:'Model Evasion',tgt:'Gemini',sev:'p-med',ss:'MEDIUM',stat:'RESOLVED',m:'T1055',mttr:'190ms'},
+];
+let incCursor=82;
+function renderIncidents(){
+  const tb=document.getElementById('inc-tb');
+  if(!tb)return;
+  tb.innerHTML=INC_ROWS_BASE.map(r=>`<tr>
+    <td class="dm dc2">${r.id}</td><td class="dm">${r.ts}</td><td>${r.vec}</td><td>${r.tgt}</td>
+    <td><span class="pill ${r.sev}">${r.ss}</span></td>
+    <td class="dm ${r.stat==='ESCALATED'?'dr':r.stat==='BLOCKED'?'dg':'da'}">${r.stat}</td>
+    <td class="dm">${r.mttr}</td>
+  </tr>`).join('');
+}
+function rotateIncidents(){
+  const now=new Date();
+  INC_ROWS_BASE.pop();
+  incCursor++;
+  const hh=String(now.getHours()).padStart(2,'0');
+  const mm=String(now.getMinutes()).padStart(2,'0');
+  const sevOptions=[['p-crit','CRITICAL'],['p-high','HIGH'],['p-med','MEDIUM']];
+  const pick=sevOptions[Math.floor(Math.random()*sevOptions.length)];
+  const newRow={
+    id:`INC-${String(incCursor).padStart(4,'0')}`,
+    ts:`${hh}:${mm}`,
+    vec:['Prompt Injection','Agent Hijack','RAG Poisoning','LLM Jailbreak','Model Evasion'][Math.floor(Math.random()*5)],
+    tgt:['GPT-4o','Claude','Gemini','LLaMA','Azure OAI'][Math.floor(Math.random()*5)],
+    sev:pick[0],ss:pick[1],
+    stat:['BLOCKED','CONTAINED','ESCALATED','RESOLVED'][Math.floor(Math.random()*4)],
+    m:['T1190','T1059','T1657','T1055'][Math.floor(Math.random()*4)],
+    mttr:Math.random()<.2?'—':`${Math.floor(40+Math.random()*200)}ms`,
+  };
+  INC_ROWS_BASE.unshift(newRow);
+  renderIncidents();
 }
 
 // Run login animations on load
