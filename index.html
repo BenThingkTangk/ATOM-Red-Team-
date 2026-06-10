@@ -1507,7 +1507,7 @@ function openMini(kind){
   if(!dock||!title||!body)return;
   if(kind==='access'){
     title.textContent='ACCESS CONTROL';
-    body.innerHTML='<p>Session:</p><p class="td">Ben O'Leary <span class="mini-pill">L3 RED TEAM</span></p><p>Last login: UTC '+new Date().toISOString().replace('T',' ').slice(0,19)+'</p><p>Roles: OWNER · RED TEAM OPERATOR · PQC ADMIN</p><p>Current scope: ALL TENANTS</p>';
+    body.innerHTML = `<p>Session:</p><p class="td">Ben OLeary <span class="mini-pill">L3 RED TEAM</span></p><p>Last login: UTC ${new Date().toISOString().replace('T',' ').slice(0,19)}</p><p>Roles: OWNER · RED TEAM OPERATOR · PQC ADMIN</p><p>Current scope: ALL TENANTS</p>`;
   } else if(kind==='audit'){
     title.textContent='AUDIT LOG';
     body.innerHTML='<p>03:11:22 — POLICY UPDATED · PQC rotation interval set to 4h.</p><p>03:08:09 — ROLE CHANGE · Chris Riley granted DEVOPS.</p><p>02:55:44 — SESSION ESTABLISHED · rt-sim-8824 (Ben).</p><p>02:41:02 — EXPORT · MITRE Navigator bundle generated for board.</p>';
