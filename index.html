@@ -3,39 +3,39 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ATOM — Autonomous Threat Operations Matrix | Nirmata Holdings</title>
+<title>ATOM — Autonomous Threat Operations Matrix</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
 
 :root {
-  --void: #000005;
-  --deep: #03030a;
-  --panel: #07070f;
-  --card: #0b0b16;
-  --card2: #0e0e1a;
-  --glass: rgba(255,255,255,0.025);
-  --border: rgba(220,30,30,0.15);
-  --border2: rgba(220,30,30,0.35);
-  --border3: rgba(220,30,30,0.6);
-  --red: #ff1a1a;
-  --red2: #cc0000;
-  --red3: #880000;
-  --red-glow: 0 0 20px rgba(255,20,20,0.4);
-  --red-glow2: 0 0 40px rgba(255,20,20,0.25);
-  --amber: #ffaa00;
-  --amber2: #cc8800;
-  --green: #00ff88;
-  --green2: #00cc66;
-  --cyan: #00d4ff;
-  --cyan2: #0099cc;
-  --purple: #8b44ff;
-  --purple2: #6622cc;
-  --blue: #1a44ff;
-  --white: #f0f0ff;
-  --dim: #6a6a8a;
-  --muted: #333345;
-  --font-hud: 'Share Tech Mono', monospace;
-  --font-ui: 'Rajdhani', sans-serif;
+  --void: #080B12;
+  --deep: #050812;
+  --panel: #0A101C;
+  --card: #0E1422;
+  --card2: #11182A;
+  --glass: rgba(255,255,255,0.035);
+  --border: rgba(255,0,51,0.18);
+  --border2: rgba(255,0,51,0.45);
+  --border3: rgba(255,0,51,0.8);
+  --red: #FF0033;
+  --red2: #C0002A;
+  --red3: #7A001C;
+  --red-glow: 0 0 26px rgba(255,0,51,0.7);
+  --red-glow2: 0 0 50px rgba(255,0,51,0.45);
+  --amber: #FFB300;
+  --amber2: #CC8A00;
+  --green: #00FF88;
+  --green2: #00CC66;
+  --cyan: #00F5FF;
+  --cyan2: #00A5B5;
+  --purple: #B144FF;
+  --purple2: #7022C8;
+  --blue: #1A44FF;
+  --white: #F5F7FF;
+  --dim: #7C869F;
+  --muted: #343B4F;
+  --font-hud: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+  --font-ui: 'IBM Plex Mono', monospace;
   --font-brand: 'Orbitron', sans-serif;
   --transition: all 0.22s cubic-bezier(0.4,0,0.2,1);
 }
@@ -45,7 +45,7 @@
 html, body {
   width:100vw; height:100vh;
   overflow:hidden;
-  background:var(--void);
+  background:radial-gradient(circle at top, rgba(255,0,51,0.08) 0, #080B12 48%, #02040A 100%);
   color:var(--white);
   font-family:var(--font-ui);
   font-size:14px;
@@ -100,6 +100,7 @@ body::before {
 .login-corner.br { bottom:40px; right:40px; border-width:0 2px 2px 0; }
 
 .login-header { text-align:center; margin-bottom:44px; }
+.login-logo-img { width:120px; height:120px; object-fit:contain; margin-bottom:18px; filter:drop-shadow(0 0 20px rgba(255,0,51,0.8)); opacity:0.95; }
 .login-eyebrow {
   font-family:var(--font-hud);
   font-size:10px; letter-spacing:5px; color:rgba(255,20,20,0.6);
@@ -208,8 +209,8 @@ body::before {
 
 /* ─── TOPBAR ─── */
 .topbar {
-  height:54px; flex-shrink:0;
-  background:rgba(0,0,3,0.97);
+  height:72px; flex-shrink:0;
+  background:radial-gradient(circle at top, rgba(255,0,51,0.18) 0, rgba(3,5,12,0.98) 55%, rgba(0,0,0,0.98) 100%);
   border-bottom:1px solid var(--border);
   display:flex; align-items:center;
   padding:0 18px; gap:0;
@@ -220,6 +221,39 @@ body::before {
   background:linear-gradient(90deg, transparent 0%, rgba(255,20,20,0.5) 30%, rgba(255,20,20,0.5) 70%, transparent 100%);
 }
 
+.tb-hero {
+  display:flex; align-items:center; gap:18px;
+  margin-left:10px; flex:1;
+}
+.tb-hero-block {
+  min-width:110px;
+}
+.tb-hero-label {
+  font-family:var(--font-hud);
+  font-size:8px; letter-spacing:2px; color:var(--dim); text-transform:uppercase;
+}
+.tb-hero-value {
+  font-family:var(--font-hud);
+  font-size:11px; color:var(--white); margin-top:4px;
+}
+.tb-status-pill {
+  padding:2px 8px; border-radius:999px; border:1px solid rgba(0,255,136,0.5);
+  color:var(--green); background:rgba(0,255,136,0.08);
+  box-shadow:0 0 8px rgba(0,255,136,0.35);
+}
+.tb-gti-wrap {
+  position:relative; width:40px; height:40px;
+}
+.tb-gti-svg { width:40px; height:40px; transform:rotate(-90deg); }
+.tb-gti-bg { fill:none; stroke:rgba(255,255,255,0.08); stroke-width:3; }
+.tb-gti-fg { fill:none; stroke:var(--red); stroke-width:3; stroke-linecap:round; stroke-dasharray:100; stroke-dashoffset:100; filter:drop-shadow(0 0 6px rgba(255,0,51,0.8)); }
+.tb-gti-num {
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-hud); font-size:11px; color:var(--white);
+}
+.tb-pqc-line {
+  white-space:nowrap; font-size:10px; color:var(--cyan);
+}
 .tb-brand {
   display:flex; align-items:center; gap:12px;
   padding-right:20px;
@@ -227,6 +261,7 @@ body::before {
   margin-right:18px;
   flex-shrink:0;
 }
+.tb-logo-img { width:40px; height:40px; object-fit:contain; filter:drop-shadow(0 0 18px rgba(255,0,51,0.8)); }
 .tb-logo {
   font-family:var(--font-brand);
   font-size:16px; font-weight:800; letter-spacing:4px;
@@ -294,7 +329,7 @@ body::before {
 
 /* ─── SIDEBAR ─── */
 .sidebar {
-  width:200px; flex-shrink:0;
+  width:76px; flex-shrink:0;
   background:rgba(0,0,5,0.98);
   border-right:1px solid var(--border);
   display:flex; flex-direction:column;
@@ -312,8 +347,8 @@ body::before {
 .sb-section:first-child .sb-section-label { border-top:none; margin-top:0; }
 
 .sb-item {
-  display:flex; align-items:center; gap:10px;
-  padding:8px 16px;
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+  padding:10px 8px;
   font-family:var(--font-ui); font-weight:500; font-size:12px; letter-spacing:0.5px;
   color:var(--dim); cursor:pointer;
   transition:var(--transition);
@@ -326,7 +361,7 @@ body::before {
   content:''; position:absolute; right:0; top:20%; bottom:20%; width:1px;
   background:var(--red); box-shadow:0 0 6px var(--red);
 }
-.sb-ico { font-size:14px; width:18px; text-align:center; flex-shrink:0; }
+.sb-ico { font-size:18px; width:auto; text-align:center; flex-shrink:0; }
 .sb-badge {
   margin-left:auto; padding:1px 7px; border-radius:10px;
   font-family:var(--font-hud); font-size:8px; letter-spacing:1px;
@@ -337,7 +372,7 @@ body::before {
 .sb-badge.c { background:rgba(0,212,255,0.1); color:var(--cyan); border-color:rgba(0,212,255,0.25); }
 
 /* ─── CONTENT ─── */
-.content { flex:1; overflow-y:auto; overflow-x:hidden; background:var(--void); padding:20px; }
+.content { flex:1; overflow-y:auto; overflow-x:hidden; background:radial-gradient(circle at top, rgba(255,0,51,0.08) 0, #080B12 48%, #02040A 100%); padding:20px; }
 
 /* ─── VIEWS ─── */
 .view { display:none; animation:fadeIn 0.3s ease; }
@@ -626,6 +661,7 @@ body::before {
 .fb-link:hover { color:var(--red); }
 .fb-clock-r { margin-left:auto; font-family:var(--font-hud); font-size:8px; letter-spacing:2px; color:var(--muted); }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 </head>
 <body>
 
@@ -638,6 +674,7 @@ body::before {
   <div class="login-corner br"></div>
 
   <div class="login-header">
+    <img class="login-logo-img" src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/213ee9be-3361-462c-be78-824d78183b75" alt="ATOM Red Team Emblem"/>
     <div class="login-eyebrow">SECURE PLATFORM ACCESS</div>
     <div class="login-logo-text">ATOM</div>
     <div class="login-tagline">AUTONOMOUS THREAT OPERATIONS MATRIX · POST-QUANTUM CYBERSECURITY ENGINE</div>
@@ -665,19 +702,10 @@ body::before {
     <div class="tb-brand">
       <div>
         <div class="tb-logo">⚛ ATOM</div>
-        <div class="tb-subtitle">NIRMATA HOLDINGS<br/>RED TEAM ENGINE</div>
+        <div class="tb-subtitle"><br/>COMMAND PLATFORM</div>
       </div>
     </div>
-    <nav class="tb-nav">
-      <div class="tb-tab on" data-v="command" onclick="nav(this)"><span class="t-ico">🏠</span>Command</div>
-      <div class="tb-tab" data-v="threatmap" onclick="nav(this)"><span class="t-ico">🗺️</span>Threat Map</div>
-      <div class="tb-tab" data-v="architecture" onclick="nav(this)"><span class="t-ico">🏗️</span>Architecture</div>
-      <div class="tb-tab" data-v="quantum" onclick="nav(this)"><span class="t-ico">⚛️</span>Quantum PQC</div>
-      <div class="tb-tab" data-v="redteam" onclick="nav(this)"><span class="t-ico">🎯</span>Red Team</div>
-      <div class="tb-tab" data-v="intelligence" onclick="nav(this)"><span class="t-ico">🧠</span>Intelligence</div>
-      <div class="tb-tab" data-v="investor" onclick="nav(this)"><span class="t-ico">📈</span>Investor</div>
-      <div class="tb-tab" data-v="devhub" onclick="nav(this)"><span class="t-ico">⚙️</span>Dev Hub</div>
-    </nav>
+
     <div class="tb-right">
       <div class="tb-status-group">
         <div class="tb-pulse"><span class="tb-pulse-core"></span><span class="tb-pulse-ring"></span></div>
@@ -709,16 +737,8 @@ body::before {
       </div>
       <div class="sb-section">
         <div class="sb-section-label">Platform</div>
-        <div class="sb-item" data-v="investor" onclick="snav(this)"><span class="sb-ico">📈</span>Investor Hub</div>
         <div class="sb-item" data-v="devhub" onclick="snav(this)"><span class="sb-ico">⚙️</span>Dev Hub</div>
         <div class="sb-item" data-v="devhub" onclick="snav(this)"><span class="sb-ico">🔌</span>API Gateway <span class="sb-badge c">48</span></div>
-      </div>
-      <div class="sb-section">
-        <div class="sb-section-label">Portfolio</div>
-        <div class="sb-item"><span class="sb-ico">🧬</span>AntimatterAI</div>
-        <div class="sb-item"><span class="sb-ico">🧠</span>ThingkTangk</div>
-        <div class="sb-item"><span class="sb-ico">🔬</span>RRG.bio</div>
-        <div class="sb-item"><span class="sb-ico">🏥</span>ClinixAI</div>
       </div>
       <div class="sb-section">
         <div class="sb-section-label">System</div>
@@ -889,7 +909,7 @@ body::before {
         <div class="ph">
           <div class="ph-left">
             <div class="ph-title">PLATFORM ARCHITECTURE</div>
-            <div class="ph-sub">ATOM ENGINE · SYSTEM TOPOLOGY · NIRMATA HOLDINGS</div>
+            <div class="ph-sub">ATOM ENGINE · SYSTEM TOPOLOGY · </div>
           </div>
           <div class="ph-right"><span class="badge bd-info">v3.2.1 STABLE</span></div>
         </div>
@@ -898,15 +918,15 @@ body::before {
           <div class="c hi-cyan glow-cyan">
             <div class="ch"><div class="ch-left"><span class="ch-ico">🏗️</span><span class="ch-title">Core Engine Topology</span></div><div class="badge bd-info">LIVE</div></div>
             <div class="arch-grid">
-              <div class="arch-node active-node"><div class="an-ico">⚛️</div><div class="an-name">ATOM Core</div><div class="an-desc">Autonomous threat detection kernel</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
-              <div class="arch-node"><div class="an-ico">🛡️</div><div class="an-name">Red Team Sim</div><div class="an-desc">Adversarial attack orchestration</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
-              <div class="arch-node"><div class="an-ico">🔑</div><div class="an-name">PQC Auth Layer</div><div class="an-desc">Kyber-1024 key exchange</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
-              <div class="arch-node"><div class="an-ico">🧠</div><div class="an-name">AI Decision Engine</div><div class="an-desc">LLM-native defense scoring</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
-              <div class="arch-node"><div class="an-ico">📡</div><div class="an-name">Telemetry Bus</div><div class="an-desc">WebSocket + gRPC streams</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
-              <div class="arch-node"><div class="an-ico">☁️</div><div class="an-name">Linode GPU Cluster</div><div class="an-desc">Akamai edge inference nodes</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
-              <div class="arch-node"><div class="an-ico">🔌</div><div class="an-name">API Gateway</div><div class="an-desc">48 endpoints / rate limiting</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
-              <div class="arch-node"><div class="an-ico">🗄️</div><div class="an-name">Vector DB</div><div class="an-desc">Threat embedding store (Pinecone)</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
-              <div class="arch-node"><div class="an-ico">📊</div><div class="an-name">Analytics Engine</div><div class="an-desc">Real-time MITRE mapping + scoring</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
+              <div class="arch-node active-node" data-key="atom-core"><div class="an-ico">⚛️</div><div class="an-name">ATOM Core</div><div class="an-desc">Autonomous threat detection kernel</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
+              <div class="arch-node" data-key="redteam"><div class="an-ico">🛡️</div><div class="an-name">Red Team Sim</div><div class="an-desc">Adversarial attack orchestration</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
+              <div class="arch-node" data-key="pqc-auth"><div class="an-ico">🔑</div><div class="an-name">PQC Auth Layer</div><div class="an-desc">Kyber-1024 key exchange</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
+              <div class="arch-node" data-key="ai-engine"><div class="an-ico">🧠</div><div class="an-name">AI Decision Engine</div><div class="an-desc">LLM-native defense scoring</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
+              <div class="arch-node" data-key="telemetry"><div class="an-ico">📡</div><div class="an-name">Telemetry Bus</div><div class="an-desc">WebSocket + gRPC streams</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
+              <div class="arch-node" data-key="gpu-cluster"><div class="an-ico">☁️</div><div class="an-name">Linode GPU Cluster</div><div class="an-desc">Akamai edge inference nodes</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
+              <div class="arch-node" data-key="api-gateway"><div class="an-ico">🔌</div><div class="an-name">API Gateway</div><div class="an-desc">48 endpoints / rate limiting</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
+              <div class="arch-node" data-key="vector-db"><div class="an-ico">🗄️</div><div class="an-name">Vector DB</div><div class="an-desc">Threat embedding store (Pinecone)</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
+              <div class="arch-node" data-key="analytics"><div class="an-ico">📊</div><div class="an-name">Analytics Engine</div><div class="an-desc">Real-time MITRE mapping + scoring</div><div class="an-status"><span class="pill p-ok">● LIVE</span></div></div>
             </div>
           </div>
 
@@ -1125,68 +1145,6 @@ body::before {
         </div>
       </div>
 
-      <!-- ▓▓▓ INVESTOR HUB ▓▓▓ -->
-      <div class="view" id="v-investor">
-        <div class="ph">
-          <div class="ph-left">
-            <div class="ph-title">INVESTOR HUB</div>
-            <div class="ph-sub">NIRMATA HOLDINGS · PORTFOLIO INTELLIGENCE · SERIES A</div>
-          </div>
-          <div class="ph-right"><span class="badge bd-ok">SERIES A ROUND OPEN</span></div>
-        </div>
-
-        <div class="g4">
-          <div class="c hi-green glow-green kpi kv-green"><div class="ch-title">PORTFOLIO VALUATION</div><div class="kpi-val">$47M</div><div class="kpi-delta dd">↑ +18% QoQ</div></div>
-          <div class="c hi-cyan glow-cyan kpi kv-cyan"><div class="ch-title">RAISE TARGET</div><div class="kpi-val">$12M</div><div class="kpi-delta dc">$4.2M committed</div></div>
-          <div class="c hi-amber kpi kv-amber"><div class="ch-title">TOTAL ARR</div><div class="kpi-val">$1.53M</div><div class="kpi-delta da">↑ across portfolio</div></div>
-          <div class="c hi-purple glow-purple kpi kv-purple"><div class="ch-title">PORTFOLIO COS.</div><div class="kpi-val">4</div><div class="kpi-delta dc">active companies</div></div>
-        </div>
-
-        <div class="g2">
-          <div class="c">
-            <div class="ch"><div class="ch-left"><span class="ch-ico">📊</span><span class="ch-title">Portfolio Companies</span></div><div class="badge bd-ok">4 ACTIVE</div></div>
-            <table class="dt">
-              <thead><tr><th>Company</th><th>Vertical</th><th>Stage</th><th>ARR</th><th>Status</th></tr></thead>
-              <tbody>
-                <tr><td>⚛️ AntimatterAI</td><td class="dc">AI Security</td><td><span class="pill p-high">SEED+</span></td><td class="dg dm">$840K</td><td><span class="pill p-ok">GROWING</span></td></tr>
-                <tr><td>🧠 ThingkTangk</td><td class="dc">HumanOS/AI</td><td><span class="pill p-high">SEED</span></td><td class="dg dm">$220K</td><td><span class="pill p-ok">ACTIVE</span></td></tr>
-                <tr><td>🔬 RRG.bio</td><td class="dc">BioTech</td><td><span class="pill p-med">PRE-SEED</span></td><td class="da dm">$80K</td><td><span class="pill p-med">R&D</span></td></tr>
-                <tr><td>🏥 ClinixAI</td><td class="dc">HealthTech</td><td><span class="pill p-high">SEED</span></td><td class="dg dm">$390K</td><td><span class="pill p-ok">SCALING</span></td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="c hi-green">
-            <div class="ch"><div class="ch-left"><span class="ch-ico">📈</span><span class="ch-title">Growth Metrics</span></div><div class="badge bd-sim">SIMULATED</div></div>
-            <div style="padding:12px;" id="inv-bars"></div>
-          </div>
-        </div>
-
-        <div class="g2">
-          <div class="c hi-cyan">
-            <div class="ch"><div class="ch-left"><span class="ch-ico">🏆</span><span class="ch-title">Investment Highlights</span></div></div>
-            <div class="im"><div class="im-ico">🌐</div><div class="im-label">AI Security TAM by 2027</div><div class="im-val dc">$46.3B</div></div>
-            <div class="im"><div class="im-ico">⚡</div><div class="im-label">Daily API Calls</div><div class="im-val dg">2.4M / day</div></div>
-            <div class="im"><div class="im-ico">🛡️</div><div class="im-label">Threats Blocked YTD</div><div class="im-val dr">1.2M+</div></div>
-            <div class="im"><div class="im-ico">👥</div><div class="im-label">Enterprise Pilot Clients</div><div class="im-val da">14 active</div></div>
-            <div class="im"><div class="im-ico">📜</div><div class="im-label">Patents Pending (PQC + AI)</div><div class="im-val">3</div></div>
-            <div class="im"><div class="im-ico">🏅</div><div class="im-label">NIST PQC Compliant</div><div class="im-val dg">✓ CERTIFIED</div></div>
-          </div>
-          <div class="c">
-            <div class="ch"><div class="ch-left"><span class="ch-ico">📅</span><span class="ch-title">Milestones</span></div></div>
-            <table class="dt">
-              <thead><tr><th>Date</th><th>Milestone</th><th>Status</th></tr></thead>
-              <tbody>
-                <tr><td class="dm">Q3 2026</td><td>ATOM v4.0 Launch</td><td><span class="pill p-info">IN DEV</span></td></tr>
-                <tr><td class="dm">Q3 2026</td><td>Series A Close</td><td><span class="pill p-high">OPEN</span></td></tr>
-                <tr><td class="dm">Q4 2026</td><td>RRG.bio FDA Pre-IND</td><td><span class="pill p-med">PLANNED</span></td></tr>
-                <tr><td class="dm">Q4 2026</td><td>ClinixAI HIPAA Cert</td><td><span class="pill p-ok">ON TRACK</span></td></tr>
-                <tr><td class="dm">Q1 2027</td><td>AntimatterAI Series B</td><td><span class="pill p-low">PIPELINE</span></td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
       <!-- ▓▓▓ DEV HUB ▓▓▓ -->
       <div class="view" id="v-devhub">
         <div class="ph">
@@ -1208,9 +1166,9 @@ body::before {
           <div class="mod-card" style="--mc-color:var(--red)"><div class="mod-ico">⚛️</div><div class="mod-name">ATOM Threat Engine</div><div class="mod-desc">Real-time AI attack detection, MITRE ATLAS mapping, PQC key rotation & live telemetry streams.</div><div class="mod-footer"><span class="pill p-ok">● STABLE</span><span class="badge bd-info">REST · WebSocket</span></div></div>
           <div class="mod-card" style="--mc-color:var(--cyan)"><div class="mod-ico">🛡️</div><div class="mod-name">Red Team Simulator</div><div class="mod-desc">Automated adversarial testing, prompt injection, jailbreak fuzzing, and agent hijack scenarios.</div><div class="mod-footer"><span class="pill p-ok">● STABLE</span><span class="badge bd-info">REST · gRPC</span></div></div>
           <div class="mod-card" style="--mc-color:var(--purple)"><div class="mod-ico">🧬</div><div class="mod-name">PQC Crypto Suite</div><div class="mod-desc">Lattice-based post-quantum key exchange, CRYSTALS-Kyber/Dilithium integration for API auth.</div><div class="mod-footer"><span class="pill p-ok">● STABLE</span><span class="badge bd-purple">SDK · NPM</span></div></div>
-          <div class="mod-card" style="--mc-color:var(--amber)"><div class="mod-ico">🧠</div><div class="mod-name">HumanOS Bridge</div><div class="mod-desc">ThingkTangk HumanOS cognitive interface API for intelligent agent orchestration and memory.</div><div class="mod-footer"><span class="pill p-med">● BETA</span><span class="badge bd-warn">GraphQL · REST</span></div></div>
-          <div class="mod-card" style="--mc-color:var(--green)"><div class="mod-ico">🏥</div><div class="mod-name">ClinixAI SDK</div><div class="mod-desc">HIPAA-compliant AI clinical decision support, TCPA outbound compliance, patient data APIs.</div><div class="mod-footer"><span class="pill p-med">● BETA</span><span class="badge bd-warn">REST · FHIR</span></div></div>
-          <div class="mod-card" style="--mc-color:var(--purple)"><div class="mod-ico">🔬</div><div class="mod-name">RRG.bio Data Layer</div><div class="mod-desc">Stem cell research telemetry, genomic sequence ingestion, lab data pipelines & trial registries.</div><div class="mod-footer"><span class="pill p-high">● ALPHA</span><span class="badge bd-sim">REST · HL7</span></div></div>
+          <div class="mod-card" style="--mc-color:var(--amber)"><div class="mod-ico">🧠</div><div class="mod-name">HumanOS Bridge</div><div class="mod-desc">Q HumanOS cognitive interface API for intelligent agent orchestration and memory.</div><div class="mod-footer"><span class="pill p-med">● BETA</span><span class="badge bd-warn">GraphQL · REST</span></div></div>
+          <div class="mod-card" style="--mc-color:var(--green)"><div class="mod-ico">🏥</div><div class="mod-name">PhysioPS SDK</div><div class="mod-desc">HIPAA-compliant AI clinical decision support, TCPA outbound compliance, patient data APIs.</div><div class="mod-footer"><span class="pill p-med">● BETA</span><span class="badge bd-warn">REST · FHIR</span></div></div>
+          <div class="mod-card" style="--mc-color:var(--purple)"><div class="mod-ico">🔬</div><div class="mod-name">Solara Data Layer</div><div class="mod-desc">Stem cell research telemetry, genomic sequence ingestion, lab data pipelines & trial registries.</div><div class="mod-footer"><span class="pill p-high">● ALPHA</span><span class="badge bd-sim">REST · HL7</span></div></div>
         </div>
 
         <div class="g2">
@@ -1223,7 +1181,7 @@ body::before {
                 <tr><td>🛡️ Red Team</td><td class="dm dc">/v3/redteam/run</td><td class="dm dg">4.2K</td><td class="dm">142ms</td><td><span class="pill p-ok">LIVE</span></td></tr>
                 <tr><td>🧬 PQC Rotate</td><td class="dm dc">/v3/pqc/rotate</td><td class="dm dg">22K</td><td class="dm">9ms</td><td><span class="pill p-ok">LIVE</span></td></tr>
                 <tr><td>🧠 HumanOS</td><td class="dm dc">/v3/humanos/query</td><td class="dm da">1.8K</td><td class="dm">88ms</td><td><span class="pill p-med">BETA</span></td></tr>
-                <tr><td>🏥 ClinixAI</td><td class="dm dc">/v3/clinix/decision</td><td class="dm da">980</td><td class="dm">62ms</td><td><span class="pill p-med">BETA</span></td></tr>
+                <tr><td>🏥 PhysioPS</td><td class="dm dc">/v3/clinix/decision</td><td class="dm da">980</td><td class="dm">62ms</td><td><span class="pill p-med">BETA</span></td></tr>
                 <tr><td>🔬 RRG Genomics</td><td class="dm dc">/v3/rrg/sequence</td><td class="dm">240</td><td class="dm">210ms</td><td><span class="pill p-high">ALPHA</span></td></tr>
               </tbody>
             </table>
@@ -1260,11 +1218,9 @@ body::before {
     <div class="fb-items">
       <div class="fb-item"><div class="fb-dot fb-dot-g"></div>ATOM ENGINE LIVE</div>
       <div class="fb-item fb-sep">·</div>
-      <div class="fb-item">⚛ NIRMATA HOLDINGS</div>
+      <div class="fb-item">⚛ </div>
       <div class="fb-item fb-sep">·</div>
       <div class="fb-item">DTOM RED TEAM COMMAND PLATFORM v3.2.1</div>
-      <div class="fb-item fb-sep">·</div>
-      <div class="fb-item">ORLANDO, FL</div>
       <div class="fb-item fb-sep">·</div>
       <div class="fb-item"><div class="fb-dot fb-dot-g"></div>PROTECTED BY CRYSTALS-KYBER PQC ENCRYPTION</div>
       <div class="fb-clock-r" id="footer-clk">—</div>
@@ -1294,6 +1250,7 @@ function doLogin() {
       document.getElementById('tb-un').textContent = m.name;
       document.getElementById('tb-av').textContent = m.init;
       boot();
+      animatePlatformEntrance();
     }, 700);
   } else {
     const e = document.getElementById('lerr');
@@ -1391,8 +1348,96 @@ const INTEL_LOGS = [
   'New harvest-now-decrypt-later signal: 3 endpoints',
 ];
 
+const ARCH_STREAMS = {
+  'atom-core': [
+    'Core loop heartbeat: 3.2ms avg cycle',
+    'Threat evaluation window: 512 events/s',
+    'LLM scoring latency: 18ms p95',
+    'Mitigation pipeline depth: 7 stages',
+    'Core anomaly score: 0.013 (healthy)',
+  ],
+  'redteam': [
+    'Active scenarios: 14 concurrent campaigns',
+    'Prompt injection variants: 3,942 tested',
+    'Jailbreak success pre-ATOM: 71% → 1.2%',
+    'Agent hijack attempts: 442 blocked',
+    'Scenario generator: 256 templates loaded',
+  ],
+  'pqc-auth': [
+    'Kyber-1024 rotations/hr: 22,184',
+    'Mean KEM latency: 0.42ms',
+    'Hybrid TLS sessions: 12,448 active',
+    'Legacy RSA sessions: 0 (fully migrated)',
+    'Harvest-now-decrypt-later risk: 2.1%',
+  ],
+  'ai-engine': [
+    'Detection precision: 97.4%',
+    'Recall on MITRE ATLAS tactics: 94.1%',
+    'Ensemble models: 7 defense strategies',
+    'Context window avg: 18K tokens',
+    'Adversarial robustness score: 0.92',
+  ],
+  'telemetry': [
+    'Events/sec: 184,221 (peak 263,991)',
+    'WebSocket clients: 842',
+    'gRPC streams: 116',
+    'Dropped packet rate: 0.004%',
+    'Backpressure queue depth: 3.1%',
+  ],
+  'gpu-cluster': [
+    'GPU utilization: 94.2% (Linode edge)',
+    'Inference TPS: 12,488/sec',
+    'Model replicas: 24 (autoscaled)',
+    'Average cold start: 290ms',
+    'Hot shard hit rate: 99.1%',
+  ],
+  'api-gateway': [
+    'Total calls today: 2.4M',
+    'Successful responses: 99.8%',
+    'Rate-limit events: 847',
+    'P95 latency across services: 42ms',
+    'Blocked keys (abuse): 3',
+  ],
+  'vector-db': [
+    'Threat embeddings stored: 42.1M',
+    'Avg query latency: 12ms',
+    'Hot partition load: 78% of traffic',
+    'Anomalous vectors (flagged): 1,842',
+    'Replication factor: 3 (multi-region)',
+  ],
+  'analytics': [
+    'Dashboards online: 24',
+    'Live panels on this view: 9',
+    'Aggregation window: 60s sliding',
+    'Custom alerts defined: 132',
+    'SLO breach last 24h: 0',
+  ],
+};
+
+
 let logIdx=0, pqcIdx=0, rtIdx=0, intIdx=0;
 let blocked=2847, incidents=3, pqcRot=22184, harv=34;
+
+function animateMetric(id, target, opts) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const suffix = (opts && opts.suffix) || '';
+  const decimals = (opts && opts.decimals) || 0;
+  const current = parseFloat(el.getAttribute('data-val') || '0') || 0;
+  const to = typeof target === 'number' ? target : parseFloat(String(target).replace(/[^0-9.\-]/g,'')) || 0;
+  if (!window.gsap) {
+    el.textContent = (decimals ? to.toFixed(decimals) : Math.round(to)).toLocaleString() + suffix;
+    el.setAttribute('data-val', to);
+    return;
+  }
+  const obj = { v: current };
+  gsap.to(obj, { v: to, duration: 0.6, ease: 'power2.out', onUpdate: () => {
+    const val = decimals ? obj.v.toFixed(decimals) : Math.round(obj.v);
+    el.textContent = Number(val).toLocaleString() + suffix;
+  }, onComplete: () => el.setAttribute('data-val', to) });
+}
+
+
 let timers=[];
 
 function pad(n){return String(n).padStart(2,'0');}
@@ -1478,14 +1523,61 @@ function tickKPIs() {
   harv+=Math.random()<0.15?1:0;
   if(Math.random()<0.12) incidents=Math.max(0,incidents+(Math.random()<0.5?1:-1));
   const mttr=88+Math.floor(Math.random()*20);
-  const el=(id,v)=>{ const e=document.getElementById(id); if(e) e.textContent=v; };
-  el('kp1',blocked.toLocaleString()); el('kp2',incidents); el('kp4',mttr+'ms'); el('kp5',pqcRot.toLocaleString());
-  el('mc1',Math.floor(Math.random()*4)); el('mc2',Math.floor(Math.random()*12)+4); el('mc3',blocked.toLocaleString());
-  el('qts',Math.floor(Math.random()*15)+82); el('harv',harv);
-  el('r-res',Math.floor(blocked/8));
+
+  animateMetric('kp1', blocked);
+  animateMetric('kp2', incidents);
+  const mttrEl = document.getElementById('kp4'); if (mttrEl) { mttrEl.textContent = mttr+'ms'; mttrEl.setAttribute('data-val', mttr); }
+  animateMetric('kp5', pqcRot);
+
+  animateMetric('mc1', Math.floor(Math.random()*4));
+  animateMetric('mc2', Math.floor(Math.random()*12)+4);
+  animateMetric('mc3', blocked);
+  animateMetric('qts', Math.floor(Math.random()*15)+82);
+  animateMetric('harv', harv);
+  animateMetric('r-res', Math.floor(blocked/8));
+
+  // top bar metrics
+  animateMetric('tb-gti-val', Math.min(99, 60 + Math.random()*30));
+  const gtiRing = document.getElementById('tb-gti-ring');
+  if (gtiRing) {
+    const score = parseFloat(document.getElementById('tb-gti-val').getAttribute('data-val') || '0');
+    const pct = Math.max(0, Math.min(100, score));
+    const dash = 100 - pct;
+    gtiRing.style.strokeDashoffset = dash.toString();
+  }
+  animateMetric('tb-chains', incidents + Math.floor(Math.random()*6));
+  const mttrTop = document.getElementById('tb-mttr-top');
+  if (mttrTop) { mttrTop.textContent = (mttr/1000).toFixed(3)+'s'; }
 }
 
 function stop() { timers.forEach(clearInterval); timers=[]; }
+
+function initArchClicks() {
+  const nodes = document.querySelectorAll('.arch-node');
+  const logId = 'arch-log';
+  if (!nodes.length) return;
+  nodes.forEach(n => {
+    n.addEventListener('click', () => {
+      nodes.forEach(x => x.classList.remove('active-node'));
+      n.classList.add('active-node');
+      const key = n.getAttribute('data-key') || 'atom-core';
+      const stream = ARCH_STREAMS[key] || ARCH_STREAMS['atom-core'];
+      const container = document.getElementById(logId);
+      if (!container) return;
+      container.innerHTML = '';
+      stream.forEach(line => {
+        addLog(logId, 't-info', 'ARCH ' + line);
+      });
+    });
+  });
+  // Seed with ATOM Core analytics on first boot
+  const first = document.querySelector('.arch-node.active-node');
+  if (first) {
+    const key = first.getAttribute('data-key') || 'atom-core';
+    const stream = ARCH_STREAMS[key] || ARCH_STREAMS['atom-core'];
+    stream.forEach(line => addLog(logId, 't-info', 'ARCH ' + line));
+  }
+}
 
 /* ══════════ BOOT ══════════ */
 function boot() {
@@ -1563,10 +1655,10 @@ function boot() {
     {l:'Pinecone Vector DB',p:100,c:'pf-purple',v:'100%'},
   ]);
   buildBars('inv-bars',[
-    {l:'AntimatterAI ARR',p:84,c:'pf-red',v:'$840K'},
-    {l:'ClinixAI ARR',p:39,c:'pf-cyan',v:'$390K'},
-    {l:'ThingkTangk ARR',p:22,c:'pf-purple',v:'$220K'},
-    {l:'RRG.bio ARR',p:8,c:'pf-amber',v:'$80K'},
+    {l:'Thesys ARR',p:84,c:'pf-red',v:'$840K'},
+    {l:'PhysioPS ARR',p:39,c:'pf-cyan',v:'$390K'},
+    {l:'Q ARR',p:22,c:'pf-purple',v:'$220K'},
+    {l:'Solara ARR',p:8,c:'pf-amber',v:'$80K'},
     {l:'Series A Committed',p:35,c:'pf-green',v:'$4.2M / $12M'},
   ]);
   buildBars('ioc-bars',[
@@ -1603,13 +1695,17 @@ function boot() {
     </div>`).join('');
 
   // Animated counters
-  animCounter('kp1',blocked,1500);
-  animCounter('kp2',incidents,800);
-  animCounter('kp3',12,1000);
-  animCounter('kp5',pqcRot,1200);
-  setTimeout(()=>{ const e=document.getElementById('kp4'); if(e) e.textContent='92ms'; },200);
-  setTimeout(()=>{ const e=document.getElementById('qts'); if(e) e.textContent='87'; },300);
-  setTimeout(()=>{ const e=document.getElementById('harv'); if(e) e.textContent=harv; },400);
+  animateMetric('kp1', blocked);
+  animateMetric('kp2', incidents);
+  animateMetric('kp3', 12);
+  animateMetric('kp5', pqcRot);
+  const kp4 = document.getElementById('kp4'); if (kp4) { kp4.textContent='92ms'; kp4.setAttribute('data-val', 92); }
+  animateMetric('qts', 87);
+  animateMetric('harv', harv);
+  animateMetric('tb-gti-val', 72);
+  const gti = document.getElementById('tb-gti-ring'); if (gti) { gti.style.strokeDashoffset = (100-72).toString(); }
+  animateMetric('tb-chains', incidents+2);
+  const mttrTop0 = document.getElementById('tb-mttr-top'); if (mttrTop0) { mttrTop0.textContent='0.092s'; }
 
   // Boot terminal messages
   const bootMsgs=[
@@ -1644,7 +1740,46 @@ function boot() {
     const cells=document.querySelectorAll('.q-cell');
     cells.forEach(c=>{ if(Math.random()<0.3) c.style.opacity=(0.1+Math.random()*0.9).toFixed(2); });
   }, 800));
+
+  // Enable interactive architecture analytics
+  initArchClicks();
 }
+
+
+// GSAP cinematic animations
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.gsap) {
+    gsap.from('.login-logo-text', {duration: 0.9, y: 24, opacity: 0, ease: 'power3.out'});
+    gsap.from('.login-eyebrow',   {duration: 0.7, x: -30, opacity: 0, ease: 'power2.out', delay: 0.1});
+    gsap.from('.login-tagline',   {duration: 0.7, x: 30,  opacity: 0, ease: 'power2.out', delay: 0.15});
+    gsap.from('.login-box',       {duration: 1.0, y: 32,  opacity: 0, ease: 'power3.out', delay: 0.15});
+  }
+});
+
+function animatePlatformEntrance() {
+  if (!window.gsap) return;
+  gsap.from('.topbar',  {duration: 0.7, y: -40, opacity: 0, ease: 'power3.out'});
+  gsap.from('.sidebar', {duration: 0.7, x: -40, opacity: 0, ease: 'power3.out', delay: 0.1});
+  gsap.from('#v-command .c', {
+    duration: 0.6,
+    y: 18,
+    opacity: 0,
+    ease: 'power3.out',
+    stagger: 0.04,
+    delay: 0.15
+  });
+  gsap.to('.tb-logo', {
+    duration: 3.0,
+    textShadow: '0 0 18px rgba(255,40,40,0.9)',
+    repeat: -1,
+    yoyo: true,
+    ease: 'sine.inOut'
+  });
+}
+
 </script>
 </body>
 </html>
+.sidebar:hover { width:220px; transition:width 0.25s ease-out; }
+.sidebar:hover .sb-item { align-items:flex-start; flex-direction:row; }
+.sidebar:hover .sb-section-label { padding-left:16px; }
