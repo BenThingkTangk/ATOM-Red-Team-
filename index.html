@@ -113,7 +113,7 @@ background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0
 
 /* ── LOGIN ── */
 #login{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;
-background:radial-gradient(ellipse 90% 70% at 50% 30%,rgba(255,0,51,.09) 0%,var(--bg) 65%);}
+background:#020308;box-shadow:0 0 120px rgba(248,113,113,0.4) inset;}
 #login.out{opacity:0;transform:scale(1.04);pointer-events:none;transition:opacity .7s var(--ease),transform .7s var(--ease);}
 .l-corner{position:absolute;width:36px;height:36px;border-color:rgba(255,0,51,.35);border-style:solid;}
 .l-corner.tl{top:36px;left:36px;border-width:2px 0 0 2px;}
@@ -913,7 +913,35 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
         </div>
       </div>
 
-      <!-- ARCHITECTURE VIEW REDUCED -->
+      <!-- ▌ARCHITECTURE ▐ -->
+      <div class="view" id="v-architecture">
+        <div class="ph">
+          <div><div class="ph-t">Architecture</div><div class="ph-s">GRAPH TOPOLOGY · SERVICE DEPENDENCIES · ZERO-TRUST SEGMENTS</div></div>
+          <div class="ph-r"><span class="bd bd-ok">GLOBAL GRAPH HEALTH: 99.3%</span></div>
+        </div>
+        <div class="g4 card-grid">
+          <div class="c">
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">SERVICE TOPOLOGY</div><div></div></div>
+            <div id="arch-topology" style="height:260px;margin:12px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;font-size:11px;color:var(--text-secondary);">
+              <div class="kpi"><div class="kpi-label">EDGE</div><div class="kpi-value">32</div><div class="kpi-sub">Akamai POP Clusters</div></div>
+              <div class="kpi"><div class="kpi-label">CORE SERVICES</div><div class="kpi-value">18</div><div class="kpi-sub">ATOM / PQC / HUMANOS</div></div>
+              <div class="kpi"><div class="kpi-label">DATA PLANES</div><div class="kpi-value">7</div><div class="kpi-sub">Streaming + Storage</div></div>
+              <div class="kpi"><div class="kpi-label">ZERO-TRUST SEGMENTS</div><div class="kpi-value">12</div><div class="kpi-sub">Policy-bound rings</div></div>
+            </div>
+          </div>
+          <div class="c">
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">LATENCY & THROUGHPUT</div><div></div></div>
+            <div style="padding:12px;" id="arch-latency"></div>
+          </div>
+          <div class="c">
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">DEPENDENCY GRAPH</div><div></div></div>
+            <div style="padding:12px;" id="arch-deps"></div>
+          </div>
+          <div class="c">
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">CONFIG DRIFT</div><div><span class="bd bd-warn">3 REGIONS</span></div></div>
+            <div class="term" id="arch-drift" style="height:220px;margin:12px;overflow-y:auto;"></div>
+          </div>
+        </div>
       </div>
 
       <!-- ▌DEV HUB ▐ -->
@@ -923,8 +951,27 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
           <div class="ph-r"><span class="bd bd-ok">SDK v3.2.1 STABLE</span></div>
         </div>
         <div class="g4 card-grid">
-          <div class="c g-card kg kpi"><div class="kpi-lbl">API UPTIME</div><div class="kpi-val">99.97%</div></div>
-          <div class="c c-card kc kpi"><div class="kpi-lbl">ENDPOINTS</div><div class="kpi-val">48</div></div>
+          <div class="c">
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">API STATUS</div><div></div></div>
+            <div class="kpi"><div class="kpi-label">API UPTIME</div><div class="kpi-value">99.97%</div><div class="kpi-sub">Last 30 days</div></div>
+            <div class="kpi" style="margin-top:10px;"><div class="kpi-label">MEAN LATENCY</div><div class="kpi-value">82ms</div><div class="kpi-sub">p95 across regions</div></div>
+          </div>
+          <div class="c">
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">ENDPOINT CATALOG</div><div></div></div>
+            <div class="term" id="dev-endpoints" style="height:220px;margin:12px;overflow-y:auto;"></div>
+          </div>
+          <div class="c">
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">SDK VERSIONS</div><div><span class="bd bd-ok">SYNCED</span></div></div>
+            <div style="padding:12px;" id="dev-sdk"></div>
+          </div>
+          <div class="c">
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">BUILD PIPELINES</div><div><span class="bd bd-info">LIVE</span></div></div>
+            <div class="term" id="dev-ci" style="height:220px;margin:12px;overflow-y:auto;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ▌KILL CHAIN THEATER ▐ -->kpi-val">48</div></div>
           <div class="c a-card ka kpi"><div class="kpi-lbl">AVG LATENCY</div><div class="kpi-val">38ms</div></div>
           <div class="c r kr kpi"><div class="kpi-lbl">ACTIVE KEYS</div><div class="kpi-val">127</div></div>
         </div>
@@ -1692,6 +1739,38 @@ function rotateIncidents(){
   renderIncidents();
   neutralizeKillChain();
 }
+
+
+// Populate Architecture and Dev Hub sample data
+function initArchDev(){
+  const drift = document.getElementById('arch-drift');
+  if(drift){
+    drift.innerHTML = [
+      '[edge-us-east-1] Config drift: WAF policy outdated — auto-remediated',
+      '[edge-eu-west-1] TLS profile mismatch — queued for rollout',
+      '[core-graph-01] Service mesh sidecar lag — investigating',
+    ].map(l=>`<div>${l}</div>`).join('');
+  }
+  const devEndpoints = document.getElementById('dev-endpoints');
+  if(devEndpoints){
+    devEndpoints.innerHTML = [
+      'POST /v1/atom/scan            ·  live  ·  412 req/min',
+      'POST /v1/atom/simulate        ·  live  ·  128 req/min',
+      'GET  /v1/pqc/status           ·  live  ·   64 req/min',
+      'WS   /v1/stream/defense-log   ·  live  ·   24 conns',
+    ].map(l=>`<div>${l}</div>`).join('');
+  }
+  const devCi = document.getElementById('dev-ci');
+  if(devCi){
+    devCi.innerHTML = [
+      '✔ main      · dtom-console      · 3m42s · passed',
+      '✔ develop   · atom-engine       · 5m11s · passed',
+      '✖ feature/pqc-lattice-views     · 7m03s · tests failing',
+    ].map(l=>`<div>${l}</div>`).join('');
+  }
+}
+
+initArchDev();
 
 // Run login animations on load
 window.addEventListener('DOMContentLoaded',animLogin);
