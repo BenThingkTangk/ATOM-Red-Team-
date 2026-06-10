@@ -13,8 +13,8 @@
 :root{
   --bg:#08090F;
   --bg1:#0D0F1A;
-  --bg2:#111422;
-  --bg3:#161927;
+  --bg2:#020308;
+  --bg3:#030409;
   --glass:rgba(255,255,255,0.03);
   --glass2:rgba(255,255,255,0.055);
   --border:rgba(255,0,51,0.14);
@@ -50,7 +50,7 @@ background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0
 
 /* DESIGN TOKENS */
 :root{
-  --bg:#05060B;
+  --bg:#03030a;
   --bg-elevated:#070815;
   --bg-card:#0A0E1C;
   --text-primary:#F5F5FF;
@@ -65,7 +65,7 @@ background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0
 }
 
 /* Unified cards */
-.card{border-radius:20px;padding:16px 18px 18px;background:linear-gradient(145deg,#05060B,#020308);border:1px solid rgba(15,23,42,0.9);box-shadow:0 28px 80px rgba(0,0,0,0.95);} 
+.card{border-radius:20px;padding:16px 18px 18px;background:linear-gradient(160deg,#020308,#030409);border:1px solid rgba(15,23,42,0.95);box-shadow:0 0 28px rgba(248,113,113,0.22),0 20px 60px rgba(0,0,0,0.9);} 
 .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;} 
 .card-title{display:flex;align-items:center;gap:10px;} 
 .card-title-text h3{font-family:var(--f-ui);font-size:14px;font-weight:600;color:var(--text-primary);} 
@@ -86,13 +86,13 @@ background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0
 
 /* window chrome */
 
-.window-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(15,23,42,0.9);} 
+.window-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 9px;border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(10,11,20,0.7);} 
 .window-lights{display:flex;align-items:center;gap:6px;} 
 .w-light{width:8px;height:8px;border-radius:999px;background:#1F2933;box-shadow:0 0 0 1px rgba(15,23,42,0.9);} 
 .w-light.red{background:#F97373;box-shadow:0 0 6px rgba(248,113,113,0.7);} 
 .w-light.yellow{background:#FBBF24;box-shadow:0 0 6px rgba(251,191,36,0.7);} 
 .w-light.green{background:#22C55E;box-shadow:0 0 6px rgba(34,197,94,0.7);} 
-.window-title{font-family:var(--f-ui);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-secondary);} 
+.window-title{font-family:var(--f-ui);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(200,205,230,0.85);flex:1;text-align:center;} 
 
 /* KPI tiles */
 
@@ -255,8 +255,7 @@ border-bottom:1px solid rgba(255,255,255,.04);}
 .span3{grid-column:span 3;}
 
 /* ── CARDS ── */
-.c{background:var(--bg2);border:1px solid rgba(255,255,255,.07);border-radius:10px;
-position:relative;overflow:hidden;box-shadow:var(--card-shadow);}
+.c{background:linear-gradient(160deg,#020308,#030409);border:1px solid rgba(15,23,42,0.9);border-radius:18px;position:relative;overflow:hidden;box-shadow:0 0 32px rgba(248,113,113,0.2),0 20px 60px rgba(0,0,0,0.92);}
 .c::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
 background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);}
 .c.r{border-color:rgba(255,0,51,.22);}
@@ -675,11 +674,11 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
         </div>
         <div class="g2">
           <div class="c r">
-            <div class="ch"><div class="ch-l"><span class="ch-ico">⚡</span><span class="ch-t">Live Defense Log</span></div><div class="bd bd-live">● LIVE</div></div>
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">LIVE DEFENSE LOG</div><div><div class="bd bd-live">● LIVE</div></div></div>
             <div class="term" id="def-log" style="height:210px;margin:12px;"></div>
           </div>
           <div class="c">
-            <div class="ch"><div class="ch-l"><span class="ch-ico">🎯</span><span class="ch-t">MITRE ATLAS Heatmap</span></div><div class="bd bd-warn">LAST 60 MIN</div></div>
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">MITRE ATLAS HEATMAP</div><div><div class="bd bd-warn">LAST 60 MIN</div></div></div>
             <div style="padding:12px;"><div class="hmap" id="hmap1"></div></div>
           </div>
         </div>
@@ -739,11 +738,11 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
         </div>
         <div class="g2">
           <div class="c p-card">
-            <div class="ch"><div class="ch-l"><span class="ch-ico">⚛️</span><span class="ch-t">PQC Engine Status</span></div><div class="bd bd-purple">LATTICE-BASED</div></div>
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">PQC ENGINE STATUS</div><div><div class="bd bd-purple">LATTICE-BASED</div></div></div>
             <div style="padding:12px;" id="pqc-bars-map"></div>
           </div>
           <div class="c">
-            <div class="ch"><div class="ch-l"><span class="ch-ico">🎯</span><span class="ch-t">MITRE ATLAS</span></div><div class="bd bd-warn">ATLAS+QUANTUM</div></div>
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">MITRE ATLAS</div><div><div class="bd bd-warn">ATLAS+QUANTUM</div></div></div>
             <div style="padding:12px;"><div class="hmap" id="hmap2"></div></div>
           </div>
         </div>
@@ -770,7 +769,7 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
           <!-- LEFT: Threat Actor + charts -->
           <div style="display:flex;flex-direction:column;gap:14px;">
             <div class="c">
-              <div class="ch"><div class="ch-l"><span class="ch-ico">🎖️</span><span class="ch-t">Threat Actor Profiles</span></div><div class="bd bd-live">LIVE</div></div>
+              <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">THREAT ACTOR PROFILES</div><div><div class="bd bd-live">LIVE</div></div></div>
               <table class="dt">
                 <thead><tr><th>Actor</th><th>Type</th><th>Last Seen</th><th>Confidence</th></tr></thead>
                 <tbody>
@@ -783,24 +782,24 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
               </table>
             </div>
             <div class="c">
-              <div class="ch"><div class="ch-l"><span class="ch-ico">🥧</span><span class="ch-t">AI Threat Category Breakdown</span></div><div class="bd bd-warn">LIVE</div></div>
+              <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">AI THREAT CATEGORY BREAKDOWN</div><div><div class="bd bd-warn">LIVE</div></div></div>
               <div class="chart-box" style="height:200px;display:flex;align-items:center;justify-content:center;">
                 <canvas id="chart-donut" style="max-width:200px;max-height:200px;"></canvas>
               </div>
             </div>
             <div class="c a-card">
-              <div class="ch"><div class="ch-l"><span class="ch-ico">📊</span><span class="ch-t">IOC Distribution</span></div></div>
+              <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">IOC DISTRIBUTION</div><div></div></div>
               <div style="padding:12px;" id="ioc-bars"></div>
             </div>
           </div>
           <!-- RIGHT: Live intel + geo -->
           <div style="display:flex;flex-direction:column;gap:14px;">
             <div class="c r" style="flex:1;">
-              <div class="ch"><div class="ch-l"><span class="ch-ico">⚡</span><span class="ch-t">Live Intel Stream</span></div><div class="bd bd-live">LIVE</div></div>
+              <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">LIVE INTEL STREAM</div><div><div class="bd bd-live">LIVE</div></div></div>
               <div class="term" id="intel-log" style="height:230px;margin:12px;"></div>
             </div>
             <div class="c">
-              <div class="ch"><div class="ch-l"><span class="ch-ico">🌍</span><span class="ch-t">Attack Origins</span></div></div>
+              <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">ATTACK ORIGINS</div><div></div></div>
               <table class="dt">
                 <thead><tr><th>Origin</th><th>Attacks</th><th>Vector</th></tr></thead>
                 <tbody>
@@ -813,7 +812,7 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
               </table>
             </div>
             <div class="c p-card">
-              <div class="ch"><div class="ch-l"><span class="ch-ico">🔮</span><span class="ch-t">Predictive Threat Score</span></div></div>
+              <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">PREDICTIVE THREAT SCORE</div><div></div></div>
               <div style="padding:12px;" id="pred-bars"></div>
             </div>
           </div>
@@ -834,7 +833,7 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
         </div>
         <div class="g2">
           <div class="c p-card">
-            <div class="ch"><div class="ch-l"><span class="ch-ico">🔐</span><span class="ch-t">Algorithm Status Board</span></div><div class="bd bd-purple">NIST APPROVED</div></div>
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">ALGORITHM STATUS BOARD</div><div><div class="bd bd-purple">NIST APPROVED</div></div></div>
             <div class="pqc-algo-row"><span class="pqc-algo-ico">🧬</span><span class="pqc-algo-name">CRYSTALS-Kyber</span><span class="pqc-algo-tag">KEM</span><span class="pqc-algo-level">NIST L5</span><span class="pqc-algo-status dg">● ACTIVE</span></div>
             <div class="pqc-algo-row"><span class="pqc-algo-ico">✍️</span><span class="pqc-algo-name">CRYSTALS-Dilithium</span><span class="pqc-algo-tag">SIG</span><span class="pqc-algo-level">NIST L3</span><span class="pqc-algo-status dg">● ACTIVE</span></div>
             <div class="pqc-algo-row"><span class="pqc-algo-ico">🌲</span><span class="pqc-algo-name">SPHINCS+</span><span class="pqc-algo-tag">HASH-SIG</span><span class="pqc-algo-level">NIST L3</span><span class="pqc-algo-status dg">● ACTIVE</span></div>
@@ -842,27 +841,27 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
             <div class="pqc-algo-row"><span class="pqc-algo-ico">❄️</span><span class="pqc-algo-name">FrodoKEM</span><span class="pqc-algo-tag">KEM</span><span class="pqc-algo-level">TESTING</span><span class="pqc-algo-status dp">● TESTING</span></div>
           </div>
           <div class="c c-card">
-            <div class="ch"><div class="ch-l"><span class="ch-ico">⚛️</span><span class="ch-t">Lattice Key Rotation Viz</span></div><div class="bd bd-live">LIVE</div></div>
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">LATTICE KEY ROTATION VIZ</div><div><div class="bd bd-live">LIVE</div></div></div>
             <div class="lattice" id="lattice-grid"></div>
             <div style="padding:0 14px 12px;font-family:var(--f-mono);font-size:8.5px;color:var(--d);letter-spacing:2px;">ENTANGLEMENT DISRUPTION PATTERN · 64-NODE LATTICE</div>
           </div>
         </div>
         <div class="g3">
           <div class="c p-card">
-            <div class="ch"><div class="ch-l"><span class="ch-ico">📡</span><span class="ch-t">Key Exchange Log</span></div><div class="bd bd-live">LIVE</div></div>
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">KEY EXCHANGE LOG</div><div><div class="bd bd-live">LIVE</div></div></div>
             <div class="term" id="pqc-log" style="height:200px;margin:12px;"></div>
           </div>
           <div class="c">
-            <div class="ch"><div class="ch-l"><span class="ch-ico">📊</span><span class="ch-t">Cipher Performance</span></div></div>
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">CIPHER PERFORMANCE</div><div></div></div>
             <div style="padding:12px;" id="cipher-bars"></div>
           </div>
           <div class="c r">
-            <div class="ch"><div class="ch-l"><span class="ch-ico">⚠️</span><span class="ch-t">HNDL Intercept Log</span></div><div class="bd bd-live">MONITOR</div></div>
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">HNDL INTERCEPT LOG</div><div><div class="bd bd-live">MONITOR</div></div></div>
             <div id="hndl-log" style="overflow-y:auto;max-height:240px;"></div>
           </div>
         </div>
         <div class="c" style="margin-bottom:14px;">
-          <div class="ch"><div class="ch-l"><span class="ch-ico">🔄</span><span class="ch-t">Harvest-Now Decrypt-Later Risk Matrix</span></div></div>
+          <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">HARVEST-NOW DECRYPT-LATER RISK MATRIX</div><div></div></div>
           <table class="dt">
             <thead><tr><th>Vector</th><th>Algorithm</th><th>Risk Level</th><th>CNSA 2.0</th><th>Status</th></tr></thead>
             <tbody>
@@ -893,24 +892,24 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
         </div>
         <div class="g2">
           <div class="c">
-            <div class="ch"><div class="ch-l"><span class="ch-ico">🎯</span><span class="ch-t">MITRE ATLAS Full Map</span></div><div class="bd bd-warn">LIVE</div></div>
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">MITRE ATLAS FULL MAP</div><div><div class="bd bd-warn">LIVE</div></div></div>
             <div style="padding:12px;"><div class="hmap" id="hmap3"></div></div>
           </div>
           <div class="c r">
-            <div class="ch"><div class="ch-l"><span class="ch-ico">🔗</span><span class="ch-t">Attack Chain Simulator</span></div><div class="bd bd-live">LIVE</div></div>
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">ATTACK CHAIN SIMULATOR</div><div><div class="bd bd-live">LIVE</div></div></div>
             <div class="term" id="rt-log" style="height:200px;margin:12px;"></div>
           </div>
         </div>
         <div class="c" style="margin-bottom:14px;">
-          <div class="ch"><div class="ch-l"><span class="ch-ico">📋</span><span class="ch-t">Active Incident Queue</span></div><div class="bd bd-live">LIVE FEED</div></div>
+          <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">ACTIVE INCIDENT QUEUE</div><div><div class="bd bd-live">LIVE FEED</div></div></div>
           <table class="dt">
             <thead><tr><th>ID</th><th>Time</th><th>Vector</th><th>Target</th><th>Severity</th><th>Status</th><th>MITRE</th><th>MTTR</th></tr></thead>
             <tbody id="rt-inc"></tbody>
           </table>
         </div>
         <div class="g2">
-          <div class="c a-card"><div class="ch"><div class="ch-l"><span class="ch-ico">🔥</span><span class="ch-t">Vector Breakdown</span></div></div><div style="padding:12px;" id="rt-vec"></div></div>
-          <div class="c c-card"><div class="ch"><div class="ch-l"><span class="ch-ico">📡</span><span class="ch-t">Response Actions</span></div><div class="bd bd-live">LIVE</div></div><div class="term" id="rt-resp" style="height:200px;margin:12px;overflow-y:auto;"></div></div>
+          <div class="c a-card"><div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">VECTOR BREAKDOWN</div><div></div></div><div style="padding:12px;" id="rt-vec"></div></div>
+          <div class="c c-card"><div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">RESPONSE ACTIONS</div><div><div class="bd bd-live">LIVE</div></div></div><div class="term" id="rt-resp" style="height:200px;margin:12px;overflow-y:auto;"></div></div>
         </div>
       </div>
 
@@ -931,7 +930,7 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
         </div>
         <div class="g2">
           <div class="c r">
-            <div class="ch"><div class="ch-l"><span class="ch-ico">🔌</span><span class="ch-t">API Services</span></div><div class="bd bd-ok">ALL LIVE</div></div>
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">API SERVICES</div><div><div class="bd bd-ok">ALL LIVE</div></div></div>
             <table class="dt"><thead><tr><th>Service</th><th>Endpoint</th><th>Calls/hr</th><th>Latency</th><th>Status</th></tr></thead>
             <tbody>
               <tr><td>⚛️ ATOM Stream</td><td class="dm dc2">/v3/atom/stream</td><td class="dm dg">128K</td><td class="dm">18ms</td><td><span class="pill p-ok">LIVE</span></td></tr>
@@ -944,7 +943,7 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
             </table>
           </div>
           <div class="c">
-            <div class="ch"><div class="ch-l"><span class="ch-ico">💻</span><span class="ch-t">Quickstart</span></div></div>
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">QUICKSTART</div><div></div></div>
             <div class="term" style="height:270px;margin:12px;">
               <p class="tl"><span class="ti"># 1. Authenticate (PQC)</span></p>
               <p class="tl"><span class="to">POST</span> <span class="tp">https://api.atom.io/v3/auth</span></p>
@@ -1028,6 +1027,7 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
 const USERS=[
   {u:'Ben.oleary@nirmata.io',p:'Lambo2391!',name:'BEN',init:'BO'},
   {u:'Chris.riley@nirmata.io',p:'Kq7&$82KYBE$8!',name:'CHRIS',init:'CR'},
+  {u:'josh.mellott@nirmata.io',p:'BIT&CHPL$A$E*&!',name:'JOSH',init:'JM'},
 ];
 ['ip','iu'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();}));
 function doLogin(){
@@ -1706,3 +1706,4 @@ window.addEventListener('DOMContentLoaded',animLogin);
         </div>
         <div style="height:100%;background:linear-gradient(90deg,#7A001C,#FF0033);border-radius:2px;transition:width .5s;" id="ab${i}"></div>
       </div>
+
