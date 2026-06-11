@@ -1831,4 +1831,85 @@ function rotateIncidents(){
     sev:pick[0],ss:pick[1],
     stat:['BLOCKED','CONTAINED','ESCALATED','RESOLVED'][Math.floor(Math.random()*4)],
     m:['T1190','T1059','T1657','T1055'][Math.floor(Math.random()*4)],
-    mttr:
+    mttr:Math.random()<.2?'—':`${Math.floor(40+Math.random()*200)}ms`,
+  };
+  INC_ROWS_BASE.unshift(newRow);
+  renderIncidents();
+  neutralizeKillChain();
+}
+
+
+// Populate Architecture and Dev Hub sample data
+function initArchDev(){
+  const lat = document.getElementById('arch-latency');
+  if(lat){
+    const regions = [
+      ['us-east',68],['us-west',82],['eu-west',96],['ap-south',120]
+    ];
+    lat.innerHTML = regions.map(([r,v])=>`<span style="height:${40+v/2}px" data-lbl="${r}"></span>`).join('');
+  }
+  const deps = document.getElementById('arch-deps');
+  if(deps){
+    // Nothing heavy here, grid + caption already convey topology
+  }
+
+  const drift = document.getElementById('arch-drift');
+  if(drift){
+    drift.innerHTML = [
+      '[edge-us-east-1] Config drift: WAF policy outdated — auto-remediated',
+      '[edge-eu-west-1] TLS profile mismatch — queued for rollout',
+      '[core-graph-01] Service mesh sidecar lag — investigating',
+    ].map(l=>`<div>${l}</div>`).join('');
+  }
+  const devEndpoints = document.getElementById('dev-endpoints');
+  if(devEndpoints){
+    devEndpoints.innerHTML = [
+      'POST /v1/atom/scan            ·  live  ·  412 req/min',
+      'POST /v1/atom/QKD             ·  live  ·  128 req/min',
+      'GET  /v1/pqc/status           ·  live  ·   64 req/min',
+      'WS   /v1/stream/defense-log   ·  live  ·   24 conns',
+    ].map(l=>`<div>${l}</div>`).join('');
+  }
+  const devCi = document.getElementById('dev-ci');
+  if(devCi){
+    devCi.innerHTML = [
+      '✔ main      · dtom-console      · 3m42s · passed',
+      '✔ develop   · atom-engine       · 5m11s · passed',
+      '✖ feature/pqc-lattice-views     · 7m03s · tests failing',
+    ].map(l=>`<div>${l}</div>`).join('');
+  }
+}
+
+initArchDev();
+
+// Demo mode: auto-cycle views after boot
+function startDemoMode(){
+  const order = ['command','threatmap','intelligence','quantum','redteam','architecture','devhub','killchain'];
+  let i = 0;
+  setInterval(()=>{
+    const tab = document.querySelector(`.tb-tab[data-v="${order[i % order.length]}"]`);
+    if(tab) nav(tab);
+    i++;
+  }, 11000);
+}
+
+// hook into existing boot sequence end
+const _origBootSeq = startBootSequence;
+startBootSequence = function(user){
+  _origBootSeq(user);
+  startDemoMode();
+};
+
+// Run login animations on load
+window.addEventListener('DOMContentLoaded',animLogin);
+</script>
+</body>
+</html
+      <!-- ▌KILL CHAIN THEATER ▐ -->
+      <div class="view" id="v-killchain">
+        <div class="ph">
+          <div><div class="ph-t">Kill Chain Theater</div><div class="ph-s">END-TO-END ATTACK REPLAY · LIVE INCIDENT RECONSTRUCTION · QUANTUM-RESILIENT DEFENSE</div></div>
+          <div class="ph-r"><span class="bd bd-live">● LIVE REPLAY</span></div>
+        </div>
+        <div style="height:100%;background:linear-gradient(90deg,#7A001C,#FF0033);border-radius:2px;transition:width .5s;" id="ab${i}"></div>
+      </div>
