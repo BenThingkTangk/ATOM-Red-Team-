@@ -92,7 +92,13 @@ background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0
 .w-light.red{background:#F97373;box-shadow:0 0 6px rgba(248,113,113,0.7);} 
 .w-light.yellow{background:#FBBF24;box-shadow:0 0 6px rgba(251,191,36,0.7);} 
 .w-light.green{background:#22C55E;box-shadow:0 0 6px rgba(34,197,94,0.7);} 
-.window-title{font-family:var(--f-ui);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(200,205,230,0.85);flex:1;text-align:center;} 
+.window-title{font-family:var(--f-ui);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(200,205,230,0.85);flex:1;text-align:center;}
+
+.window-head{position:relative;}
+.window-title[data-tip]{cursor:help;}
+.window-title[data-tip]::after{content:attr(data-tip);position:absolute;left:50%;bottom:-32px;transform:translateX(-50%);white-space:nowrap;background:rgba(15,23,42,0.98);color:rgba(226,232,240,0.96);font-family:var(--f-ui);font-size:10px;padding:4px 8px;border-radius:999px;border:1px solid rgba(55,65,81,1);opacity:0;pointer-events:none;transition:opacity .18s var(--ease);box-shadow:0 12px 30px rgba(0,0,0,0.85);} 
+.window-title[data-tip]:hover::after{opacity:1;} 
+ 
 
 /* KPI tiles */
 
@@ -145,6 +151,29 @@ cursor:pointer;transition:all .2s;box-shadow:0 0 20px rgba(255,0,51,.2);position
 .btn-auth:hover{box-shadow:0 0 35px rgba(255,0,51,.45),0 0 60px rgba(255,0,51,.15);transform:translateY(-1px);}
 .l-err{font-family:var(--f-mono);font-size:9px;color:var(--r);text-align:center;margin-top:12px;min-height:14px;letter-spacing:1px;}
 .l-foot{font-family:var(--f-mono);font-size:7.5px;color:var(--d2);text-align:center;margin-top:16px;letter-spacing:2px;line-height:1.9;}
+
+
+
+/* ARCHITECTURE TOPOLOGY */
+
+.mini-bars{height:220px;margin:12px;display:flex;align-items:flex-end;gap:8px;padding:6px 4px;background:rgba(15,23,42,0.75);border-radius:12px;border:1px solid rgba(30,41,59,1);} 
+.mini-bars span{flex:1;border-radius:999px 999px 4px 4px;background:linear-gradient(to top,rgba(248,113,113,0.85),rgba(248,113,113,0.2));position:relative;overflow:hidden;} 
+.mini-bars span::after{content:attr(data-lbl);position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-family:var(--f-mono);font-size:9px;color:rgba(148,163,184,0.9);} 
+
+.mini-graph{height:220px;margin:12px;border-radius:12px;border:1px solid rgba(30,41,59,1);background:radial-gradient(circle at 0% 0%,rgba(56,189,248,0.15),transparent 55%),#020308;position:relative;overflow:hidden;} 
+.mini-graph::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(30,64,175,0.4) 1px,transparent 1px),linear-gradient(90deg,rgba(30,64,175,0.4) 1px,transparent 1px);background-size:28px 28px;opacity:0.5;} 
+.mini-graph::after{content:'ATOM ⇄ PQC ⇄ HumanOS ⇄ Data Plane';position:absolute;bottom:10px;left:14px;font-family:var(--f-mono);font-size:10px;color:rgba(148,163,184,0.95);} 
+
+.arch-top{height:260px;margin:12px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;font-size:11px;color:var(--text-secondary);}
+.arch-col{background:rgba(15,23,42,0.7);border-radius:12px;padding:10px 11px;border:1px solid rgba(51,65,85,0.9);box-shadow:inset 0 0 0 1px rgba(15,23,42,0.6);}
+.arch-title{font-family:var(--f-ui);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(226,232,240,0.9);margin-bottom:8px;}
+.arch-node{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px dashed rgba(51,65,85,0.8);} 
+.arch-node:last-child{border-bottom:none;}
+.an-pill{font-family:var(--f-ui);font-size:11px;color:rgba(226,232,240,0.86);} 
+.an-metric{font-family:var(--f-mono);font-size:10px;color:rgba(148,163,184,0.9);} 
+
+@media(max-width:900px){.arch-top{grid-template-columns:1fr 1fr;height:auto;}}
+@media(max-width:600px){.arch-top{grid-template-columns:1fr;}}
 
 /* ── SHELL ── */
 #platform{display:none;flex-direction:column;height:100vh;width:100vw;}
@@ -686,11 +715,11 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
         </div>
         <div class="g2">
           <div class="c r">
-            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">LIVE DEFENSE LOG</div><div><div class="bd bd-live">● LIVE</div></div></div>
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title" data-tip="Real-time incident stream from ATOM and SIEM">LIVE DEFENSE LOG</div><div><div class="bd bd-live">● LIVE</div></div></div>
             <div class="term" id="def-log" style="height:210px;margin:12px;"></div>
           </div>
           <div class="c">
-            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">MITRE ATLAS HEATMAP</div><div><div class="bd bd-warn">LAST 60 MIN</div></div></div>
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title" data-tip="Active AI attack techniques mapped to MITRE ATLAS">MITRE ATLAS HEATMAP</div><div><div class="bd bd-warn">LAST 60 MIN</div></div></div>
             <div style="padding:12px;"><div class="hmap" id="hmap1"></div></div>
           </div>
         </div>
@@ -700,7 +729,7 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
             <div class="chart-box" style="height:200px;"><canvas id="chart-alerts"></canvas></div>
           </div>
           <div class="c card">
-            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">TOP TARGETED AI APIS</div><div class="bd bd-live">LIVE</div></div>
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title" data-tip="AI providers currently under highest adversarial load">TOP TARGETED AI APIS</div><div class="bd bd-live">LIVE</div></div>
             <div style="padding:12px;" id="api-tgt"></div>
           </div>
         </div>
@@ -714,7 +743,7 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
             <div style="padding:12px;" id="vec-bars"></div>
           </div>
           <div class="c g-card card">
-            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">SYSTEM HEALTH</div><div class="bd bd-ok">NOMINAL</div></div>
+            <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title" data-tip="Status of all core engines, PQC, and gateways">SYSTEM HEALTH</div><div class="bd bd-ok">NOMINAL</div></div>
             <div style="padding:12px;" id="health-bars"></div>
           </div>
         </div>
@@ -723,16 +752,16 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
       <!-- ▌THREAT MAP ▐ -->
       <div class="view" id="v-threatmap">
         <div class="ph">
-          <div><div class="ph-t">Global Threat Map</div><div class="ph-s">ATOM RED TEAM · LIVE ATTACK TELEMETRY · AKAMAI 4,400+ EDGE POPs</div></div>
-          <div class="ph-r"><span class="bd bd-live">● ATOM LIVE</span><span class="bd bd-info" id="clk2">—</span></div>
+          <div><div class="ph-t">Global Threat Map</div><div class="ph-s">GLOBAL RED TEAM TELEMETRY · LIVE ATTACK VISUALIZATION · AKAMAI 4,400+ EDGE POPs</div></div>
+          <div class="ph-r"><span class="bd bd-info" id="clk2">UTC —</span></div>
         </div>
         <div class="map-outer" style="margin-bottom:14px;">
           <div class="map-arc" id="map-arc"></div>
           <div class="volt-flag" id="volt-flag">VOLT TYPHOON DETECTED</div>
-          <iframe class="map-frame" src="https://www.antimatterai.com/demos/atom-red-team"
+          <iframe class="map-frame" style="height:520px;" src="https://www.antimatterai.com/demos/atom-red-team"
             sandbox="allow-scripts allow-same-origin allow-forms" loading="lazy"></iframe>
           <div class="map-hud">
-            <div class="map-live"><div class="map-live-d"></div>ATOM RED TEAM GLOBAL ATTACK TELEMETRY · LIVE DETECTION ACTIVE</div>
+            <div class="map-live"><div class="map-live-d"></div>GLOBAL ATTACK TELEMETRY · LIVE DETECTION ACTIVE</div>
           </div>
           <div class="map-stats">
             <div class="map-stat">CRITICAL: <span id="mc1" class="dr">0</span></div>
@@ -934,20 +963,42 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
         <div class="g4 card-grid">
           <div class="c">
             <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">SERVICE TOPOLOGY</div><div></div></div>
-            <div id="arch-topology" style="height:260px;margin:12px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;font-size:11px;color:var(--text-secondary);">
-              <div class="kpi"><div class="kpi-label">EDGE</div><div class="kpi-value">32</div><div class="kpi-sub">Akamai POP Clusters</div></div>
-              <div class="kpi"><div class="kpi-label">CORE SERVICES</div><div class="kpi-value">18</div><div class="kpi-sub">ATOM / PQC / HUMANOS</div></div>
-              <div class="kpi"><div class="kpi-label">DATA PLANES</div><div class="kpi-value">7</div><div class="kpi-sub">Streaming + Storage</div></div>
+            <div id="arch-topology" class="arch-top">
+              <div class="arch-col">
+                <div class="arch-title">Edge Layer</div>
+                <div class="arch-node"><span class="an-pill">Akamai Edge POPs</span><span class="an-metric">32 clusters</span></div>
+                <div class="arch-node"><span class="an-pill">Linode GPU Nodes</span><span class="an-metric">64 workers</span></div>
+                <div class="arch-node"><span class="an-pill">Ingress Gateways</span><span class="an-metric">12 regions</span></div>
+              </div>
+              <div class="arch-col">
+                <div class="arch-title">Control Plane</div>
+                <div class="arch-node"><span class="an-pill">ATOM Threat Engine</span><span class="an-metric">5 microservices</span></div>
+                <div class="arch-node"><span class="an-pill">PQC Key Services</span><span class="an-metric">Kyber / Dilithium</span></div>
+                <div class="arch-node"><span class="an-pill">HumanOS</span><span class="an-metric">Ops co-pilot</span></div>
+              </div>
+              <div class="arch-col">
+                <div class="arch-title">Data Plane</div>
+                <div class="arch-node"><span class="an-pill">Event Stream</span><span class="an-metric">Kafka / Pulsar</span></div>
+                <div class="arch-node"><span class="an-pill">Feature Store</span><span class="an-metric">12 TB hot</span></div>
+                <div class="arch-node"><span class="an-pill">Long-term Lake</span><span class="an-metric">PB-scale</span></div>
+              </div>
+              <div class="arch-col">
+                <div class="arch-title">Security Rings</div>
+                <div class="arch-node"><span class="an-pill">Zero-Trust Segments</span><span class="an-metric">12 rings</span></div>
+                <div class="arch-node"><span class="an-pill">Policy Engine</span><span class="an-metric">OPA / Rego</span></div>
+                <div class="arch-node"><span class="an-pill">Audit & HNDL</span><span class="an-metric">18 U.S.C. §1030</span></div>
+              </div>
+            </div>ub">Streaming + Storage</div></div>
               <div class="kpi"><div class="kpi-label">ZERO-TRUST SEGMENTS</div><div class="kpi-value">12</div><div class="kpi-sub">Policy-bound rings</div></div>
             </div>
           </div>
           <div class="c">
             <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">LATENCY & THROUGHPUT</div><div></div></div>
-            <div style="padding:12px;" id="arch-latency"></div>
+            <div style="padding:12px;" id="arch-latency" class="mini-bars"></div>
           </div>
           <div class="c">
             <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">DEPENDENCY GRAPH</div><div></div></div>
-            <div style="padding:12px;" id="arch-deps"></div>
+            <div style="padding:12px;" id="arch-deps" class="mini-graph"></div>
           </div>
           <div class="c">
             <div class="window-head"><div class="window-lights"><span class="w-light red"></span><span class="w-light yellow"></span><span class="w-light green"></span></div><div class="window-title">CONFIG DRIFT</div><div><span class="bd bd-warn">3 REGIONS</span></div></div>
@@ -1780,55 +1831,4 @@ function rotateIncidents(){
     sev:pick[0],ss:pick[1],
     stat:['BLOCKED','CONTAINED','ESCALATED','RESOLVED'][Math.floor(Math.random()*4)],
     m:['T1190','T1059','T1657','T1055'][Math.floor(Math.random()*4)],
-    mttr:Math.random()<.2?'—':`${Math.floor(40+Math.random()*200)}ms`,
-  };
-  INC_ROWS_BASE.unshift(newRow);
-  renderIncidents();
-  neutralizeKillChain();
-}
-
-
-// Populate Architecture and Dev Hub sample data
-function initArchDev(){
-  const drift = document.getElementById('arch-drift');
-  if(drift){
-    drift.innerHTML = [
-      '[edge-us-east-1] Config drift: WAF policy outdated — auto-remediated',
-      '[edge-eu-west-1] TLS profile mismatch — queued for rollout',
-      '[core-graph-01] Service mesh sidecar lag — investigating',
-    ].map(l=>`<div>${l}</div>`).join('');
-  }
-  const devEndpoints = document.getElementById('dev-endpoints');
-  if(devEndpoints){
-    devEndpoints.innerHTML = [
-      'POST /v1/atom/scan            ·  live  ·  412 req/min',
-      'POST /v1/atom/simulate        ·  live  ·  128 req/min',
-      'GET  /v1/pqc/status           ·  live  ·   64 req/min',
-      'WS   /v1/stream/defense-log   ·  live  ·   24 conns',
-    ].map(l=>`<div>${l}</div>`).join('');
-  }
-  const devCi = document.getElementById('dev-ci');
-  if(devCi){
-    devCi.innerHTML = [
-      '✔ main      · dtom-console      · 3m42s · passed',
-      '✔ develop   · atom-engine       · 5m11s · passed',
-      '✖ feature/pqc-lattice-views     · 7m03s · tests failing',
-    ].map(l=>`<div>${l}</div>`).join('');
-  }
-}
-
-initArchDev();
-
-// Run login animations on load
-window.addEventListener('DOMContentLoaded',animLogin);
-</script>
-</body>
-</html
-      <!-- ▌KILL CHAIN THEATER ▐ -->
-      <div class="view" id="v-killchain">
-        <div class="ph">
-          <div><div class="ph-t">Kill Chain Theater</div><div class="ph-s">END-TO-END ATTACK REPLAY · LIVE INCIDENT RECONSTRUCTION · QUANTUM-RESILIENT DEFENSE</div></div>
-          <div class="ph-r"><span class="bd bd-live">● LIVE REPLAY</span></div>
-        </div>
-        <div style="height:100%;background:linear-gradient(90deg,#7A001C,#FF0033);border-radius:2px;transition:width .5s;" id="ab${i}"></div>
-      </div>
+    mttr:
