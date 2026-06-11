@@ -113,7 +113,7 @@ background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0
 
 /* ── LOGIN ── */
 #login{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;
-background:#020308;box-shadow:0 0 120px rgba(248,113,113,0.4) inset;}
+background:radial-gradient(ellipse 140% 120% at 50% 20%,#05060B 0%,#020308 45%,#010106 100%);overflow:hidden;}
 #login.out{opacity:0;transform:scale(1.04);pointer-events:none;transition:opacity .7s var(--ease),transform .7s var(--ease);}
 .l-corner{position:absolute;width:36px;height:36px;border-color:rgba(255,0,51,.35);border-style:solid;}
 .l-corner.tl{top:36px;left:36px;border-width:2px 0 0 2px;}
@@ -568,6 +568,18 @@ display:flex;align-items:center;padding:0 18px;gap:0;}
   </div>
 </div>
 
+
+
+<!-- ██ BOOT / CLEARANCE HUD ██ -->
+<div id="boot" style="display:none;position:fixed;inset:0;z-index:900;background:#020308;display:flex;align-items:center;justify-content:center;">
+  <div style="max-width:720px;width:100%;padding:24px 28px;border-radius:18px;background:radial-gradient(circle at 0% 0%,rgba(248,113,113,0.2),transparent 60%),#020308;border:1px solid rgba(148,163,184,0.4);box-shadow:0 40px 120px rgba(0,0,0,0.95);font-family:var(--f-mono);font-size:11px;color:var(--text-secondary);">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <div style="letter-spacing:0.18em;text-transform:uppercase;font-size:10px;color:rgba(229,231,235,0.8);">SESSION INITIALIZATION</div>
+      <div style="font-size:10px;color:#F97373;">ATOM RED TEAM // DTOM-OPS</div>
+    </div>
+    <div id="boot-log" style="height:180px;overflow:hidden;white-space:pre-line;line-height:1.6;background:#020308;border-radius:12px;padding:10px 12px;border:1px solid rgba(15,23,42,0.9);"></div>
+  </div>
+</div>
 <!-- ██ PLATFORM ██ -->
 <div id="platform">
 
@@ -1085,7 +1097,7 @@ function doLogin(){
     document.getElementById('login').classList.add('out');
     setTimeout(()=>{
       document.getElementById('login').style.display='none';
-      startBootSequence(m);
+      startClearanceBoot(m);
     },700);
   } else {
     const e=document.getElementById('lerr');
@@ -1541,6 +1553,41 @@ function boot(){
 
 // User menu and mini-views
 
+function startClearanceBoot(user){
+  const boot = document.getElementById('boot');
+  const logEl = document.getElementById('boot-log');
+  if(!boot || !logEl){ startBootSequence(user); return; }
+  boot.style.display = 'flex';
+  const lines = [
+    '[INIT] ATOM red team console engaged...',
+    '[AUTH] Operator: ' + user.u.toLowerCase(),
+    '[AUTH] Clearance level: Q-RED / compartmented',
+    '[PQC] Loading CRYSTALS-KYBER keypair ... ok',
+    '[PQC] Dilithium signature scheme online ... ok',
+    '[PQC] Lattice integrity check ... ok',
+    '[LINK] Establishing edge tunnel to Akamai POP mesh ... ok',
+    '[SYNC] Pulling latest MITRE ATLAS + threat intel ... ok',
+    '[FINAL] All systems green. HNDL intercept active.
+',
+  ];
+  let i = 0;
+  logEl.textContent = '';
+  const step = () => {
+    if(i < lines.length){
+      logEl.textContent += lines[i] + '
+';
+      i++;
+      setTimeout(step, 260);
+    } else {
+      setTimeout(()=>{
+        boot.style.display = 'none';
+        startBootSequence(user);
+      }, 400);
+    }
+  };
+  step();
+}
+
 function startBootSequence(user){
   const overlay=document.getElementById('boot-overlay');
   const platform=document.getElementById('platform');
@@ -1785,4 +1832,3 @@ window.addEventListener('DOMContentLoaded',animLogin);
         </div>
         <div style="height:100%;background:linear-gradient(90deg,#7A001C,#FF0033);border-radius:2px;transition:width .5s;" id="ab${i}"></div>
       </div>
-
